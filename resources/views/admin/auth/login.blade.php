@@ -16,8 +16,8 @@
                             <span>الدخول للوحة التحكم </span>
                         </h6>
                     </div>
-{{--                    @include('admin.includes.alerts.errors')--}}
-{{--                    @include('admin.includes.alerts.success')--}}
+                    @include('admin.includes.alerts.errors')
+                    @include('admin.includes.alerts.success')
                     <div class="card-content">
                         <div class="card-body">
                             <form class="form-horizontal form-simple" action="{{route('admin.login.store')}}" method="post"
