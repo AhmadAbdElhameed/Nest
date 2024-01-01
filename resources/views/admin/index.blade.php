@@ -16,11 +16,11 @@
                                 <div class="card-content">
                                     <div class="card-body pb-0">
                                         <div class="row">
-                                            <div class="col-6 pl-2">
+                                            <div class="col-8 pl-2">
                                                 <h4>اجمالي المبيعات</h4>
                                             </div>
-                                            <div class="col-5 text-right">
-                                                <h4>$9,980</h4>
+                                            <div class="col-4 text-right">
+                                                <h4>$9,9</h4>
                                             </div>
                                         </div>
                                     </div>
@@ -32,11 +32,11 @@
                                 <div class="card-content">
                                     <div class="card-body pb-0">
                                         <div class="row">
-                                            <div class="col-5 pl-2">
+                                            <div class="col-8 pl-2">
                                                 <h4>اجمالي الطلبات</h4>
                                             </div>
-                                            <div class="col-5 text-right">
-                                                <h4>$944</h4>
+                                            <div class="col-4 text-right">
+                                                <h4>694</h4>
                                             </div>
                                         </div>
                                     </div>
@@ -48,10 +48,10 @@
                                 <div class="card-content">
                                     <div class="card-body pb-0">
                                         <div class="row">
-                                            <div class="col-6 pl-2">
+                                            <div class="col-8 pl-2">
                                                 <h4>عدد المنتجات</h4>
                                             </div>
-                                            <div class="col-5 text-right">
+                                            <div class="col-4 text-right">
                                                 <h4>$1.2</h4>
                                             </div>
                                         </div>
@@ -65,10 +65,10 @@
                                 <div class="card-content">
                                     <div class="card-body pb-0">
                                         <div class="row">
-                                            <div class="col-5 pl-2">
+                                            <div class="col-8 pl-2">
                                                 <h4>عدد العملاء</h4>
                                             </div>
-                                            <div class="col-5 text-right">
+                                            <div class="col-4 text-right">
                                                 <h4>$1.2</h4>
                                             </div>
                                         </div>
