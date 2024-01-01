@@ -2,6 +2,7 @@
 
 use App\Http\Controllers\Admin\AdminController;
 use App\Http\Controllers\Admin\LoginController;
+use App\Http\Controllers\Admin\SettingController;
 use Illuminate\Support\Facades\Route;
 
 /*
@@ -20,6 +21,9 @@ Route::group(['middleware' => 'auth:admin' , 'prefix' => 'admin' ,'as' => 'admin
         Route::get('/dashboard','index')->name('dashboard');
     });
 
+    Route::prefix('settings')->as('settings.')->controller(SettingController::class)->group(function () {
+        Route::get('/shipping-methods/{Shipping}', 'editShippingMethod')->name('shipping-methods');
+    });
 
 });
 
