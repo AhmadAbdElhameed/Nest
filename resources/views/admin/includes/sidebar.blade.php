@@ -104,12 +104,12 @@
                 <ul class="menu-content">
                     <li><a class="menu-item" href="#" data-i18n="nav.templates.vert.main">وسائل التوصيل</a>
                         <ul class="menu-content">
-                            <li><a class="menu-item" href="../vertical-menu-template"
+                            <li><a class="menu-item" href="{{route('admin.settings.shipping-method','free')}}"
                                    data-i18n="nav.templates.vert.classic_menu">توصيل مجاني</a>
-                            </li><li><a class="menu-item" href="../vertical-menu-template"
+                            </li><li><a class="menu-item" href="{{route('admin.settings.shipping-method','inner')}}"
                                    data-i18n="nav.templates.vert.classic_menu">توصيل داخلي</a>
                             </li>
-                            <li><a class="menu-item" href="../vertical-modern-menu-template">توصيل خارجي</a>
+                            <li><a class="menu-item" href="{{route('admin.settings.shipping-method','outer')}}">توصيل خارجي</a>
                             </li>
                         </ul>
                     </li>

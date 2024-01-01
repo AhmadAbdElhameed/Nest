@@ -1,8 +1,9 @@
 <?php
 
 namespace App\Providers;
-
 use Illuminate\Support\ServiceProvider;
+
+
 use App\Http\Interfaces\Admin\SettingInterface;
 use App\Http\Repositories\Admin\SettingRepository;
 
