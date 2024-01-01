@@ -31,7 +31,7 @@ class Setting extends Model
         }
         static::updateOrCreate(
             ['key' => $key],
-            ['plain_value' => json_encode($value)]
+            ['plain_value' => $value]
         );
     }
 
