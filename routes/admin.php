@@ -1,5 +1,6 @@
 <?php
 
+use App\Http\Controllers\Admin\AdminController;
 use App\Http\Controllers\Admin\LoginController;
 use Illuminate\Support\Facades\Route;
 
@@ -14,16 +15,22 @@ use Illuminate\Support\Facades\Route;
 |
 */
 
-Route::group(['middleware' => 'auth:admin' , 'prefix' => 'admin' , 'name' => 'admin.'],function (){
+Route::group(['middleware' => 'auth:admin' , 'prefix' => 'admin' ,'as' => 'admin.'  ],function (){
+    Route::controller(AdminController::class)->group(function (){
+        Route::get('/dashboard','index')->name('dashboard');
+    });
+
 
 });
 
-Route::get('/admin/dashboard',function (){
-    return "Hello Admin";
-})->name('admin.dashboard');
-
-Route::group(['prefix' => 'admin'],function (){
-    Route::get('login', [LoginController::class, 'login'])->name('admin.login');
-    Route::post('login/store', [LoginController::class, 'store'])->name('admin.login.store');
+Route::group(['middleware' => 'guest:admin' , 'prefix' => 'admin' ,'as' => 'admin.'  ],function (){
+    Route::controller(LoginController::class)->group(function (){
+        Route::get('login', 'login')->name('login');
+        Route::post('login/store', 'store')->name('login.store');
+    });
 });
+
+
+
+
 
