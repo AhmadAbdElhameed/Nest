@@ -30,7 +30,7 @@
                 <ul class="nav navbar-nav float-right">
                     <li class="dropdown dropdown-user nav-item">
                         <a class="dropdown-toggle nav-link dropdown-user-link" href="#" data-toggle="dropdown">
-                            <span class="mr-1">مرحبا
+                            <span class="mr-1">
                               <span
                                   class="user-name text-bold-700">{{auth('admin')->user()->name}}</span>
                             </span>
@@ -45,7 +45,6 @@
                                 الخروج </a>
                         </div>
                     </li>
-
                     <li class="dropdown dropdown-language nav-item">
                         <a class="dropdown-toggle nav-link" id="dropdown-flag" href="#" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
                             <i class="flag-icon {{ LaravelLocalization::getCurrentLocale() == 'en' ? 'flag-icon-us' : 'flag-icon-eg' }}"></i> <!-- Dynamically set the flag icon -->
@@ -61,9 +60,6 @@
                             @endforeach
                         </div>
                     </li>
-
-
-
                     <li class="dropdown dropdown-notification nav-item">
                         <a class="nav-link nav-link-label" href="#" data-toggle="dropdown"><i class="ficon ft-bell"></i>
                             <span class="badge badge-pill badge-default badge-danger badge-default badge-up badge-glow">5</span>
