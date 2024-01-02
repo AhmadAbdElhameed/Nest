@@ -14,7 +14,7 @@ class Authenticate extends Middleware
     {
         if(!$request->expectsJson()){
             // Check if the request URL starts with 'admin/'
-            if($request->is('admin/*')) {
+            if($request->is(app()->getLocale().'/admin/*')) {
                 return route('admin.login');
             } else {
                 return route('login');
