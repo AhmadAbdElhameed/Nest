@@ -2,6 +2,7 @@
 
 use App\Http\Controllers\Admin\AdminController;
 use App\Http\Controllers\Admin\LoginController;
+use App\Http\Controllers\Admin\ProfileController;
 use App\Http\Controllers\Admin\SettingController;
 use Illuminate\Support\Facades\Route;
 use Mcamara\LaravelLocalization\Facades\LaravelLocalization;
@@ -33,6 +34,10 @@ Route::group(
             Route::prefix('settings')->as('settings.')->controller(SettingController::class)->group(function () {
                 Route::get('/shipping-methods/{shipping}', 'editShippingMethod')->name('shipping-method');
                 Route::put('/shipping-methods/{shipping}', 'updateShippingMethod')->name('shipping-method.update');
+            });
+            Route::prefix('profile')->as('profile.')->controller(ProfileController::class)->group(function () {
+                Route::get('/', 'index')->name('index');
+                Route::put('/update/{admin}', 'update')->name('update');
             });
             Route::get('logout',[LoginController::class,'logout'])->name('logout');
         });
