@@ -30,12 +30,13 @@
                 <ul class="nav navbar-nav float-right">
                     <li class="dropdown dropdown-user nav-item">
                         <a class="dropdown-toggle nav-link dropdown-user-link" href="#" data-toggle="dropdown">
-                <span class="mr-1">مرحبا
-                  <span
-                      class="user-name text-bold-700">{{auth('admin')->user()->name}}</span>
-                </span>
+                            <span class="mr-1">مرحبا
+                              <span
+                                  class="user-name text-bold-700">{{auth('admin')->user()->name}}</span>
+                            </span>
                             <span class="avatar avatar-online">
-                  <img  style="height: 35px;" src="" alt="avatar"><i></i></span>
+                                <img  style="height: 35px;" src="" alt="avatar"><i></i>
+                            </span>
                         </a>
                         <div class="dropdown-menu dropdown-menu-right"><a class="dropdown-item" href=""><i
                                     class="ft-user"></i> تعديل الملف الشحصي </a>
@@ -44,6 +45,24 @@
                                 الخروج </a>
                         </div>
                     </li>
+
+                    <li class="dropdown dropdown-language nav-item">
+                        <a class="dropdown-toggle nav-link" id="dropdown-flag" href="#" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                            <i class="flag-icon {{ LaravelLocalization::getCurrentLocale() == 'en' ? 'flag-icon-us' : 'flag-icon-eg' }}"></i> <!-- Dynamically set the flag icon -->
+                            <span class="selected-language">{{ LaravelLocalization::getCurrentLocaleNative() }}</span>
+                        </a>
+                        <div class="dropdown-menu" aria-labelledby="dropdown-flag">
+                            @foreach(LaravelLocalization::getSupportedLocales() as $localeCode => $properties)
+                                @if($localeCode != LaravelLocalization::getCurrentLocale())
+                                    <a class="dropdown-item" href="{{ LaravelLocalization::getLocalizedURL($localeCode, null, [], true) }}">
+                                        <i class="flag-icon {{ $localeCode == 'en' ? 'flag-icon-us' : 'flag-icon-eg' }}"></i> {{ $properties['native'] }}
+                                    </a>
+                                @endif
+                            @endforeach
+                        </div>
+                    </li>
+
+
 
                     <li class="dropdown dropdown-notification nav-item">
                         <a class="nav-link nav-link-label" href="#" data-toggle="dropdown"><i class="ficon ft-bell"></i>
