@@ -4,6 +4,7 @@ namespace App\Http\Repositories\Admin;
 
 use App\Http\Interfaces\Admin\SettingInterface;
 use App\Models\Setting;
+use Illuminate\Support\Facades\DB;
 
 class SettingRepository implements SettingInterface
 {
@@ -27,19 +28,23 @@ class SettingRepository implements SettingInterface
     {
         try {
             $settings = Setting::find($shipping);
+
+            DB::beginTransaction();
             $settings->update([
                 'plain_value' => $request->plain_value,
             ]);
             // Translation
             $settings->value = $request->value;
             $settings->save();
-
+            DB::commit();
             toast(__('admin/sidebar.shipping_updated'),'success');
 
-            return redirect()->back();
+            return redirect()->back()->with(['success' => __('admin/sidebar.shipping_updated')]);
 
         }catch (\Exception $ex){
-
+            toast(__('admin/sidebar.shipping_updated_fail'),'error');
+            DB::rollBack();
+            return redirect()->back()->with(['success' => __('admin/sidebar.shipping_updated_fail')]);
         }
     }
 }

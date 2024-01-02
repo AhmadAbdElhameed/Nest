@@ -52,8 +52,6 @@
                                             @method('PUT')
 
                                             <input type="hidden" name="id" value="{{$shipping->id}}">
-
-{{--                                            @dd($shipping)--}}
                                             <div class="form-body">
                                                 <div class="row">
                                                     <div class="col-md-6">

@@ -9,6 +9,7 @@ return [
    'inner_shipping' => 'Inner Shipping',
    'outer_shipping' => 'Outer Shipping',
     'shipping_updated' => 'Shipping Updated Successfully!',
+    'shipping_updated_fail' => 'Failed, something went wrong!',
     'shipping_edit' => 'Update Shipping Method',
     'shipping_name' => 'Name',
     'shipping_fee' => 'Shipping Fee',

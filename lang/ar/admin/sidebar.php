@@ -9,6 +9,7 @@ return [
     'inner_shipping' => 'توصيل داخلي',
     'outer_shipping' => 'توصيل خارجي',
     'shipping_updated' => 'تم تحديث وسيلة الشحن بنجاح!',
+    'shipping_updated_fail' => 'فشلت العملية - حدث خطا اثناء التحديث',
     'shipping_edit' => 'تعديل وسيلة توصيل',
     'shipping_name' => 'الاسم',
     'shipping_fee' => 'قيمة التوصيل',
