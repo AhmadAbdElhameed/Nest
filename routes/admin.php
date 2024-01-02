@@ -34,6 +34,7 @@ Route::group(
                 Route::get('/shipping-methods/{shipping}', 'editShippingMethod')->name('shipping-method');
                 Route::put('/shipping-methods/{shipping}', 'updateShippingMethod')->name('shipping-method.update');
             });
+            Route::get('logout',[LoginController::class,'logout'])->name('logout');
         });
 
         Route::group(['middleware' => 'guest:admin', 'prefix' => 'admin', 'as' => 'admin.'], function () {
