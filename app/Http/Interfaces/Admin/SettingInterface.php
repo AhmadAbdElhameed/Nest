@@ -5,5 +5,5 @@ interface SettingInterface
 
     public function editShippingMethod($shipping);
 
-    public function updateShippingMethod($shipping);
+    public function updateShippingMethod($request , $shipping);
 }

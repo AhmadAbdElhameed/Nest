@@ -72,9 +72,7 @@
 <!-- ////////////////////////////////////////////////////////////////////////////-->
 @include('admin.includes.footer')
 
-@notify_js
-@notify_render
-
+@include('sweetalert::alert')
 <!-- BEGIN VENDOR JS-->
 <script src="{{asset('assets/admin/vendors/js/vendors.min.js')}}" type="text/javascript"></script>
 <!-- BEGIN VENDOR JS-->
@@ -169,6 +167,7 @@
         meridians: true,setCurrentTime: false
     });
 </script>
+
 @yield('script')
 </body>
 </html>

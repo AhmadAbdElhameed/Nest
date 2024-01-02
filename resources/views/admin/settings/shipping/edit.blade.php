@@ -1,7 +1,7 @@
 @extends('admin.layouts.master')
 
 @section('title')
-    Shipping Method
+    Shipping Methods
 @endsection
 
 @section('content')
@@ -12,10 +12,10 @@
                     <div class="row breadcrumbs-top">
                         <div class="breadcrumb-wrapper col-12">
                             <ol class="breadcrumb">
-                                <li class="breadcrumb-item"><a href="">الرئيسية </a>
+                                <li class="breadcrumb-item"><a href="{{route('admin.dashboard')}}">{{__('admin/sidebar.home')}}</a>
                                 </li>
 
-                                <li class="breadcrumb-item active">وسائل التوصيل
+                                <li class="breadcrumb-item active">{{__('admin/sidebar.shipping_methods')}}
                                 </li>
                             </ol>
                         </div>
@@ -29,7 +29,7 @@
                         <div class="col-md-12">
                             <div class="card">
                                 <div class="card-header">
-                                    <h4 class="card-title" id="basic-layout-form"> تعديل وسيلة توصيل </h4>
+                                    <h4 class="card-title" id="basic-layout-form">{{__('admin/sidebar.shipping_edit')}}</h4>
                                     <a class="heading-elements-toggle"><i
                                             class="la la-ellipsis-v font-medium-3"></i></a>
                                     <div class="heading-elements">
@@ -51,14 +51,14 @@
                                             @csrf
                                             @method('PUT')
 
-                                            <input type="hidden" name="id" value="">
+                                            <input type="hidden" name="id" value="{{$shipping->id}}">
 
-
+{{--                                            @dd($shipping)--}}
                                             <div class="form-body">
                                                 <div class="row">
                                                     <div class="col-md-6">
                                                         <div class="form-group">
-                                                            <label for="projectinput1"> الاسم </label>
+                                                            <label for="projectinput1">{{__('admin/sidebar.shipping_name')}}</label>
                                                             <input type="text" value="{{$shipping->value}}" id="name"
                                                                    class="form-control"
                                                                    placeholder="  "
@@ -70,7 +70,7 @@
                                                     </div>
                                                     <div class="col-md-6">
                                                         <div class="form-group">
-                                                            <label for="projectinput1"> قيمة التوصيل </label>
+                                                            <label for="projectinput1">{{__('admin/sidebar.shipping_fee')}}</label>
                                                             <input type="number" value="{{$shipping->plain_value}}" id="plain_value"
                                                                    class="form-control"
                                                                    placeholder=""
@@ -88,10 +88,10 @@
                                             <div class="form-actions">
                                                 <button type="button" class="btn btn-warning mr-1"
                                                         onclick="history.back();">
-                                                    <i class="ft-x"></i> تراجع
+                                                    <i class="ft-x"></i> {{__('admin/sidebar.shipping_back')}}
                                                 </button>
                                                 <button type="submit" class="btn btn-primary">
-                                                    <i class="la la-check-square-o"></i> حفظ
+                                                    <i class="la la-check-square-o"></i> {{__('admin/sidebar.shipping_save')}}
                                                 </button>
                                             </div>
                                         </form>

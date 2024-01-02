@@ -19,11 +19,27 @@ class SettingRepository implements SettingInterface
         } else {
             $shipping = Setting::where('key', 'free_shipping_label')->first();
         }
+//        return  $shipping;
         return view('admin.settings.shipping.edit',compact('shipping'));
     }
 
-    public function updateShippingMethod($shipping)
+    public function updateShippingMethod($request , $shipping)
     {
+        try {
+            $settings = Setting::find($shipping);
+            $settings->update([
+                'plain_value' => $request->plain_value,
+            ]);
+            // Translation
+            $settings->value = $request->value;
+            $settings->save();
 
+            toast(__('admin/sidebar.shipping_updated'),'success');
+
+            return redirect()->back();
+
+        }catch (\Exception $ex){
+
+        }
     }
 }

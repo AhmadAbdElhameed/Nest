@@ -3,6 +3,7 @@
 namespace App\Http\Controllers\Admin;
 
 use App\Http\Controllers\Controller;
+use App\Http\Requests\Admin\Setting\UpdateShippingRuleRequest;
 use Illuminate\Http\Request;
 use App\Http\Interfaces\Admin\SettingInterface;
 
@@ -18,7 +19,7 @@ class SettingController extends Controller
     public function editShippingMethod($shipping){
         return $this->settingInterface->editShippingMethod($shipping);
     }
-    public function updateShippingMethod($shipping){
-        return $this->settingInterface->updateShippingMethod($shipping);
+    public function updateShippingMethod(UpdateShippingRuleRequest $request , $shipping){
+        return $this->settingInterface->updateShippingMethod($request , $shipping);
     }
 }
