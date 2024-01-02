@@ -1,6 +1,10 @@
 <?php
 
 namespace App\Providers;
+use App\Http\Interfaces\Admin\AdminInterface;
+use App\Http\Interfaces\Admin\LoginInterface;
+use App\Http\Repositories\Admin\AdminRepository;
+use App\Http\Repositories\Admin\LoginRepository;
 use Illuminate\Support\ServiceProvider;
 
 
@@ -19,6 +23,8 @@ class RepositoryServiceProvider extends ServiceProvider
         ########## Admin ###########
         $this->app->bind(SettingInterface::class, SettingRepository::class);
         $this->app->bind(ProfileInterface::class, ProfileRepository::class);
+        $this->app->bind(AdminInterface::class, AdminRepository::class);
+        $this->app->bind(LoginInterface::class, LoginRepository::class);
     }
 
     /**
