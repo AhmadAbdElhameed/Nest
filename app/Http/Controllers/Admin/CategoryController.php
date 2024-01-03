@@ -4,8 +4,8 @@ namespace App\Http\Controllers\Admin;
 
 use App\Http\Controllers\Controller;
 use App\Http\Interfaces\Admin\CategoryInterface;
-use App\Http\Requests\StoreCategoryRequest;
-use App\Http\Requests\UpdateCategoryRequest;
+use App\Http\Requests\Admin\Category\StoreCategoryRequest;
+use App\Http\Requests\Admin\Category\UpdateCategoryRequest;
 use App\Models\Category;
 
 class CategoryController extends Controller
@@ -22,7 +22,7 @@ class CategoryController extends Controller
      */
     public function index()
     {
-        //
+        return $this->categoryInterface->index();
     }
 
     /**
@@ -30,7 +30,7 @@ class CategoryController extends Controller
      */
     public function create()
     {
-        //
+        return $this->categoryInterface->create();
     }
 
     /**
@@ -38,7 +38,7 @@ class CategoryController extends Controller
      */
     public function store(StoreCategoryRequest $request)
     {
-        //
+        return $this->categoryInterface->store($request);
     }
 
     /**
@@ -46,7 +46,7 @@ class CategoryController extends Controller
      */
     public function show(Category $category)
     {
-        //
+        return $this->categoryInterface->show($category);
     }
 
     /**
@@ -54,7 +54,7 @@ class CategoryController extends Controller
      */
     public function edit(Category $category)
     {
-        //
+        return $this->categoryInterface->edit($category);
     }
 
     /**
@@ -62,7 +62,7 @@ class CategoryController extends Controller
      */
     public function update(UpdateCategoryRequest $request, Category $category)
     {
-        //
+        return $this->categoryInterface->update($request,$category);
     }
 
     /**
@@ -70,6 +70,6 @@ class CategoryController extends Controller
      */
     public function destroy(Category $category)
     {
-        //
+        return $this->categoryInterface->destroy($category);
     }
 }

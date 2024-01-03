@@ -1,6 +1,7 @@
 <?php
 
 use App\Http\Controllers\Admin\AdminController;
+use App\Http\Controllers\Admin\CategoryController;
 use App\Http\Controllers\Admin\LoginController;
 use App\Http\Controllers\Admin\ProfileController;
 use App\Http\Controllers\Admin\SettingController;
@@ -40,6 +41,17 @@ Route::group(
                 Route::put('/update/{admin}', 'update')->name('update');
             });
             Route::get('logout',[LoginController::class,'logout'])->name('logout');
+
+            ################################## Categories Routes ####################################
+            Route::prefix('category')->as('category.')->controller(CategoryController::class)->group(function () {
+                Route::get('/', 'index')->name('index');
+                Route::get('create', 'create')->name('create');
+                Route::post('store', 'store')->name('store');
+                Route::get('edit/{category}', 'edit')->name('edit');
+                Route::put('update/{category}', 'update')->name('update');
+                Route::get('delete/{category}', 'destroy')->name('delete');
+            });
+            ################################## end categories #######################################
         });
 
         Route::group(['middleware' => 'guest:admin', 'prefix' => 'admin', 'as' => 'admin.'], function () {
