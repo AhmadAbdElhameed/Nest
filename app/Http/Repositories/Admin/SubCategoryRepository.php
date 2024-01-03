@@ -36,7 +36,6 @@ class SubCategoryRepository implements SubCategoryInterface
     public function store($request)
     {
 
-//        dd($request->all());
         try {
 
             if (!$request->has('status'))
@@ -67,16 +66,46 @@ class SubCategoryRepository implements SubCategoryInterface
 
     public function edit($subCategory)
     {
-        // TODO: Implement edit() method.
+        $categories = Category::where('status',1)->get();
+        return view('admin.sub-category.edit',compact('subCategory','categories'));
     }
 
     public function update($request, $subCategory)
     {
-        // TODO: Implement update() method.
+//        dd($request->all());
+        try {
+            if (!$subCategory)
+                return redirect()->route('admin.sub-category.index')->with(['error' => 'هذا القسم غير موجود']);
+
+            if (!$request->has('status'))
+                $request->request->add(['status' => 0]);
+            else
+                $request->request->add(['status' => 1]);
+
+            if($request->image){
+                $image = $this->updateAnyImage($request,'image',$this->subCategoryModel::PATH,$subCategory->image);
+            }
+
+            $subCategory->update($request->all());
+
+            //save translations
+            $subCategory->name = $request->name;
+            $subCategory->image = $image ?? $subCategory->image;
+            $subCategory->save();
+
+            toast('Success ','success');
+            return redirect()->route('admin.sub-category.index')->with(['success' => 'تم ألتحديث بنجاح']);
+        } catch (\Exception $ex) {
+            toast('Failed ','error');
+            return redirect()->route('admin.sub-category.index')->with(['error' => 'حدث خطا ما برجاء المحاوله لاحقا']);
+        }
     }
 
     public function destroy($subCategory)
     {
-        // TODO: Implement destroy() method.
+        $this->deleteImage($subCategory->image);
+        $subCategory->delete();
+        toast('SubCategory Deleted Successfully!','success');
+        return redirect()->back();
     }
 }

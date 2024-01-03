@@ -73,11 +73,11 @@
                                                         <td>
                                                             <div class="btn-group" role="group"
                                                                  aria-label="Basic example">
-                                                                <a href="{{route('admin.category.edit',$subCategory)}}"
+                                                                <a href="{{route('admin.sub-category.edit',$subCategory)}}"
                                                                    class="btn btn-outline-primary btn-min-width box-shadow-3 mr-1 mb-1">تعديل</a>
 
 
-                                                                <a href="{{route('admin.category.delete',$subCategory)}}"
+                                                                <a href="{{route('admin.sub-category.delete',$subCategory)}}"
                                                                    class="btn btn-outline-danger btn-min-width box-shadow-3 mr-1 mb-1">حذف</a>
 
                                                             </div>

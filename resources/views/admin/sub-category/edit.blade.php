@@ -17,7 +17,7 @@
                                 </li>
                                 <li class="breadcrumb-item"><a href=""> الاقسام الرئيسية </a>
                                 </li>
-                                <li class="breadcrumb-item active"> تعديل - {{$category -> name}}
+                                <li class="breadcrumb-item active"> تعديل - {{$subCategory->name}}
                                 </li>
                             </ol>
                         </div>
@@ -48,13 +48,11 @@
                                 <div class="card-content collapse show">
                                     <div class="card-body">
                                         <form class="form"
-                                              action="{{route('admin.category.update',$category)}}"
+                                              action="{{route('admin.sub-category.update',$subCategory)}}"
                                               method="POST"
                                               enctype="multipart/form-data">
                                             @csrf
                                             @method('PUT')
-{{--                                            <input name="id" value="{{$category -> id}}" type="hidden">--}}
-
                                             <div class="form-body">
 
                                                 <h4 class="form-section"><i class="ft-home"></i> بيانات القسم </h4>
@@ -62,7 +60,7 @@
                                                 <div class="form-group">
                                                     <div class="text-center">
                                                         <img
-                                                            src="{{asset($category->image)}}"
+                                                            src="{{asset($subCategory->image)}}"
                                                             class="rounded-circle  height-150" alt="صورة القسم  ">
                                                     </div>
                                                 </div>
@@ -87,7 +85,7 @@
                                                             <input type="text" id="name"
                                                                    class="form-control"
                                                                    placeholder="  "
-                                                                   value="{{$category->name}}"
+                                                                   value="{{$subCategory->name}}"
                                                                    name="name">
                                                             @error("name")
                                                             <span class="text-danger">{{$message}}</span>
@@ -102,7 +100,7 @@
                                                             <input type="text" id="name"
                                                                    class="form-control"
                                                                    placeholder="  "
-                                                                   value="{{$category->slug}}"
+                                                                   value="{{$subCategory->slug}}"
                                                                    name="slug">
                                                             @error("slug")
                                                             <span class="text-danger">{{$message}}</span>
@@ -110,6 +108,31 @@
                                                         </div>
                                                     </div>
                                                 </div>
+
+                                                <div class="row" id="cats_list" >
+                                                    <div class="col-md-12">
+                                                        <div class="form-group">
+                                                            <label for="projectinput1"> اختر القسم الرئيسي
+                                                            </label>
+                                                            <select name="category_id" class="select2 form-control">
+                                                                <optgroup label="من فضلك أختر القسم ">
+                                                                    @if($categories && $categories -> count() > 0)
+                                                                        @foreach($categories as $category)
+                                                                            <option
+                                                                                {{$subCategory->category->id == $category->id ? 'selected' : ''}}
+                                                                                value="{{$category -> id }}">{{$category -> name}}</option>
+                                                                        @endforeach
+                                                                    @endif
+                                                                </optgroup>
+                                                            </select>
+                                                            @error('category_id')
+                                                            <span class="text-danger"> {{$message}}</span>
+                                                            @enderror
+
+                                                        </div>
+                                                    </div>
+                                                </div>
+
                                                 <div class="row">
                                                     <div class="col-md-6">
                                                         <div class="form-group mt-1">

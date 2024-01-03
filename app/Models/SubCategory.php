@@ -29,4 +29,9 @@ class SubCategory extends Model
     {
         return 'slug';
     }
+
+    public function category(): \Illuminate\Database\Eloquent\Relations\BelongsTo
+    {
+        return $this->belongsTo(Category::class);
+    }
 }
