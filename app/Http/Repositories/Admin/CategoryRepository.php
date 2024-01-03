@@ -32,18 +32,32 @@ class CategoryRepository implements CategoryInterface
 
     public function store($request)
     {
-        $status = $request->has('status') ? 1 : 0;
-        $image = $this->uploadImage($request,'image',$this->categoryModel::PATH);
-//        dd($image);
-        Category::create([
-            'name' => $request->name,
-            'status' => $status,
-            'slug' => $request->slug,
-            'image' => $image
-        ]);
 
-        toast('Category created','success');
-        return redirect()->route('admin.category.index')->with(['success' => 'Done !']);
+        try {
+
+            if (!$request->has('status'))
+                $request->request->add(['status' => 0]);
+            else
+                $request->request->add(['status' => 1]);
+
+            $image = $this->uploadImage($request,'image',$this->categoryModel::PATH);
+
+            $category = Category::create([
+                'slug' => $request->slug,
+                'status' => $request->status,
+            ]);
+
+            //save translations
+            $category->name = $request->name;
+            $category->image = $image;
+            $category->save();
+
+            toast('Success ','success');
+            return redirect()->route('admin.category.index')->with(['success' => 'تم ألتحديث بنجاح']);
+        } catch (\Exception $ex) {
+            toast('Failed ','error');
+            return redirect()->route('admin.category.index')->with(['error' => 'حدث خطا ما برجاء المحاوله لاحقا']);
+        }
     }
 
     public function show($category)
