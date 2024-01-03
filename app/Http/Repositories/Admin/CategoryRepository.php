@@ -3,10 +3,19 @@
 namespace App\Http\Repositories\Admin;
 
 use App\Http\Interfaces\Admin\CategoryInterface;
+use App\Http\Traits\ImageUploadTrait;
 use App\Models\Category;
 
 class CategoryRepository implements CategoryInterface
 {
+    use imageUploadTrait;
+
+    private $categoryModel;
+
+    public function __construct(Category $category)
+    {
+        $this->categoryModel = $category;
+    }
 
     public function index()
     {
@@ -16,18 +25,23 @@ class CategoryRepository implements CategoryInterface
 
     public function create()
     {
-        // TODO: Implement create() method.
+        return view('admin.category.create');
     }
 
     public function store($request)
     {
+        $status = $request->has('status') ? 1 : 0;
+        $image = $this->uploadImage($request,'image',$this->categoryModel::PATH);
+//        dd($image);
         Category::create([
             'name' => $request->name,
-            'status' => $request->status,
+            'status' => $status,
+            'slug' => $request->slug,
+            'image' => $image
         ]);
 
-        toast('Category Success','success');
-        return redirect()->route('admin.category.index');
+        toast('Category created','success');
+        return redirect()->route('admin.category.index')->with(['success' => 'Done !']);
     }
 
     public function show($category)

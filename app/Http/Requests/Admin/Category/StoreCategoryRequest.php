@@ -3,6 +3,7 @@
 namespace App\Http\Requests\Admin\Category;
 
 use Illuminate\Foundation\Http\FormRequest;
+use Illuminate\Validation\Rule;
 
 class StoreCategoryRequest extends FormRequest
 {
@@ -22,7 +23,14 @@ class StoreCategoryRequest extends FormRequest
     public function rules(): array
     {
         return [
-            //
+            'name' => [
+                'required',
+                'string',
+                'max:255',
+                Rule::unique('category_translations', 'name')
+                    ->where('locale', app()->getLocale()) // Adjust this if you handle multiple locales
+            ],
+            'slug' => 'required|string|max:255|unique:categories,slug'
         ];
     }
 }

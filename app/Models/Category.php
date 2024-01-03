@@ -14,7 +14,8 @@ class Category extends Model
     use HasFactory,Translatable;
 //    use HasSlug;
 
-    protected $fillable = ['name','slug','status'];
+    const PATH = 'uploads/category';
+    protected $fillable = ['name','slug','status','image'];
 
     protected $with = ['translations'];
 
@@ -51,14 +52,23 @@ class Category extends Model
 
     protected function createSlug($name)
     {
-        // If the name is non-English, you may need to generate the slug differently
+        // Check if the name contains non-Latin characters (like Arabic)
         if (!preg_match('/[\p{Latin}]/u', $name)) {
-            // Handle the slug generation for non-Latin characters
-            // This is just an example and might not cover all cases
-            return Str::slug(transliterator_transliterate('Any-Latin; Latin-ASCII; Lower()', $name));
+            // Handle slug generation for non-Latin characters
+            // You might use a library or custom logic here
+            return $this->arabicSlug($name);
         }
 
+        // Default slug generation for Latin characters
         return Str::slug($name);
+    }
+
+    private function arabicSlug($name)
+    {
+        // Custom logic to generate a slug for Arabic characters
+        // This is a simple example and might need to be adjusted
+        $slug = preg_replace('/\s+/u', '-', trim($name));
+        return $slug;
     }
 
     public function getRouteKeyName()

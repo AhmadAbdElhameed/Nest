@@ -73,6 +73,7 @@
 @include('admin.includes.footer')
 
 @include('sweetalert::alert')
+@yield('script')
 <!-- BEGIN VENDOR JS-->
 <script src="{{asset('assets/admin/vendors/js/vendors.min.js')}}" type="text/javascript"></script>
 <!-- BEGIN VENDOR JS-->
@@ -168,6 +169,6 @@
     });
 </script>
 
-@yield('script')
+
 </body>
 </html>

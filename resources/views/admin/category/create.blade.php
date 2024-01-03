@@ -4,8 +4,21 @@
     Create Category
 @endsection
 
-@section('content')
+@section('style')
+    <style>
+        #imagePreview {
+            /* Your styles here, e.g., max width, border, etc. */
+            max-width: 200px;
+            max-height: 200px;
+            border: 1px solid #ddd;
+            margin-top: 10px;
+        }
+    </style>
 
+@endsection
+
+@section('content')
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.7.1/jquery.min.js"></script>
     <div class="app-content content">
         <div class="content-wrapper">
             <div class="content-header row">
@@ -51,24 +64,27 @@
                                         <form class="form"
                                               action="{{route('admin.category.store')}}"
                                               method="POST"
-                                              enctype="multipart/form-data">
+                                              enctype="multipart/form-data"
+                                              id="myForm">
                                             @csrf
 
 
-                                            <div class="form-group">
-                                                <label> صوره القسم </label>
-                                                <label id="projectinput7" class="file center-block">
-                                                    <input type="file" id="file" name="photo">
-                                                    <span class="file-custom"></span>
-                                                </label>
-                                                @error('photo')
-                                                <span class="text-danger">{{$message}}</span>
-                                                @enderror
-                                            </div>
 
                                             <div class="form-body">
 
                                                 <h4 class="form-section"><i class="ft-home"></i> بيانات القسم </h4>
+
+                                                <div class="form-group">
+                                                    <label> صوره القسم </label>
+                                                    <label id="projectinput7" class="file center-block">
+                                                        <input type="file" id="image" name="image">
+                                                        <span class="file-custom"></span>
+                                                    </label>
+                                                    @error('image')
+                                                    <span class="text-danger">{{$message}}</span>
+                                                    @enderror
+                                                </div>
+
                                                 <div class="row">
                                                     <div class="col-md-6">
                                                         <div class="form-group">
@@ -200,19 +216,78 @@
         </div>
     </div>
 
-@stop
+@endsection
 
-@section('script')
+{{--@section('script')--}}
+
+{{--    <script>--}}
+{{--        $('input:radio[name="type"]').change(--}}
+{{--            function(){--}}
+{{--                if (this.checked && this.value == '2') {  // 1 if main cat - 2 if sub cat--}}
+{{--                    $('#cats_list').removeClass('hidden');--}}
+
+{{--                }else{--}}
+{{--                    $('#cats_list').addClass('hidden');--}}
+{{--                }--}}
+{{--            });--}}
+{{--    </script>--}}
+{{--@stop--}}
+
+@section('scripts')
 
     <script>
-        $('input:radio[name="type"]').change(
-            function(){
-                if (this.checked && this.value == '2') {  // 1 if main cat - 2 if sub cat
-                    $('#cats_list').removeClass('hidden');
-
-                }else{
-                    $('#cats_list').addClass('hidden');
-                }
-            });
+        document.getElementById('imageInput').addEventListener('change', function(event) {
+            var reader = new FileReader();
+            reader.onload = function() {
+                var output = document.getElementById('imagePreview');
+                output.src = reader.result;
+                output.style.display = 'block';
+            };
+            reader.readAsDataURL(event.target.files[0]);
+        });
     </script>
-@stop
+
+    <script type="text/javascript">
+        $(document).ready(function(){
+            $('#image').change(function(e){
+                var reader = new FileReader();
+                reader.onload = function(e){
+                    $('#showImage').attr('src',e.target.result);
+                }
+                reader.readAsDataURL(e.target.files['0'])
+            })
+        })
+    </script>
+    <script type="text/javascript">
+        $(document).ready(function (){
+            $('#myForm').validate({
+                rules: {
+                    name: {
+                        required : true,
+                    },
+
+                },
+                messages :{
+                    name: {
+                        required : 'Please Enter Name',
+                    },
+
+
+                },
+                errorElement : 'span',
+                errorPlacement: function (error,element) {
+                    error.addClass('invalid-feedback');
+                    element.closest('.form-group').append(error);
+                },
+                highlight : function(element, errorClass, validClass){
+                    $(element).addClass('is-invalid');
+                },
+                unhighlight : function(element, errorClass, validClass){
+                    $(element).removeClass('is-invalid');
+                },
+            });
+        });
+
+    </script>
+
+@endsection
