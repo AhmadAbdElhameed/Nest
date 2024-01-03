@@ -68,6 +68,9 @@ class CategoryRepository implements CategoryInterface
 
     public function destroy($category)
     {
-        // TODO: Implement destroy() method.
+        $this->deleteImage($category->image);
+        $category->delete();
+        toast('Category Deleted Successfully!','success');
+        return redirect()->back();
     }
 }
