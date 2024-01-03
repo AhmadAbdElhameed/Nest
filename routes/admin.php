@@ -5,6 +5,7 @@ use App\Http\Controllers\Admin\CategoryController;
 use App\Http\Controllers\Admin\LoginController;
 use App\Http\Controllers\Admin\ProfileController;
 use App\Http\Controllers\Admin\SettingController;
+use App\Http\Controllers\Admin\SubCategoryController;
 use Illuminate\Support\Facades\Route;
 use Mcamara\LaravelLocalization\Facades\LaravelLocalization;
 
@@ -52,6 +53,17 @@ Route::group(
                 Route::get('delete/{category}', 'destroy')->name('delete');
             });
             ################################## end categories #######################################
+
+            ################################## Sub Categories Routes ####################################
+            Route::prefix('sub-category')->as('sub-category.')->controller(SubCategoryController::class)->group(function () {
+                Route::get('/', 'index')->name('index');
+                Route::get('create', 'create')->name('create');
+                Route::post('store', 'store')->name('store');
+                Route::get('edit/{subCategory}', 'edit')->name('edit');
+                Route::put('update/{subCategory}', 'update')->name('update');
+                Route::get('delete/{subCategory}', 'destroy')->name('delete');
+            });
+            ################################## end Sub Categories #######################################
         });
 
         Route::group(['middleware' => 'guest:admin', 'prefix' => 'admin', 'as' => 'admin.'], function () {
