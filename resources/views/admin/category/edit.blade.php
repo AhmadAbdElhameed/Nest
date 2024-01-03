@@ -53,7 +53,7 @@
                                               enctype="multipart/form-data">
                                             @csrf
                                             @method('PUT')
-
+{{--                                            <input name="id" value="{{$category -> id}}" type="hidden">--}}
 
                                             <div class="form-body">
 

@@ -5,6 +5,8 @@ namespace App\Http\Repositories\Admin;
 use App\Http\Interfaces\Admin\CategoryInterface;
 use App\Http\Traits\ImageUploadTrait;
 use App\Models\Category;
+use Illuminate\Support\Facades\DB;
+use Illuminate\Support\Facades\Log;
 
 class CategoryRepository implements CategoryInterface
 {
@@ -56,20 +58,34 @@ class CategoryRepository implements CategoryInterface
 
     public function update($request, $category)
     {
-       $status = $request->has('status') ? 1 : 0;
-        if($request->image){
-            $image = $this->updateAnyImage($request,'image',$this->categoryModel::PATH,$category->image);
+
+        try {
+            if (!$category)
+                return redirect()->route('admin.category.index')->with(['error' => 'هذا القسم غير موجود']);
+
+            if (!$request->has('status'))
+                $request->request->add(['status' => 0]);
+            else
+                $request->request->add(['status' => 1]);
+
+            if($request->image){
+                $image = $this->updateAnyImage($request,'image',$this->categoryModel::PATH,$category->image);
+            }
+
+            $category->update($request->all());
+
+            //save translations
+            $category->name = $request->name;
+            $category->image = $image ?? $category->image;
+            $category->save();
+
+            toast('Success ','success');
+            return redirect()->route('admin.category.index')->with(['success' => 'تم ألتحديث بنجاح']);
+        } catch (\Exception $ex) {
+            toast('Failed ','error');
+            return redirect()->route('admin.category.index')->with(['error' => 'حدث خطا ما برجاء المحاوله لاحقا']);
         }
 
-       $category->update([
-           'name' => $request->name,
-           'status' => $status,
-           'slug' => $request->slug,
-           'image' => $image
-       ]);
-
-       toast('Category Success','success');
-       return redirect()->route('admin.category.index');
     }
 
     public function destroy($category)
