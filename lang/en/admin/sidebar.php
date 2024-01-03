@@ -15,4 +15,10 @@ return [
     'shipping_fee' => 'Shipping Fee',
     'shipping_back' => 'Back',
     'shipping_save' => 'Update',
+    'category_title' => 'Categories',
+    'sub-category_title' => 'Sub-Categories',
+    'category' => 'All Categories',
+    'category_create' => 'Add New Category',
+    'sub-category' => 'All Sub-Categories',
+    'sub-category_create' => 'Add New Sub-Category',
 ];
