@@ -57,9 +57,15 @@ class CategoryRepository implements CategoryInterface
     public function update($request, $category)
     {
        $status = $request->has('status') ? 1 : 0;
+        if($request->image){
+            $image = $this->updateAnyImage($request,'image',$this->categoryModel::PATH,$category->image);
+        }
+
        $category->update([
            'name' => $request->name,
            'status' => $status,
+           'slug' => $request->slug,
+           'image' => $image
        ]);
 
        toast('Category Success','success');

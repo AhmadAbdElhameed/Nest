@@ -21,7 +21,7 @@ trait ImageUploadTrait
         }
     }
 
-    public function updateImage(UpdateSliderRequest $request , $inputName , $path , $oldPath = null){
+    public function updateImage(Request $request , $inputName , $path , $oldPath = null){
         if ($request->hasFile($oldPath)) {
             $image = $request->{$oldPath};
 //            $imageName = rand() . '_' . $image->getClientOriginalName();
