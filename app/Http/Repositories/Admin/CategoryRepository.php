@@ -52,11 +52,11 @@ class CategoryRepository implements CategoryInterface
             $category->image = $image;
             $category->save();
 
-            toast('Success ','success');
-            return redirect()->route('admin.category.index')->with(['success' => 'تم ألتحديث بنجاح']);
+            toast(__('admin/category.create_success'),'success');
+            return redirect()->route('admin.category.index')->with(['success' => __('admin/category.create_success')]);
         } catch (\Exception $ex) {
             toast('Failed ','error');
-            return redirect()->route('admin.category.index')->with(['error' => 'حدث خطا ما برجاء المحاوله لاحقا']);
+            return redirect()->route('admin.category.index')->with(['error' => __('admin/category.failed_message')]);
         }
     }
 
@@ -75,7 +75,7 @@ class CategoryRepository implements CategoryInterface
 
         try {
             if (!$category)
-                return redirect()->route('admin.category.index')->with(['error' => 'هذا القسم غير موجود']);
+                return redirect()->route('admin.category.index')->with(['error' => __('admin/category.not_exist')]);
 
             if (!$request->has('status'))
                 $request->request->add(['status' => 0]);
@@ -93,11 +93,11 @@ class CategoryRepository implements CategoryInterface
             $category->image = $image ?? $category->image;
             $category->save();
 
-            toast('Success ','success');
-            return redirect()->route('admin.category.index')->with(['success' => 'تم ألتحديث بنجاح']);
+            toast(__('admin/category.update_success'),'success');
+            return redirect()->route('admin.category.index')->with(['success' => __('admin/category.update_success')]);
         } catch (\Exception $ex) {
             toast('Failed ','error');
-            return redirect()->route('admin.category.index')->with(['error' => 'حدث خطا ما برجاء المحاوله لاحقا']);
+            return redirect()->route('admin.category.index')->with(['error' => __('admin/category.failed_message')]);
         }
 
     }
@@ -106,7 +106,7 @@ class CategoryRepository implements CategoryInterface
     {
         $this->deleteImage($category->image);
         $category->delete();
-        toast('Category Deleted Successfully!','success');
+        toast(__('admin/category.delete_success'),'success');
         return redirect()->back();
     }
 }

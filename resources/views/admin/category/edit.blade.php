@@ -1,7 +1,7 @@
 @extends('admin.layouts.master')
 
 @section('title')
-    Update Category
+    {{__('admin/category.edit_page_title')}}
 @endsection
 
 @section('content')
@@ -13,11 +13,11 @@
                     <div class="row breadcrumbs-top">
                         <div class="breadcrumb-wrapper col-12">
                             <ol class="breadcrumb">
-                                <li class="breadcrumb-item"><a href="">الرئيسية </a>
+                                <li class="breadcrumb-item"><a href="{{route('admin.dashboard')}}">{{__('admin/category.home')}}</a>
                                 </li>
-                                <li class="breadcrumb-item"><a href=""> الاقسام الرئيسية </a>
+                                <li class="breadcrumb-item"><a href="{{route('admin.category.index')}}"> {{__('admin/category.main_title')}}</a>
                                 </li>
-                                <li class="breadcrumb-item active"> تعديل - {{$category -> name}}
+                                <li class="breadcrumb-item active"> {{__('admin/category.main_title_edit')}} - {{$category -> name}}
                                 </li>
                             </ol>
                         </div>
@@ -31,7 +31,7 @@
                         <div class="col-md-12">
                             <div class="card">
                                 <div class="card-header">
-                                    <h4 class="card-title" id="basic-layout-form"> تعديل قسم رئيسي </h4>
+                                    <h4 class="card-title" id="basic-layout-form"> {{__('admin/category.sub_main_title_edit')}} </h4>
                                     <a class="heading-elements-toggle"><i
                                             class="la la-ellipsis-v font-medium-3"></i></a>
                                     <div class="heading-elements">
@@ -53,11 +53,9 @@
                                               enctype="multipart/form-data">
                                             @csrf
                                             @method('PUT')
-{{--                                            <input name="id" value="{{$category -> id}}" type="hidden">--}}
-
                                             <div class="form-body">
 
-                                                <h4 class="form-section"><i class="ft-home"></i> بيانات القسم </h4>
+                                                <h4 class="form-section"><i class="ft-home"></i>{{__('admin/category.category_details_title')}} </h4>
 
                                                 <div class="form-group">
                                                     <div class="text-center">
@@ -69,7 +67,7 @@
 
 
                                                 <div class="form-group">
-                                                    <label> صوره القسم </label>
+                                                    <label> {{__('admin/category.edit_form_image')}}</label>
                                                     <label id="projectinput7" class="file center-block">
                                                         <input type="file" id="file" name="image">
                                                         <span class="file-custom"></span>
@@ -82,7 +80,7 @@
                                                 <div class="row">
                                                     <div class="col-md-6">
                                                         <div class="form-group">
-                                                            <label for="projectinput1"> اسم القسم
+                                                            <label for="projectinput1">{{__('admin/category.edit_form_name')}}
                                                             </label>
                                                             <input type="text" id="name"
                                                                    class="form-control"
@@ -97,7 +95,7 @@
 
                                                     <div class="col-md-6">
                                                         <div class="form-group">
-                                                            <label for="projectinput1"> اسم بالرابط
+                                                            <label for="projectinput1"> {{__('admin/category.edit_form_slug')}}
                                                             </label>
                                                             <input type="text" id="name"
                                                                    class="form-control"
@@ -119,7 +117,7 @@
                                                                    class="switchery" data-color="success"
                                                                    {{$category->status == 1 ? 'checked' : ''}}/>
                                                             <label for="switcheryColor4"
-                                                                   class="card-title ml-1">الحالة </label>
+                                                                   class="card-title ml-1">{{__('admin/category.edit_form_status')}} </label>
 
                                                             @error("status")
                                                             <span class="text-danger">{{$message }}</span>
@@ -133,10 +131,10 @@
                                             <div class="form-actions">
                                                 <button type="button" class="btn btn-warning mr-1"
                                                         onclick="history.back();">
-                                                    <i class="ft-x"></i> تراجع
+                                                    <i class="ft-x"></i> {{__('admin/category.edit_form_back_button')}}
                                                 </button>
                                                 <button type="submit" class="btn btn-primary">
-                                                    <i class="la la-check-square-o"></i> تحديث
+                                                    <i class="la la-check-square-o"></i> {{__('admin/category.edit_form_update_button')}}
                                                 </button>
                                             </div>
                                         </form>
