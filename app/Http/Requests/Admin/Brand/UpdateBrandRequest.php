@@ -3,6 +3,7 @@
 namespace App\Http\Requests\Admin\Brand;
 
 use Illuminate\Foundation\Http\FormRequest;
+use Illuminate\Validation\Rule;
 
 class UpdateBrandRequest extends FormRequest
 {
@@ -21,8 +22,21 @@ class UpdateBrandRequest extends FormRequest
      */
     public function rules(): array
     {
+
+        $brandId = $this->brand ? $this->brand->id : null;
         return [
-            //
+            'name' => [
+                'required',
+                'string',
+                'max:255',
+                Rule::unique('brand_translations', 'name')
+                    ->where(function ($query) use ($brandId) {
+                        return $query->where('locale', app()->getLocale())
+                            ->where('brand_id', '!=', $brandId);
+                    })
+            ],
+            'slug' => 'required|string|max:255|unique:brands,slug,' . $this->brand->id,
+            'image' => 'nullable|image|max:2000|mimes:jpeg,jpg,webp,png'
         ];
     }
 }
