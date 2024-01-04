@@ -3,7 +3,7 @@
 @extends('admin.layouts.master')
 
 @section('title')
-    Category
+    {{__('admin/category.index_page_title')}}
 @endsection
 
 @section('content')

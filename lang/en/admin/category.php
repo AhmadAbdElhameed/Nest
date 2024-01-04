@@ -26,6 +26,7 @@ return [
     'add_new_category' => 'Add New Category',
     'create_page_title' => 'Create Category',
     'edit_page_title' => 'Update Category',
+    'index_page_title' => 'Category',
     'form_create_button' => 'Create',
     'update_success' => 'Category Updated Successfully!',
     'create_success' => 'Category Created Successfully!',
