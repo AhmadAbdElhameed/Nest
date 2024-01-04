@@ -51,6 +51,22 @@
                 </ul>
             </li>
 
+
+            <li class="nav-item"><a href=""><i class="la la-male"></i>
+                    <span class="menu-title" data-i18n="nav.dash.main">براند  </span>
+                    <span
+                        class="badge badge badge-warning  badge-pill float-right mr-2"></span>
+                </a>
+                <ul class="menu-content">
+                    <li class="active"><a class="menu-item" href="{{route('admin.brand.index')}}"
+                                          data-i18n="nav.dash.ecommerce"> كل البراندات </a>
+                    </li>
+                    <li><a class="menu-item" href="{{route('admin.brand.create')}}" data-i18n="nav.dash.crypto">أضافة
+                            براند </a>
+                    </li>
+                </ul>
+            </li>
+
 {{--            <li class="nav-item"><a href=""><i class="la la-male"></i>--}}
 {{--                    <span class="menu-title" data-i18n="nav.dash.main">المتاجر  </span>--}}
 {{--                    <span--}}
@@ -67,20 +83,7 @@
 {{--            </li>--}}
 
 
-{{--            <li class="nav-item"><a href=""><i class="la la-male"></i>--}}
-{{--                    <span class="menu-title" data-i18n="nav.dash.main">الطلاب  </span>--}}
-{{--                    <span--}}
-{{--                        class="badge badge badge-warning  badge-pill float-right mr-2"></span>--}}
-{{--                </a>--}}
-{{--                <ul class="menu-content">--}}
-{{--                    <li class="active"><a class="menu-item" href=""--}}
-{{--                                          data-i18n="nav.dash.ecommerce"> عرض الكل </a>--}}
-{{--                    </li>--}}
-{{--                    <li><a class="menu-item" href="" data-i18n="nav.dash.crypto">أضافة--}}
-{{--                            طالب </a>--}}
-{{--                    </li>--}}
-{{--                </ul>--}}
-{{--            </li>--}}
+
 
 
 {{--            <li class="nav-item">--}}
