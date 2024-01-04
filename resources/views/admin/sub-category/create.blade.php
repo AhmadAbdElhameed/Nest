@@ -122,7 +122,7 @@
                                                             <label for="projectinput1">{{__('admin/sub_category.choose_category')}}
                                                             </label>
                                                             <select name="category_id" class="select2 form-control">
-                                                                <optgroup label="من فضلك أختر القسم ">
+                                                                <optgroup label="{{__('admin/sub_category.choose_category')}}">
                                                                     @if($categories && $categories -> count() > 0)
                                                                         @foreach($categories as $category)
                                                                             <option
@@ -165,7 +165,7 @@
                                                     <i class="ft-x"></i> {{__('admin/sub_category.edit_form_back_button')}}
                                                 </button>
                                                 <button type="submit" class="btn btn-primary">
-                                                    <i class="la la-check-square-o"></i> {{__('admin/sub_category.edit_form_create_button')}}
+                                                    <i class="la la-check-square-o"></i> {{__('admin/sub_category.form_create_button')}}
                                                 </button>
                                             </div>
                                         </form>

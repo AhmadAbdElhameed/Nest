@@ -30,7 +30,8 @@ class StoreCategoryRequest extends FormRequest
                 Rule::unique('category_translations', 'name')
                     ->where('locale', app()->getLocale()) // Adjust this if you handle multiple locales
             ],
-            'slug' => 'required|string|max:255|unique:categories,slug'
+            'slug' => 'required|string|max:255|unique:categories,slug',
+            'image' => 'required|image|max:2000|mimes:jpeg,jpg,webp,png'
         ];
     }
 }
