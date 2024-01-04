@@ -56,11 +56,11 @@ class SubCategoryRepository implements SubCategoryInterface
             $category->image = $image;
             $category->save();
 
-            toast('Success ','success');
-            return redirect()->route('admin.sub-category.index')->with(['success' => 'تم ألتحديث بنجاح']);
+            toast( __('admin/sub_category.create_success'),'success');
+            return redirect()->route('admin.sub-category.index')->with(['success' => __('admin/sub_category.create_success')]);
         } catch (\Exception $ex) {
             toast('Failed ','error');
-            return redirect()->route('admin.sub-category.index')->with(['error' => 'حدث خطا ما برجاء المحاوله لاحقا']);
+            return redirect()->route('admin.sub-category.index')->with(['error' => __('admin/sub_category.failed_message')]);
         }
     }
 
@@ -75,7 +75,7 @@ class SubCategoryRepository implements SubCategoryInterface
 //        dd($request->all());
         try {
             if (!$subCategory)
-                return redirect()->route('admin.sub-category.index')->with(['error' => 'هذا القسم غير موجود']);
+                return redirect()->route('admin.sub-category.index')->with(['error' => __('admin/sub_category.not_exist')]);
 
             if (!$request->has('status'))
                 $request->request->add(['status' => 0]);
@@ -93,11 +93,11 @@ class SubCategoryRepository implements SubCategoryInterface
             $subCategory->image = $image ?? $subCategory->image;
             $subCategory->save();
 
-            toast('Success ','success');
-            return redirect()->route('admin.sub-category.index')->with(['success' => 'تم ألتحديث بنجاح']);
+            toast( __('admin/sub_category.update_success'),'success');
+            return redirect()->route('admin.sub-category.index')->with(['success' => __('admin/sub_category.update_success')]);
         } catch (\Exception $ex) {
             toast('Failed ','error');
-            return redirect()->route('admin.sub-category.index')->with(['error' => 'حدث خطا ما برجاء المحاوله لاحقا']);
+            return redirect()->route('admin.sub-category.index')->with(['error' => __('admin/sub_category.failed_message')]);
         }
     }
 
@@ -105,7 +105,7 @@ class SubCategoryRepository implements SubCategoryInterface
     {
         $this->deleteImage($subCategory->image);
         $subCategory->delete();
-        toast('SubCategory Deleted Successfully!','success');
+        toast(__('admin/sub_category.delete_success'),'success');
         return redirect()->back();
     }
 }

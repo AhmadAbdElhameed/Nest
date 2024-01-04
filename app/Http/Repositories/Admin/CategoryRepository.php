@@ -96,7 +96,7 @@ class CategoryRepository implements CategoryInterface
             toast(__('admin/category.update_success'),'success');
             return redirect()->route('admin.category.index')->with(['success' => __('admin/category.update_success')]);
         } catch (\Exception $ex) {
-            toast('Failed ','error');
+            toast(__('admin/category.failed_message'),'error');
             return redirect()->route('admin.category.index')->with(['error' => __('admin/category.failed_message')]);
         }
 
