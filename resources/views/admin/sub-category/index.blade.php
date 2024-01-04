@@ -90,7 +90,7 @@
                                             </tbody>
                                         </table>
                                         <div class="justify-content-center d-flex">
-
+                                            {{ $subCategories->links('pagination::bootstrap-4') }}
                                         </div>
                                     </div>
                                 </div>

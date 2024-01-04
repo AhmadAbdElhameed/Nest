@@ -85,12 +85,11 @@
                                                     </tr>
                                                 @endforeach
                                             @endisset
-
-
                                             </tbody>
+
                                         </table>
                                         <div class="justify-content-center d-flex">
-
+                                            {{ $brands->links('pagination::bootstrap-4') }}
                                         </div>
                                     </div>
                                 </div>
