@@ -13,9 +13,12 @@ use Illuminate\Support\Facades\Route;
 |
 */
 
-//Route::get('/', function () {
-//    return view('welcome');
-//});
+Route::get('/', function () {
+     $category = \App\Models\Category::all();
+     $category->makeVisible(['translations']);
+
+     return $category;
+});
 //Route::get('/admin', function () {
 //    return view('layouts.admin');
 //});

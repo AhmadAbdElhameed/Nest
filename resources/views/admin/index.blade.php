@@ -1,7 +1,7 @@
 @extends('admin.layouts.master')
 
 @section('title')
-    Dashboard
+    {{__('admin/dashboard.page_title')}}
 @endsection
 
 @section('content')
@@ -17,7 +17,7 @@
                                     <div class="card-body pb-0">
                                         <div class="row">
                                             <div class="col-8 pl-2">
-                                                <h4>اجمالي المبيعات</h4>
+                                                <h4>{{__('admin/dashboard.total_revenue')}}</h4>
                                             </div>
                                             <div class="col-4 text-right">
                                                 <h4>$9,9</h4>
@@ -33,7 +33,7 @@
                                     <div class="card-body pb-0">
                                         <div class="row">
                                             <div class="col-8 pl-2">
-                                                <h4>اجمالي الطلبات</h4>
+                                                <h4>{{__('admin/dashboard.total_orders')}}</h4>
                                             </div>
                                             <div class="col-4 text-right">
                                                 <h4>694</h4>
@@ -49,7 +49,7 @@
                                     <div class="card-body pb-0">
                                         <div class="row">
                                             <div class="col-8 pl-2">
-                                                <h4>عدد المنتجات</h4>
+                                                <h4>{{__('admin/dashboard.total_products')}}</h4>
                                             </div>
                                             <div class="col-4 text-right">
                                                 <h4>$1.2</h4>
@@ -66,7 +66,7 @@
                                     <div class="card-body pb-0">
                                         <div class="row">
                                             <div class="col-8 pl-2">
-                                                <h4>عدد العملاء</h4>
+                                                <h4>{{__('admin/dashboard.total_customers')}}</h4>
                                             </div>
                                             <div class="col-4 text-right">
                                                 <h4>$1.2</h4>

@@ -15,4 +15,10 @@ return [
     'shipping_fee' => 'قيمة التوصيل',
     'shipping_back' => 'تراجع',
     'shipping_save' => 'حفظ',
+    'category_title' => 'الاقسام الرئىسية',
+    'sub-category_title' => 'الاقسام الفرعية',
+    'category' => 'كل الاقسام الرئيسية',
+    'category_create' => 'اضافة قسم رئيسي',
+    'sub-category' => 'كل الاقسام الفرعية',
+    'sub-category_create' => 'اضافة قسم فرعي',
 ];
