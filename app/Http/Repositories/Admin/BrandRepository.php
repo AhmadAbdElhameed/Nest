@@ -26,10 +26,7 @@ class BrandRepository implements BrandInterface
 
     public function create()
     {
-
-        $categories = Category::where('status',1)->get();
-//        dd($categories);
-        return view('admin.sub-category.create',compact('categories'));
+        return view('admin.brand.create');
     }
 
     public function store($request)
@@ -42,12 +39,11 @@ class BrandRepository implements BrandInterface
             else
                 $request->request->add(['status' => 1]);
 
-            $image = $this->uploadImage($request,'image',$this->subCategoryModel::PATH);
+            $image = $this->uploadImage($request,'image',$this->brandModel::PATH);
 
-            $category = SubCategory::create([
+            $category = Brand::create([
                 'slug' => $request->slug,
                 'status' => $request->status,
-                'category_id' => $request->category_id,
             ]);
 
             //save translations
@@ -55,26 +51,25 @@ class BrandRepository implements BrandInterface
             $category->image = $image;
             $category->save();
 
-            toast( __('admin/sub_category.create_success'),'success');
-            return redirect()->route('admin.sub-category.index')->with(['success' => __('admin/sub_category.create_success')]);
+            toast( __('admin/brand.create_success'),'success');
+            return redirect()->route('admin.brand.index')->with(['success' => __('admin/brand.create_success')]);
         } catch (\Exception $ex) {
             toast('Failed ','error');
-            return redirect()->route('admin.sub-category.index')->with(['error' => __('admin/sub_category.failed_message')]);
+            return redirect()->route('admin.brand.index')->with(['error' => __('admin/brand.failed_message')]);
         }
     }
 
-    public function edit($subCategory)
+    public function edit($brand)
     {
-        $categories = Category::where('status',1)->get();
-        return view('admin.sub-category.edit',compact('subCategory','categories'));
+        return view('admin.brand.edit',compact('brand'));
     }
 
-    public function update($request, $subCategory)
+    public function update($request, $brand)
     {
 //        dd($request->all());
         try {
-            if (!$subCategory)
-                return redirect()->route('admin.sub-category.index')->with(['error' => __('admin/sub_category.not_exist')]);
+            if (!$brand)
+                return redirect()->route('admin.brand.index')->with(['error' => __('admin/brand.not_exist')]);
 
             if (!$request->has('status'))
                 $request->request->add(['status' => 0]);
@@ -82,29 +77,29 @@ class BrandRepository implements BrandInterface
                 $request->request->add(['status' => 1]);
 
             if($request->image){
-                $image = $this->updateAnyImage($request,'image',$this->subCategoryModel::PATH,$subCategory->image);
+                $image = $this->updateAnyImage($request,'image',$this->brandModel::PATH,$brand->image);
             }
 
-            $subCategory->update($request->all());
+            $brand->update($request->all());
 
             //save translations
-            $subCategory->name = $request->name;
-            $subCategory->image = $image ?? $subCategory->image;
-            $subCategory->save();
+            $brand->name = $request->name;
+            $brand->image = $image ?? $brand->image;
+            $brand->save();
 
-            toast( __('admin/sub_category.update_success'),'success');
-            return redirect()->route('admin.sub-category.index')->with(['success' => __('admin/sub_category.update_success')]);
+            toast( __('admin/brand.update_success'),'success');
+            return redirect()->route('admin.brand.index')->with(['success' => __('admin/brand.update_success')]);
         } catch (\Exception $ex) {
             toast('Failed ','error');
-            return redirect()->route('admin.sub-category.index')->with(['error' => __('admin/sub_category.failed_message')]);
+            return redirect()->route('admin.brand.index')->with(['error' => __('admin/brand.failed_message')]);
         }
     }
 
-    public function destroy($subCategory)
+    public function destroy($brand)
     {
-        $this->deleteImage($subCategory->image);
-        $subCategory->delete();
-        toast(__('admin/sub_category.delete_success'),'success');
+        $this->deleteImage($brand->image);
+        $brand->delete();
+        toast(__('admin/brand.delete_success'),'success');
         return redirect()->back();
     }
 

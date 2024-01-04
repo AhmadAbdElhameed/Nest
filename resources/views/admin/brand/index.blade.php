@@ -73,12 +73,12 @@
                                                         <td>
                                                             <div class="btn-group" role="group"
                                                                  aria-label="Basic example">
-                                                                <a href="{{route('admin.sub-category.edit',$brand)}}"
-                                                                   class="btn btn-outline-primary btn-min-width box-shadow-3 mr-1 mb-1">{{__('admin/sub_category.form_edit')}}</a>
+                                                                <a href="{{route('admin.brand.edit',$brand)}}"
+                                                                   class="btn btn-outline-primary btn-min-width box-shadow-3 mr-1 mb-1">{{__('admin/brand.form_edit')}}</a>
 
 
-                                                                <a href="{{route('admin.sub-category.delete',$brand)}}"
-                                                                   class="btn btn-outline-danger btn-min-width box-shadow-3 mr-1 mb-1">{{__('admin/sub_category.form_delete')}}</a>
+                                                                <a href="{{route('admin.brand.delete',$brand)}}"
+                                                                   class="btn btn-outline-danger btn-min-width box-shadow-3 mr-1 mb-1">{{__('admin/brand.form_delete')}}</a>
 
                                                             </div>
                                                         </td>

@@ -72,9 +72,9 @@ Route::group(
                 Route::get('/', 'index')->name('index');
                 Route::get('create', 'create')->name('create');
                 Route::post('store', 'store')->name('store');
-                Route::get('edit/{subCategory}', 'edit')->name('edit');
-                Route::put('update/{subCategory}', 'update')->name('update');
-                Route::get('delete/{subCategory}', 'destroy')->name('delete');
+                Route::get('edit/{brand}', 'edit')->name('edit');
+                Route::put('update/{brand}', 'update')->name('update');
+                Route::get('delete/{brand}', 'destroy')->name('delete');
             });
             ################################## Brands Categories #######################################
 

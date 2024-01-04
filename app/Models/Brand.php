@@ -11,7 +11,7 @@ class Brand extends Model
     use HasFactory,Translatable;
 //    use HasSlug;
 
-    const PATH = 'uploads/sub-category';
+    const PATH = 'uploads/brand';
     protected $fillable = ['slug','status','image'];
 
     protected $with = ['translations'];
