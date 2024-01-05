@@ -3,6 +3,7 @@
 namespace App\Http\Requests\Admin\Tag;
 
 use Illuminate\Foundation\Http\FormRequest;
+use Illuminate\Validation\Rule;
 
 class UpdateTagRequest extends FormRequest
 {
@@ -21,8 +22,21 @@ class UpdateTagRequest extends FormRequest
      */
     public function rules(): array
     {
+
+        $tagId = $this->tag ? $this->tag->id : null;
         return [
-            //
+
+            'name' => [
+                'required',
+                'string',
+                'max:255',
+                Rule::unique('tag_translations', 'name')
+                    ->where(function ($query) use ($tagId) {
+                        return $query->where('locale', app()->getLocale())
+                            ->where('tag_id', '!=', $tagId);
+                    })
+            ],
+            'slug' => 'required|string|max:255|unique:tags,slug,' . $this->tag->id,
         ];
     }
 }

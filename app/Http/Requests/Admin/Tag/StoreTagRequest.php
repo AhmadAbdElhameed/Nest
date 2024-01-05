@@ -3,6 +3,7 @@
 namespace App\Http\Requests\Admin\Tag;
 
 use Illuminate\Foundation\Http\FormRequest;
+use Illuminate\Validation\Rule;
 
 class StoreTagRequest extends FormRequest
 {
@@ -22,7 +23,14 @@ class StoreTagRequest extends FormRequest
     public function rules(): array
     {
         return [
-            //
+            'name' => [
+                'required',
+                'string',
+                'max:255',
+                Rule::unique('tag_translations', 'name')
+                    ->where('locale', app()->getLocale()) // Adjust this if you handle multiple locales
+            ],
+            'slug' => 'required|string|max:255|unique:tags,slug,',
         ];
     }
 }
