@@ -3509,6 +3509,7 @@ table.dataTable {
   top: -1px !important; }
 
 div.dataTables_wrapper {
+
   width: 100%;
   margin: 0 auto; }
   div.dataTables_wrapper div.dataTables_filter label {
