@@ -46,12 +46,27 @@ class TagRepository implements TagInterface
 
     public function edit($tag)
     {
-        // TODO: Implement edit() method.
+        return view('admin.tag.edit',compact('tag'));
     }
 
     public function update($request, $tag)
     {
-        // TODO: Implement update() method.
+        try {
+            if (!$tag)
+                return redirect()->route('admin.tag.index')->with(['error' => __('admin/tag.not_exist')]);
+
+            $tag->update($request->all());
+
+            //save translations
+            $tag->name = $request->name;
+            $tag->save();
+
+            toast( __('admin/tag.update_success'),'success');
+            return redirect()->route('admin.tag.index')->with(['success' => __('admin/tag.update_success')]);
+        } catch (\Exception $ex) {
+            toast('Failed ','error');
+            return redirect()->route('admin.tag.index')->with(['error' => __('admin/tag.failed_message')]);
+        }
     }
 
     public function destroy($tag)

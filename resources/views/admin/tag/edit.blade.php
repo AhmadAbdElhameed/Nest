@@ -1,7 +1,7 @@
 @extends('admin.layouts.master')
 
 @section('title')
-    {{__('admin/brand.edit_page_title')}}
+    {{__('admin/tag.edit_page_title')}}
 @endsection
 
 @section('content')
@@ -13,11 +13,11 @@
                     <div class="row breadcrumbs-top">
                         <div class="breadcrumb-wrapper col-12">
                             <ol class="breadcrumb">
-                                <li class="breadcrumb-item"><a href="">{{__('admin/brand.home')}} </a>
+                                <li class="breadcrumb-item"><a href="">{{__('admin/tag.home')}} </a>
                                 </li>
-                                <li class="breadcrumb-item"><a href=""> {{__('admin/brand.main_title')}} </a>
+                                <li class="breadcrumb-item"><a href=""> {{__('admin/tag.main_title')}} </a>
                                 </li>
-                                <li class="breadcrumb-item active"> {{__('admin/brand.main_title_edit')}} - {{$brand->name}}
+                                <li class="breadcrumb-item active"> {{__('admin/tag.main_title_edit')}} - {{$tag->name}}
                                 </li>
                             </ol>
                         </div>
@@ -31,7 +31,7 @@
                         <div class="col-md-12">
                             <div class="card">
                                 <div class="card-header">
-                                    <h4 class="card-title" id="basic-layout-form"> {{__('admin/brand.sub_main_title_edit')}} </h4>
+                                    <h4 class="card-title" id="basic-layout-form"> {{__('admin/tag.sub_main_title_edit')}} </h4>
                                     <a class="heading-elements-toggle"><i
                                             class="la la-ellipsis-v font-medium-3"></i></a>
                                     <div class="heading-elements">
@@ -48,44 +48,24 @@
                                 <div class="card-content collapse show">
                                     <div class="card-body">
                                         <form class="form"
-                                              action="{{route('admin.brand.update',$brand)}}"
+                                              action="{{route('admin.tag.update',$tag)}}"
                                               method="POST"
                                               enctype="multipart/form-data">
                                             @csrf
                                             @method('PUT')
                                             <div class="form-body">
 
-                                                <h4 class="form-section"><i class="ft-home"></i> {{__('admin/brand.brand_details_title')}}  </h4>
-
-                                                <div class="form-group">
-                                                    <div class="text-center">
-                                                        <img
-                                                            src="{{asset($brand->image)}}"
-                                                            class="rounded-circle  height-150" alt="صورة القسم  ">
-                                                    </div>
-                                                </div>
-
-
-                                                <div class="form-group">
-                                                    <label> {{__('admin/brand.edit_form_image')}} </label>
-                                                    <label id="projectinput7" class="file center-block">
-                                                        <input type="file" id="file" name="image">
-                                                        <span class="file-custom"></span>
-                                                    </label>
-                                                    @error('image')
-                                                        <span class="text-danger">{{$message}}</span>
-                                                    @enderror
-                                                </div>
+                                                <h4 class="form-section"><i class="ft-home"></i> {{__('admin/tag.tag_details_title')}}  </h4>
 
                                                 <div class="row">
                                                     <div class="col-md-6">
                                                         <div class="form-group">
-                                                            <label for="projectinput1"> {{__('admin/brand.edit_form_name')}}
+                                                            <label for="projectinput1"> {{__('admin/tag.edit_form_name')}}
                                                             </label>
                                                             <input type="text" id="name"
                                                                    class="form-control"
                                                                    placeholder="  "
-                                                                   value="{{$brand->name}}"
+                                                                   value="{{$tag->name}}"
                                                                    name="name">
                                                             @error("name")
                                                             <span class="text-danger">{{$message}}</span>
@@ -95,34 +75,15 @@
 
                                                     <div class="col-md-6">
                                                         <div class="form-group">
-                                                            <label for="projectinput1"> {{__('admin/brand.edit_form_slug')}}
+                                                            <label for="projectinput1"> {{__('admin/tag.edit_form_slug')}}
                                                             </label>
                                                             <input type="text" id="name"
                                                                    class="form-control"
                                                                    placeholder="  "
-                                                                   value="{{$brand->slug}}"
+                                                                   value="{{$tag->slug}}"
                                                                    name="slug">
                                                             @error("slug")
                                                             <span class="text-danger">{{$message}}</span>
-                                                            @enderror
-                                                        </div>
-                                                    </div>
-                                                </div>
-
-
-                                                <div class="row">
-                                                    <div class="col-md-6">
-                                                        <div class="form-group mt-1">
-                                                            <input type="checkbox" value="{{$brand->status}}"
-                                                                   name="status"
-                                                                   id="switcheryColor4"
-                                                                   class="switchery" data-color="success"
-                                                                   {{$brand->status == 1 ? 'checked' : ''}}/>
-                                                            <label for="switcheryColor4"
-                                                                   class="card-title ml-1">{{__('admin/brand.edit_form_status')}} </label>
-
-                                                            @error("status")
-                                                            <span class="text-danger">{{$message }}</span>
                                                             @enderror
                                                         </div>
                                                     </div>
@@ -133,10 +94,10 @@
                                             <div class="form-actions">
                                                 <button type="button" class="btn btn-warning mr-1"
                                                         onclick="history.back();">
-                                                    <i class="ft-x"></i> {{__('admin/brand.edit_form_back_button')}}
+                                                    <i class="ft-x"></i> {{__('admin/tag.edit_form_back_button')}}
                                                 </button>
                                                 <button type="submit" class="btn btn-primary">
-                                                    <i class="la la-check-square-o"></i> {{__('admin/brand.edit_form_update_button')}}
+                                                    <i class="la la-check-square-o"></i> {{__('admin/tag.edit_form_update_button')}}
                                                 </button>
                                             </div>
                                         </form>

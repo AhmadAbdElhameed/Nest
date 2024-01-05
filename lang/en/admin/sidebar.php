@@ -24,4 +24,7 @@ return [
     'brands_title' => 'Brands',
     'brands_create' => 'Add New Brand',
     'brands' => 'All Brands',
+    'tags' => 'All Tags',
+    'tags_create' => 'Add New Tag',
+    'tags_title' => 'Tags',
 ];
