@@ -22,16 +22,19 @@ class UpdateSubCategoryRequest extends FormRequest
      */
     public function rules(): array
     {
+        $subCategoryId = $this->subCategory ? $this->subCategory->id : null;
         return [
-            'category_id' => 'required|exists:categories,id',
             'name' => [
                 'required',
                 'string',
                 'max:255',
                 Rule::unique('sub_category_translations', 'name')
-                    ->where('locale', app()->getLocale()) // Adjust this if you handle multiple locales
+                    ->where(function ($query) use ($subCategoryId) {
+                        return $query->where('locale', app()->getLocale())
+                            ->where('sub_category_id', '!=', $subCategoryId);
+                    })
             ],
-            'slug' => 'required|string|max:255|unique:sub_categories,slug,'. $this->subCategory->id,
+            'slug' => 'required|string|max:255|unique:sub_categories,slug,' . $this->subCategory->id,
             'image' => 'nullable|image|max:2000|mimes:jpeg,jpg,webp,png'
         ];
     }
