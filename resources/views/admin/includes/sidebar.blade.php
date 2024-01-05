@@ -66,6 +66,20 @@
                 </ul>
             </li>
 
+            <li class="nav-item"><a href=""><i class="la la-male"></i>
+                    <span class="menu-title" data-i18n="nav.dash.main">{{__('admin/sidebar.tags_title')}}</span>
+                    <span
+                        class="badge badge badge-warning  badge-pill float-right mr-2"></span>
+                </a>
+                <ul class="menu-content">
+                    <li class="active"><a class="menu-item" href="{{route('admin.tag.index')}}"
+                                          data-i18n="nav.dash.ecommerce">{{__('admin/sidebar.tags')}} </a>
+                    </li>
+                    <li><a class="menu-item" href="{{route('admin.tag.create')}}" data-i18n="nav.dash.crypto">{{__('admin/sidebar.tags_create')}} </a>
+                    </li>
+                </ul>
+            </li>
+
 {{--            <li class="nav-item"><a href=""><i class="la la-male"></i>--}}
 {{--                    <span class="menu-title" data-i18n="nav.dash.main">المتاجر  </span>--}}
 {{--                    <span--}}

@@ -7,6 +7,7 @@ use App\Http\Controllers\Admin\LoginController;
 use App\Http\Controllers\Admin\ProfileController;
 use App\Http\Controllers\Admin\SettingController;
 use App\Http\Controllers\Admin\SubCategoryController;
+use App\Http\Controllers\Admin\TagController;
 use Illuminate\Support\Facades\Route;
 use Mcamara\LaravelLocalization\Facades\LaravelLocalization;
 
@@ -75,6 +76,18 @@ Route::group(
                 Route::get('edit/{brand}', 'edit')->name('edit');
                 Route::put('update/{brand}', 'update')->name('update');
                 Route::get('delete/{brand}', 'destroy')->name('delete');
+            });
+            ################################## Brands Categories #######################################
+
+
+            ################################## Brands Routes ####################################
+            Route::prefix('tag')->as('tag.')->controller(TagController::class)->group(function () {
+                Route::get('/', 'index')->name('index');
+                Route::get('create', 'create')->name('create');
+                Route::post('store', 'store')->name('store');
+                Route::get('edit/{tag}', 'edit')->name('edit');
+                Route::put('update/{tag}', 'update')->name('update');
+                Route::get('delete/{tag}', 'destroy')->name('delete');
             });
             ################################## Brands Categories #######################################
 
