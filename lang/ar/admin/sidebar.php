@@ -21,4 +21,7 @@ return [
     'category_create' => 'اضافة قسم رئيسي',
     'sub-category' => 'كل الاقسام الفرعية',
     'sub-category_create' => 'اضافة قسم فرعي',
+    'brands_title' => 'العلامات التجارية',
+    'brands_create' => 'اضافة علامة تجارية',
+    'brands' => 'كل العلامات التجارية',
 ];

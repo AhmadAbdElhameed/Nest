@@ -53,16 +53,15 @@
 
 
             <li class="nav-item"><a href=""><i class="la la-male"></i>
-                    <span class="menu-title" data-i18n="nav.dash.main">براند  </span>
+                    <span class="menu-title" data-i18n="nav.dash.main">{{__('admin/sidebar.brands_title')}}</span>
                     <span
                         class="badge badge badge-warning  badge-pill float-right mr-2"></span>
                 </a>
                 <ul class="menu-content">
                     <li class="active"><a class="menu-item" href="{{route('admin.brand.index')}}"
-                                          data-i18n="nav.dash.ecommerce"> كل البراندات </a>
+                                          data-i18n="nav.dash.ecommerce">{{__('admin/sidebar.brands')}} </a>
                     </li>
-                    <li><a class="menu-item" href="{{route('admin.brand.create')}}" data-i18n="nav.dash.crypto">أضافة
-                            براند </a>
+                    <li><a class="menu-item" href="{{route('admin.brand.create')}}" data-i18n="nav.dash.crypto">{{__('admin/sidebar.brands_create')}} </a>
                     </li>
                 </ul>
             </li>
