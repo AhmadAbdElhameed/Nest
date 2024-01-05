@@ -1,6 +1,7 @@
 <?php
 
 use App\Http\Controllers\Admin\AdminController;
+use App\Http\Controllers\Admin\BrandController;
 use App\Http\Controllers\Admin\CategoryController;
 use App\Http\Controllers\Admin\LoginController;
 use App\Http\Controllers\Admin\ProfileController;
@@ -64,6 +65,19 @@ Route::group(
                 Route::get('delete/{subCategory}', 'destroy')->name('delete');
             });
             ################################## end Sub Categories #######################################
+
+
+            ################################## Brands Routes ####################################
+            Route::prefix('brand')->as('brand.')->controller(BrandController::class)->group(function () {
+                Route::get('/', 'index')->name('index');
+                Route::get('create', 'create')->name('create');
+                Route::post('store', 'store')->name('store');
+                Route::get('edit/{brand}', 'edit')->name('edit');
+                Route::put('update/{brand}', 'update')->name('update');
+                Route::get('delete/{brand}', 'destroy')->name('delete');
+            });
+            ################################## Brands Categories #######################################
+
         });
 
         Route::group(['middleware' => 'guest:admin', 'prefix' => 'admin', 'as' => 'admin.'], function () {

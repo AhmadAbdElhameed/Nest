@@ -1,5 +1,5 @@
 <?php
-const PAGINATION_COUNT = 2;
+const PAGINATION_COUNT = 10;
 
 function getFolder(){
     return app()->getLocale() == 'ar' ? 'css-rtl' : 'css';

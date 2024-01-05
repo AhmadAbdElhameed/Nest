@@ -3514,7 +3514,7 @@ div.dataTables_wrapper {
   div.dataTables_wrapper div.dataTables_filter label {
     margin-top: 1rem; }
   div.dataTables_wrapper div.dataTables_paginate ul.pagination {
-    margin: 10px 0; }
+    margin: 10px 0; display: none}
 
 td.highlight {
   font-weight: bold;

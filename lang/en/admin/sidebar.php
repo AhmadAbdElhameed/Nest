@@ -21,4 +21,7 @@ return [
     'category_create' => 'Add New Category',
     'sub-category' => 'All Sub-Categories',
     'sub-category_create' => 'Add New Sub-Category',
+    'brands_title' => 'Brands',
+    'brands_create' => 'Add New Brand',
+    'brands' => 'All Brands',
 ];
