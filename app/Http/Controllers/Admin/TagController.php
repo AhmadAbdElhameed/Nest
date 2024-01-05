@@ -4,8 +4,8 @@ namespace App\Http\Controllers\Admin;
 
 use App\Http\Controllers\Controller;
 use App\Http\Interfaces\Admin\TagInterface;
-use App\Http\Requests\StoreTagRequest;
-use App\Http\Requests\UpdateTagRequest;
+use App\Http\Requests\Admin\Tag\StoreTagRequest;
+use App\Http\Requests\Admin\Tag\UpdateTagRequest;
 use App\Models\Tag;
 
 class TagController extends Controller

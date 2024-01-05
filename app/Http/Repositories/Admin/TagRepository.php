@@ -16,12 +16,27 @@ class TagRepository implements TagInterface
 
     public function create()
     {
-        // TODO: Implement create() method.
+        return view('admin.tag.create');
     }
 
     public function store($request)
     {
-        // TODO: Implement store() method.
+        try {
+
+            $category = Tag::create([
+                'slug' => $request->slug,
+            ]);
+
+            //save translations
+            $category->name = $request->name;
+            $category->save();
+
+            toast( __('admin/tag.create_success'),'success');
+            return redirect()->route('admin.tag.index')->with(['success' => __('admin/tag.create_success')]);
+        } catch (\Exception $ex) {
+            toast('Failed ','error');
+            return redirect()->route('admin.tag.index')->with(['error' => __('admin/tag.failed_message')]);
+        }
     }
 
     public function show($tag)

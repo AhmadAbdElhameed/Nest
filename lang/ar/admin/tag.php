@@ -16,7 +16,7 @@ return [
     'form_delete' => 'حذف',
     'main_title_edit' => 'تعديل',
     'sub_main_title_edit' => 'تعديل علامة',
-    'brand_details_title' => 'بيانات العلامة',
+    'tag_details_title' => 'بيانات العلامة',
     'edit_form_image' => 'الصورة',
     'edit_form_name' => 'الاسم',
     'edit_form_slug' => 'اسم بالرابط',

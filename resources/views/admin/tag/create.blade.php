@@ -1,7 +1,7 @@
 @extends('admin.layouts.master')
 
 @section('title')
-    {{__('admin/brand.create_page_title')}}
+    {{__('admin/tag.create_page_title')}}
 @endsection
 
 @section('style')
@@ -26,11 +26,11 @@
                     <div class="row breadcrumbs-top">
                         <div class="breadcrumb-wrapper col-12">
                             <ol class="breadcrumb">
-                                <li class="breadcrumb-item"><a href="">{{__('admin/brand.home')}} </a>
+                                <li class="breadcrumb-item"><a href="">{{__('admin/tag.home')}} </a>
                                 </li>
-                                <li class="breadcrumb-item"><a href="{{route('admin.category.index')}}">{{__('admin/brand.main_title')}} </a>
+                                <li class="breadcrumb-item"><a href="{{route('admin.tag.index')}}">{{__('admin/tag.main_title')}} </a>
                                 </li>
-                                <li class="breadcrumb-item active"> {{__('admin/brand.add_new_category')}}
+                                <li class="breadcrumb-item active"> {{__('admin/tag.add_new_category')}}
                                 </li>
                             </ol>
                         </div>
@@ -44,7 +44,7 @@
                         <div class="col-md-12">
                             <div class="card">
                                 <div class="card-header">
-                                    <h4 class="card-title" id="basic-layout-form">{{__('admin/brand.add_new_category')}}</h4>
+                                    <h4 class="card-title" id="basic-layout-form">{{__('admin/tag.add_new_category')}}</h4>
                                     <a class="heading-elements-toggle"><i
                                             class="la la-ellipsis-v font-medium-3"></i></a>
                                     <div class="heading-elements">
@@ -61,7 +61,7 @@
                                 <div class="card-content collapse show">
                                     <div class="card-body">
                                         <form class="form"
-                                              action="{{route('admin.brand.store')}}"
+                                              action="{{route('admin.tag.store')}}"
                                               method="POST"
                                               enctype="multipart/form-data"
                                               id="myForm">
@@ -71,24 +71,12 @@
 
                                             <div class="form-body">
 
-                                                <h4 class="form-section"><i class="ft-home"></i> {{__('admin/brand.brand_details_title')}}  </h4>
-
-                                                <div class="form-group">
-                                                    <label>{{__('admin/brand.edit_form_image')}}  </label>
-                                                    <br>
-                                                    <label id="projectinput7" class="file center-block">
-                                                        <input type="file" id="image" name="image">
-                                                        <span class="file-custom"></span>
-                                                    </label>
-                                                    @error('image')
-                                                    <span class="text-danger">{{$message}}</span>
-                                                    @enderror
-                                                </div>
+                                                <h4 class="form-section"><i class="ft-home"></i> {{__('admin/tag.tag_details_title')}}  </h4>
 
                                                 <div class="row">
                                                     <div class="col-md-6">
                                                         <div class="form-group">
-                                                            <label for="projectinput1">{{__('admin/brand.edit_form_name')}}
+                                                            <label for="projectinput1">{{__('admin/tag.edit_form_name')}}
                                                             </label>
                                                             <input type="text" id="name"
                                                                    class="form-control"
@@ -103,7 +91,7 @@
 
                                                     <div class="col-md-6">
                                                         <div class="form-group">
-                                                            <label for="projectinput1">{{__('admin/brand.edit_form_slug')}}
+                                                            <label for="projectinput1">{{__('admin/tag.edit_form_slug')}}
                                                             </label>
                                                             <input type="text" id="name"
                                                                    class="form-control"
@@ -116,34 +104,16 @@
                                                         </div>
                                                     </div>
                                                 </div>
-
-                                                <div class="row">
-                                                    <div class="col-md-6">
-                                                        <div class="form-group mt-1">
-                                                            <input type="checkbox" value="1"
-                                                                   name="status"
-                                                                   id="switcheryColor4"
-                                                                   class="switchery" data-color="success"
-                                                                   checked/>
-                                                            <label for="switcheryColor4"
-                                                                   class="card-title ml-1">{{__('admin/brand.edit_form_status')}}  </label>
-
-                                                            @error("status")
-                                                            <span class="text-danger">{{$message }}</span>
-                                                            @enderror
-                                                        </div>
-                                                    </div>
-                                                </div>
                                             </div>
 
 
                                             <div class="form-actions">
                                                 <button type="button" class="btn btn-warning mr-1"
                                                         onclick="history.back();">
-                                                    <i class="ft-x"></i> {{__('admin/brand.edit_form_back_button')}}
+                                                    <i class="ft-x"></i> {{__('admin/tag.edit_form_back_button')}}
                                                 </button>
                                                 <button type="submit" class="btn btn-primary">
-                                                    <i class="la la-check-square-o"></i> {{__('admin/brand.form_create_button')}}
+                                                    <i class="la la-check-square-o"></i> {{__('admin/tag.form_create_button')}}
                                                 </button>
                                             </div>
                                         </form>

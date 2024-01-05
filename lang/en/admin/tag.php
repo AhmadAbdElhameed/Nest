@@ -16,7 +16,7 @@ return [
     'form_delete' => 'Delete',
     'main_title_edit' => 'Update',
     'sub_main_title_edit' => 'Update Tag',
-    'brand_details_title' => 'Tag Details',
+    'tag_details_title' => 'Tag Details',
     'edit_form_image' => 'Image',
     'edit_form_name' => 'Name',
     'edit_form_slug' => 'Slug',

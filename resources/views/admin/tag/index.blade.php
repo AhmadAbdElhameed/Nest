@@ -56,8 +56,6 @@
                                             <tr>
                                                 <th>{{__('admin/tag.form_name')}} </th>
                                                 <th> {{__('admin/tag.form_slug')}} </th>
-                                                <th>{{__('admin/tag.form_status')}}</th>
-                                                <th>{{__('admin/tag.form_image')}}</th>
                                                 <th>{{__('admin/tag.form_actions')}}</th>
                                             </tr>
                                             </thead>
@@ -68,7 +66,6 @@
                                                     <tr>
                                                         <td>{{$tag -> name}}</td>
                                                         <td>{{$tag -> slug}}</td>
-                                                        <td>{{$tag -> getActive()}}</td>
                                                         <td>
                                                             <div class="btn-group" role="group"
                                                                  aria-label="Basic example">
