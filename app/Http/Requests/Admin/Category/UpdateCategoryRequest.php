@@ -22,13 +22,17 @@ class UpdateCategoryRequest extends FormRequest
      */
     public function rules(): array
     {
+        $categoryId = $this->category ? $this->category->id : null;
         return [
             'name' => [
                 'required',
                 'string',
                 'max:255',
                 Rule::unique('category_translations', 'name')
-                    ->where('locale', app()->getLocale()) // Adjust this if you handle multiple locales
+                    ->where(function ($query) use ($categoryId) {
+                        return $query->where('locale', app()->getLocale())
+                            ->where('category_id', '!=', $categoryId);
+                    })
             ],
             'slug' => 'required|string|max:255|unique:categories,slug,' . $this->category->id,
             'image' => 'nullable|image|max:2000|mimes:jpeg,jpg,webp,png'
