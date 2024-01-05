@@ -71,6 +71,8 @@ class TagRepository implements TagInterface
 
     public function destroy($tag)
     {
-        // TODO: Implement destroy() method.
+        $tag->delete();
+        toast(__('admin/tag.delete_success'),'success');
+        return redirect()->back();
     }
 }
