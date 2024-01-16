@@ -8,6 +8,7 @@ use App\Http\Controllers\Admin\ProfileController;
 use App\Http\Controllers\Admin\SettingController;
 use App\Http\Controllers\Admin\SubCategoryController;
 use App\Http\Controllers\Admin\TagController;
+use App\Http\Controllers\ProductController;
 use Illuminate\Support\Facades\Route;
 use Mcamara\LaravelLocalization\Facades\LaravelLocalization;
 
@@ -54,7 +55,7 @@ Route::group(
                 Route::put('update/{category}', 'update')->name('update');
                 Route::get('delete/{category}', 'destroy')->name('delete');
             });
-            ################################## end categories #######################################
+            ################################## end categories Routes #######################################
 
             ################################## Sub Categories Routes ####################################
             Route::prefix('sub-category')->as('sub-category.')->controller(SubCategoryController::class)->group(function () {
@@ -65,7 +66,7 @@ Route::group(
                 Route::put('update/{subCategory}', 'update')->name('update');
                 Route::get('delete/{subCategory}', 'destroy')->name('delete');
             });
-            ################################## end Sub Categories #######################################
+            ################################## end Sub Categories Routes #######################################
 
 
             ################################## Brands Routes ####################################
@@ -77,10 +78,10 @@ Route::group(
                 Route::put('update/{brand}', 'update')->name('update');
                 Route::get('delete/{brand}', 'destroy')->name('delete');
             });
-            ################################## Brands Categories #######################################
+            ################################## Brands Routes #######################################
 
 
-            ################################## Brands Routes ####################################
+            ################################## Tags Routes ####################################
             Route::prefix('tag')->as('tag.')->controller(TagController::class)->group(function () {
                 Route::get('/', 'index')->name('index');
                 Route::get('create', 'create')->name('create');
@@ -89,7 +90,20 @@ Route::group(
                 Route::put('update/{tag}', 'update')->name('update');
                 Route::get('delete/{tag}', 'destroy')->name('delete');
             });
-            ################################## Brands Categories #######################################
+            ################################## Tags Routes #######################################
+
+
+
+            ################################## Products Routes ####################################
+            Route::prefix('product')->as('product.')->controller(ProductController::class)->group(function () {
+                Route::get('/', 'index')->name('index');
+                Route::get('create', 'create')->name('create');
+                Route::post('store', 'store')->name('store');
+                Route::get('edit/{product}', 'edit')->name('edit');
+                Route::put('update/{product}', 'update')->name('update');
+                Route::get('delete/{product}', 'destroy')->name('delete');
+            });
+            ################################## Products Routes #######################################
 
         });
 

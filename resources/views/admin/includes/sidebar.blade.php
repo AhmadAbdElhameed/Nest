@@ -80,6 +80,20 @@
                 </ul>
             </li>
 
+            <li class="nav-item"><a href=""><i class="la la-male"></i>
+                    <span class="menu-title" data-i18n="nav.dash.main">{{__('admin/sidebar.products_title')}}</span>
+                    <span
+                        class="badge badge badge-warning  badge-pill float-right mr-2"></span>
+                </a>
+                <ul class="menu-content">
+                    <li class="active"><a class="menu-item" href="{{route('admin.product.index')}}"
+                                          data-i18n="nav.dash.ecommerce">{{__('admin/sidebar.products')}} </a>
+                    </li>
+                    <li><a class="menu-item" href="{{route('admin.product.create')}}" data-i18n="nav.dash.crypto">{{__('admin/sidebar.products_create')}} </a>
+                    </li>
+                </ul>
+            </li>
+
 {{--            <li class="nav-item"><a href=""><i class="la la-male"></i>--}}
 {{--                    <span class="menu-title" data-i18n="nav.dash.main">المتاجر  </span>--}}
 {{--                    <span--}}

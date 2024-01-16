@@ -2,18 +2,26 @@
 
 namespace App\Http\Controllers;
 
+use App\Http\Interfaces\Admin\ProductInterface;
 use App\Http\Requests\StoreProductRequest;
 use App\Http\Requests\UpdateProductRequest;
 use App\Models\Product;
 
 class ProductController extends Controller
 {
+    private $productInterface;
+
+    public function __construct(ProductInterface $product)
+    {
+        $this->productInterface = $product;
+    }
+
     /**
      * Display a listing of the resource.
      */
     public function index()
     {
-        //
+        return $this->productInterface->index();
     }
 
     /**
@@ -21,7 +29,7 @@ class ProductController extends Controller
      */
     public function create()
     {
-        //
+        return $this->productInterface->create();
     }
 
     /**
@@ -29,7 +37,7 @@ class ProductController extends Controller
      */
     public function store(StoreProductRequest $request)
     {
-        //
+        return $this->productInterface->store($request);
     }
 
     /**
@@ -37,7 +45,7 @@ class ProductController extends Controller
      */
     public function show(Product $product)
     {
-        //
+        return $this->productInterface->show($product);
     }
 
     /**
@@ -45,7 +53,7 @@ class ProductController extends Controller
      */
     public function edit(Product $product)
     {
-        //
+        return $this->productInterface->edit($product);
     }
 
     /**
@@ -53,7 +61,7 @@ class ProductController extends Controller
      */
     public function update(UpdateProductRequest $request, Product $product)
     {
-        //
+        return $this->productInterface->update($request,$product);
     }
 
     /**
@@ -61,6 +69,6 @@ class ProductController extends Controller
      */
     public function destroy(Product $product)
     {
-        //
+        return $this->productInterface->destroy($product);
     }
 }

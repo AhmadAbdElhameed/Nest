@@ -5,12 +5,14 @@ use App\Http\Interfaces\Admin\AdminInterface;
 use App\Http\Interfaces\Admin\BrandInterface;
 use App\Http\Interfaces\Admin\CategoryInterface;
 use App\Http\Interfaces\Admin\LoginInterface;
+use App\Http\Interfaces\Admin\ProductInterface;
 use App\Http\Interfaces\Admin\SubCategoryInterface;
 use App\Http\Interfaces\Admin\TagInterface;
 use App\Http\Repositories\Admin\AdminRepository;
 use App\Http\Repositories\Admin\BrandRepository;
 use App\Http\Repositories\Admin\CategoryRepository;
 use App\Http\Repositories\Admin\LoginRepository;
+use App\Http\Repositories\Admin\ProductRepository;
 use App\Http\Repositories\Admin\SubCategoryRepository;
 use App\Http\Repositories\Admin\TagRepository;
 use Illuminate\Support\ServiceProvider;
@@ -37,6 +39,7 @@ class RepositoryServiceProvider extends ServiceProvider
         $this->app->bind(SubCategoryInterface::class, SubCategoryRepository::class);
         $this->app->bind(BrandInterface::class, BrandRepository::class);
         $this->app->bind(TagInterface::class, TagRepository::class);
+        $this->app->bind(ProductInterface::class, ProductRepository::class);
     }
 
     /**
