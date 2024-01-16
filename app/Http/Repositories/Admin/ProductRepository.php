@@ -3,7 +3,11 @@
 namespace App\Http\Repositories\Admin;
 
 use App\Http\Interfaces\Admin\ProductInterface;
+use App\Models\Brand;
+use App\Models\Category;
 use App\Models\Product;
+use App\Models\Tag;
+use Illuminate\Support\Facades\DB;
 
 class ProductRepository implements ProductInterface
 {
@@ -16,12 +20,59 @@ class ProductRepository implements ProductInterface
 
     public function create()
     {
-        // TODO: Implement create() method.
+        $data = [];
+        $data['brands'] = Brand::where('status',1)->select('id')->get();
+        $data['tags'] = Tag::select('id')->get();
+        $data['categories'] = Category::active()->select('id')->get();
+//        dd($data);
+        return view('admin.product.create', $data);
     }
 
     public function store($request)
     {
-        // TODO: Implement store() method.
+        DB::beginTransaction();
+
+        //validation
+
+        if (!$request->has('status'))
+            $request->request->add(['status' => 0]);
+        else
+            $request->request->add(['status' => 1]);
+
+        if (!$request->has('manage_stock'))
+            $request->request->add(['manage_stock' => 0]);
+        else
+            $request->request->add(['manage_stock' => 1]);
+
+        if (!$request->has('in_stock'))
+            $request->request->add(['in_stock' => 0]);
+        else
+            $request->request->add(['in_stock' => 1]);
+
+        $product = Product::create([
+            'slug' => $request->slug,
+            'brand_id' => $request->brand_id,
+            'status' => $request->status,
+            'price' => $request->price,
+            'manage_stock' => $request->manage_stock,
+            'in_stock' => $request->in_stock,
+        ]);
+        //save translations
+        $product->name = $request->name;
+        $product->description = $request->description;
+        $product->short_description = $request->short_description;
+        $product->save();
+
+        //save product categories
+
+        $product->categories()->attach($request->categories);
+
+        //save product tags
+
+        $product->tags()->attach($request->tags);
+
+        DB::commit();
+        return redirect()->route('admin.product.index')->with(['success' => 'تم ألاضافة بنجاح']);
     }
 
     public function show($product)
