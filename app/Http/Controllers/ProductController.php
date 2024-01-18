@@ -3,8 +3,9 @@
 namespace App\Http\Controllers;
 
 use App\Http\Interfaces\Admin\ProductInterface;
-use App\Http\Requests\StoreProductRequest;
-use App\Http\Requests\UpdateProductRequest;
+use App\Http\Requests\Admin\Product\StoreProductPriceRequest;
+use App\Http\Requests\Admin\Product\StoreProductRequest;
+use App\Http\Requests\Admin\Product\UpdateProductRequest;
 use App\Models\Product;
 
 class ProductController extends Controller
@@ -71,4 +72,14 @@ class ProductController extends Controller
     {
         return $this->productInterface->destroy($product);
     }
+
+    public function getPrice(Product $product)
+    {
+        return $this->productInterface->getPrice($product);
+    }
+    public function updatePrice(StoreProductPriceRequest $request,Product $product)
+    {
+        return $this->productInterface->updatePrice($request,$product);
+    }
+
 }

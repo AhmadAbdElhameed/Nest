@@ -102,6 +102,11 @@ Route::group(
                 Route::get('edit/{product}', 'edit')->name('edit');
                 Route::put('update/{product}', 'update')->name('update');
                 Route::get('delete/{product}', 'destroy')->name('delete');
+
+
+                Route::get('get-price/{product}', 'getPrice')->name('price');
+                Route::put('update-price/{product}', 'updatePrice')->name('price.update');
+
             });
             ################################## Products Routes #######################################
 

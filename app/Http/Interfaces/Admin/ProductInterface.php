@@ -18,4 +18,8 @@ interface ProductInterface
     public function update($request,$product);
 
     public function destroy($product);
+
+    public function getPrice($product);
+
+    public function updatePrice($request,$product);
 }

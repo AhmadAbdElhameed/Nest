@@ -67,7 +67,7 @@
                                                         <td>
                                                             <div class="btn-group" role="group"
                                                                  aria-label="Basic example">
-                                                                <a href=""
+                                                                <a href="{{route('admin.product.price',$product)}}"
                                                                    class="btn btn-outline-primary btn-min-width box-shadow-3 mr-1 mb-1">السعر</a>
 
                                                                 <a href=""
@@ -92,7 +92,9 @@
                             </div>
                         </div>
                     </div>
-                    {!! $products -> links() !!}
+                    <div class="justify-content-center d-flex">
+                        {{ $products -> links('pagination::bootstrap-5') }}
+                    </div>
                 </section>
             </div>
         </div>

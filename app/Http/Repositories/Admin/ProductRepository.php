@@ -94,4 +94,26 @@ class ProductRepository implements ProductInterface
     {
         // TODO: Implement destroy() method.
     }
+
+    public function getPrice($product)
+    {
+        return view('admin.product.price.edit',compact('product'));
+    }
+
+    public function updatePrice($request,$product)
+    {
+
+        try{
+            $product->update([
+                'price' => $request->price,
+                'special_price' => $request->special_price,
+                'special_price_type' => $request->special_price_type,
+                'special_price_start' => $request->special_price_start,
+                'special_price_end' => $request->special_price_end,
+            ]);
+            return redirect()->route('admin.product.index')->with(['success' => 'done']);
+        }catch(\Exception $exception){
+
+        }
+    }
 }
