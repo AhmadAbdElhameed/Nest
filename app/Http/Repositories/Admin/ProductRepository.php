@@ -147,4 +147,23 @@ class ProductRepository implements ProductInterface
         DB::commit();
         return redirect()->route('admin.product.index')->with(['success' => 'تم ألاضافة بنجاح']);
     }
+
+    public function getImages($product)
+    {
+        return view('admin.product.image.edit',compact('product'));
+    }
+
+    public function updateImages($request, $product)
+    {
+
+        $file = $request->file('dzfile');
+        $filename = uploadImage('products', $file);
+
+        return response()->json([
+            'name' => $filename,
+            'original_name' => $file->getClientOriginalName(),
+        ]);
+
+
+    }
 }

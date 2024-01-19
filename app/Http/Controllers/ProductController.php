@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use App\Http\Interfaces\Admin\ProductInterface;
 use App\Http\Requests\Admin\Product\StoreProductPriceRequest;
 use App\Http\Requests\Admin\Product\StoreProductRequest;
+use App\Http\Requests\Admin\Product\UpdateProductImagesRequest;
 use App\Http\Requests\Admin\Product\UpdateProductInventoryRequest;
 use App\Http\Requests\Admin\Product\UpdateProductRequest;
 use App\Models\Product;
@@ -90,6 +91,14 @@ class ProductController extends Controller
     public function updateInventory(UpdateProductInventoryRequest $request,Product $product)
     {
         return $this->productInterface->updateInventory($request,$product);
+    }
+    public function getImages(Product $product)
+    {
+        return $this->productInterface->getImages($product);
+    }
+    public function updateImages(UpdateProductImagesRequest $request,Product $product)
+    {
+        return $this->productInterface->updateImages($request,$product);
     }
 
 }

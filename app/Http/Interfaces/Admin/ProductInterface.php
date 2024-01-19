@@ -26,4 +26,8 @@ interface ProductInterface
     public function getInventory($product);
 
     public function updateInventory($request, $product);
+
+    public function getImages($product);
+
+    public function updateImages( $request,$product);
 }
