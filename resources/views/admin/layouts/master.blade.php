@@ -18,6 +18,7 @@
     <link href="https://maxcdn.icons8.com/fonts/line-awesome/1.1/css/line-awesome.min.css"
           rel="stylesheet">
 
+
     <link rel="stylesheet" type="text/css" href="{{asset('assets/admin/'.getFolder().'/plugins/animate/animate.css')}}">
     <!-- BEGIN VENDOR CSS-->
     <link rel="stylesheet" type="text/css" href="{{asset('assets/admin/'.getFolder().'/vendors.css')}}">
@@ -73,7 +74,10 @@
 @include('admin.includes.footer')
 
 @include('sweetalert::alert')
-@yield('script')
+<script src="https://code.jquery.com/jquery-3.5.1.min.js"></script>
+
+
+
 <!-- BEGIN VENDOR JS-->
 <script src="{{asset('assets/admin/vendors/js/vendors.min.js')}}" type="text/javascript"></script>
 <!-- BEGIN VENDOR JS-->
@@ -167,8 +171,10 @@
     $('#meridians14').timeDropper({
         meridians: true,setCurrentTime: false
     });
+
 </script>
 
-
+@stack('scripts')
+@yield('script')
 </body>
 </html>

@@ -116,4 +116,35 @@ class ProductRepository implements ProductInterface
 
         }
     }
+
+    public function getInventory($product)
+    {
+        return view('admin.product.inventory.edit',compact('product'));
+    }
+
+    public function updateInventory($request, $product)
+    {
+
+        DB::beginTransaction();
+
+        if (!$request->has('manage_stock'))
+            $request->request->add(['manage_stock' => 0]);
+        else
+            $request->request->add(['manage_stock' => 1]);
+
+        if (!$request->has('in_stock'))
+            $request->request->add(['in_stock' => 0]);
+        else
+            $request->request->add(['in_stock' => 1]);
+
+        $product->update([
+            'sku' => $request->sku,
+            'manage_stock' => $request->manage_stock,
+            'in_stock' => $request->in_stock,
+            'qty' => $request->qty
+        ]);
+
+        DB::commit();
+        return redirect()->route('admin.product.index')->with(['success' => 'تم ألاضافة بنجاح']);
+    }
 }

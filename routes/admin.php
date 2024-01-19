@@ -107,6 +107,9 @@ Route::group(
                 Route::get('get-price/{product}', 'getPrice')->name('price');
                 Route::put('update-price/{product}', 'updatePrice')->name('price.update');
 
+                Route::get('inventory/{product}', 'getInventory')->name('inventory');
+                Route::put('inventory/update/{product}', 'updateInventory')->name('inventory.update');
+
             });
             ################################## Products Routes #######################################
 
