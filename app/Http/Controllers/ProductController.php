@@ -9,6 +9,7 @@ use App\Http\Requests\Admin\Product\UpdateProductImagesRequest;
 use App\Http\Requests\Admin\Product\UpdateProductInventoryRequest;
 use App\Http\Requests\Admin\Product\UpdateProductRequest;
 use App\Models\Product;
+use Illuminate\Http\Request;
 
 class ProductController extends Controller
 {
@@ -99,6 +100,10 @@ class ProductController extends Controller
     public function updateImages(UpdateProductImagesRequest $request,Product $product)
     {
         return $this->productInterface->updateImages($request,$product);
+    }
+    public function destroyImage(Request $request)
+    {
+        return $this->productInterface->destroyImage($request);
     }
 
 }

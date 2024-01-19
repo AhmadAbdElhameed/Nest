@@ -30,4 +30,6 @@ interface ProductInterface
     public function getImages($product);
 
     public function updateImages( $request,$product);
+
+    public function destroyImage($request);
 }

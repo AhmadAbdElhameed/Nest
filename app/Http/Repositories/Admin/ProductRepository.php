@@ -7,7 +7,9 @@ use App\Models\Brand;
 use App\Models\Category;
 use App\Models\Product;
 use App\Models\Tag;
+use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
+use Illuminate\Support\Facades\File;
 
 class ProductRepository implements ProductInterface
 {
@@ -155,15 +157,29 @@ class ProductRepository implements ProductInterface
 
     public function updateImages($request, $product)
     {
+        $uploadedImages = [];
 
-        $file = $request->file('dzfile');
-        $filename = uploadImage('products', $file);
+        if ($request->hasFile('images')) {
+            foreach ($request->file('images') as $image) {
+                $filename = $image->getClientOriginalName();
+                $destinationPath = public_path('uploads/images');
+                $image->move($destinationPath, $filename);
+                $uploadedImages[] = url('uploads/images/' . $filename);
+            }
+        }
 
-        return response()->json([
-            'name' => $filename,
-            'original_name' => $file->getClientOriginalName(),
-        ]);
+        return response()->json(['uploadedImages' => $uploadedImages]);
+    }
 
+    public function destroyImage($request)
+    {
+        $url = $request->input('url');
+        $filename = basename(parse_url($url, PHP_URL_PATH));
 
+        // Delete the file from public/uploads/images
+        File::delete(public_path('uploads/images/' . $filename));
+
+        // Respond with success
+        return response()->json(['success' => 'Image removed']);
     }
 }

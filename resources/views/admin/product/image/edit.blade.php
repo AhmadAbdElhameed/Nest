@@ -1,4 +1,8 @@
 @extends('admin.layouts.master')
+
+@section('style')
+
+@endsection
 @section('content')
 
     <div class="app-content content">
@@ -43,36 +47,45 @@
                                 @include('admin.includes.alerts.errors')
                                 <div class="card-content collapse show">
                                     <div class="card-body">
-                                        <form class="form"
-                                              action="{{route('admin.product.image.update',$product)}}"
-                                              method="POST"
-                                              enctype="multipart/form-data">
-                                            @csrf
-                                            @method('PUT')
-                                            <div class="form-body">
+{{--                                        <form class="form"--}}
+{{--                                              action="{{route('admin.product.image.update',$product)}}"--}}
+{{--                                              method="POST"--}}
+{{--                                              enctype="multipart/form-data">--}}
+{{--                                            @csrf--}}
+{{--                                            <div class="form-body">--}}
 
-                                                <h4 class="form-section"><i class="ft-home"></i> صور المنتج </h4>
-                                                <div class="form-group">
-                                                    <div id="dpz-multiple-files" class="dropzone dropzone-area">
-                                                        <div class="dz-message">يمكنك رفع اكثر من صوره هنا</div>
-                                                    </div>
-                                                    <br><br>
-                                                </div>
+{{--                                                <h4 class="form-section"><i class="ft-home"></i> صور المنتج </h4>--}}
+{{--                                                <div class="form-group">--}}
 
+{{--                                                </div>--}}
 
-                                            </div>
-
-
-                                            <div class="form-actions">
-                                                <button type="button" class="btn btn-warning mr-1"
-                                                        onclick="history.back();">
-                                                    <i class="ft-x"></i> تراجع
-                                                </button>
-                                                <button type="submit" class="btn btn-primary">
-                                                    <i class="la la-check-square-o"></i> تحديث
-                                                </button>
-                                            </div>
+{{--                                            </div>--}}
+{{--                                            <div class="form-actions">--}}
+{{--                                                <button type="button" class="btn btn-warning mr-1"--}}
+{{--                                                        onclick="history.back();">--}}
+{{--                                                    <i class="ft-x"></i> تراجع--}}
+{{--                                                </button>--}}
+{{--                                                <button type="submit" class="btn btn-primary">--}}
+{{--                                                    <i class="la la-check-square-o"></i> تحديث--}}
+{{--                                                </button>--}}
+{{--                                            </div>--}}
+{{--                                        </form>--}}
+                                        <form id="image-upload-form" method="POST" enctype="multipart/form-data">
+                                            <input type="file" name="images[]" id="image-upload" multiple>
+                                            <button type="submit">Upload</button>
                                         </form>
+
+                                        <table id="images-table">
+                                            <thead>
+                                            <tr>
+                                                <th>Image</th>
+                                                <th>Action</th>
+                                            </tr>
+                                            </thead>
+                                            <tbody>
+                                            <!-- Existing images will be listed here -->
+                                            </tbody>
+                                        </table>
 
                                     </div>
                                 </div>
@@ -90,62 +103,50 @@
 
 @section('script')
 
-
     <script>
-
-        var uploadedDocumentMap = {}
-        Dropzone.options.dpzMultipleFiles = {
-            paramName: "dzfile", // The name that will be used to transfer the file
-            //autoProcessQueue: false,
-            maxFilesize: 5, // MB
-            clickable: true,
-            addRemoveLinks: true,
-            acceptedFiles: 'image/*',
-            dictFallbackMessage: " المتصفح الخاص بكم لا يدعم خاصيه تعدد الصوره والسحب والافلات ",
-            dictInvalidFileType: "لايمكنك رفع هذا النوع من الملفات ",
-            dictCancelUpload: "الغاء الرفع ",
-            dictCancelUploadConfirmation: " هل انت متاكد من الغاء رفع الملفات ؟ ",
-            dictRemoveFile: "حذف الصوره",
-            dictMaxFilesExceeded: "لايمكنك رفع عدد اكثر من هضا ",
-            headers: {
-                'X-CSRF-TOKEN':
-                    "{{ csrf_token() }}"
-            }
-
-            ,
-            url: "{{ route('admin.product.image.update',$product) }}", // Set the url
-            method: 'PUT',
-            success:
-                function (file, response) {
-                    $('form').append('<input type="hidden" name="document[]" value="' + response.name + '">')
-                    uploadedDocumentMap[file.name] = response.name
+        $(document).ready(function() {
+            $.ajaxSetup({
+                headers: {
+                    'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
                 }
-            ,
-            removedfile: function (file) {
-                file.previewElement.remove()
-                var name = ''
-                if (typeof file.file_name !== 'undefined') {
-                    name = file.file_name
-                } else {
-                    name = uploadedDocumentMap[file.name]
-                }
-                $('form').find('input[name="document[]"][value="' + name + '"]').remove()
-            }
-            ,
-            // previewsContainer: "#dpz-btn-select-files", // Define the container to display the previews
-            init: function () {
+            });
 
-                @if(isset($event) && $event->document)
-                var files = {!! json_encode($event->document) !!};
-                    for (var i in files) {
-                    var file = files[i]
-                    this.options.addedfile.call(this, file)
-                    file.previewElement.classList.add('dz-complete')
-                    $('form').append('<input type="hidden" name="document[]" value="' + file.file_name + '">')
-                }
-                @endif
-            }
-        }
+            $('#image-upload-form').on('submit', function(e) {
+                e.preventDefault();
+                var formData = new FormData(this);
 
+                $.ajax({
+                    url: "{{ route('admin.product.image.update',$product) }}",
+                    type: 'POST',
+                    data: formData,
+                    success: function(data) {
+                        // Update the table with the new image
+                        data.uploadedImages.forEach(function(imageUrl) {
+                            $('#images-table tbody').append('<tr><td><img src="' + imageUrl + '" style="width: 100px; height: auto;"></td><td><button type="button" class="remove-image" data-url="' + imageUrl + '">Remove</button></td></tr>');
+                        });
+                    },
+                    cache: false,
+                    contentType: false,
+                    processData: false
+                });
+            });
+
+            $(document).on('click', '.remove-image', function() {
+                var imageUrl = $(this).data('url');
+                var row = $(this).closest('tr');
+
+                // AJAX request to remove the image
+                $.ajax({
+                    url: "{{ route('admin.product.image.destroy') }}",
+                    type: 'POST',
+                    data: { url: imageUrl },
+                    success: function(data) {
+                        // Remove the row from the table
+                        row.remove();
+                    }
+                });
+            });
+        });
     </script>
+
 @stop

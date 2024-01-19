@@ -111,8 +111,8 @@ Route::group(
                 Route::put('inventory/update/{product}', 'updateInventory')->name('inventory.update');
 
                 Route::get('image/{product}', 'getImages')->name('image');
-                Route::put('image/update/{product}', 'updateImages')->name('image.update');
-
+                Route::post('image/update/{product}', 'updateImages')->name('image.update');
+                Route::post('/images/delete', 'destroyImage')->name('image.destroy');
             });
             ################################## Products Routes #######################################
 
