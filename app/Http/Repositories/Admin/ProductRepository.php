@@ -5,6 +5,7 @@ namespace App\Http\Repositories\Admin;
 use App\Http\Interfaces\Admin\ProductInterface;
 use App\Models\Brand;
 use App\Models\Category;
+use App\Models\Image;
 use App\Models\Product;
 use App\Models\Tag;
 use Illuminate\Http\Request;
@@ -164,22 +165,28 @@ class ProductRepository implements ProductInterface
                 $filename = $image->getClientOriginalName();
                 $destinationPath = public_path('uploads/images');
                 $image->move($destinationPath, $filename);
-                $uploadedImages[] = url('uploads/images/' . $filename);
+
+                $imageRecord = new Image();
+                $imageRecord->product_id = $product->id;
+                $imageRecord->image = $filename;
+                $imageRecord->save();
+
+                $uploadedImages[] = [
+                    'url' => url('uploads/images/' . $filename),
+                    'id' => $imageRecord->id // Return the ID of the image
+                ];
             }
         }
 
         return response()->json(['uploadedImages' => $uploadedImages]);
     }
 
-    public function destroyImage($request)
+    public function destroyImage($id)
     {
-        $url = $request->input('url');
-        $filename = basename(parse_url($url, PHP_URL_PATH));
+        $image = Image::findOrFail($id);
+        File::delete(public_path('uploads/images/' . $image->image));
+        $image->delete();
 
-        // Delete the file from public/uploads/images
-        File::delete(public_path('uploads/images/' . $filename));
-
-        // Respond with success
         return response()->json(['success' => 'Image removed']);
     }
 }

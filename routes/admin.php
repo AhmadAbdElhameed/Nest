@@ -112,7 +112,7 @@ Route::group(
 
                 Route::get('image/{product}', 'getImages')->name('image');
                 Route::post('image/update/{product}', 'updateImages')->name('image.update');
-                Route::post('/images/delete', 'destroyImage')->name('image.destroy');
+                Route::delete('/images/delete/{id}', 'destroyImage')->name('image.destroy');
             });
             ################################## Products Routes #######################################
 

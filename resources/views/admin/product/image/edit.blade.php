@@ -1,8 +1,5 @@
 @extends('admin.layouts.master')
 
-@section('style')
-
-@endsection
 @section('content')
 
     <div class="app-content content">
@@ -47,45 +44,38 @@
                                 @include('admin.includes.alerts.errors')
                                 <div class="card-content collapse show">
                                     <div class="card-body">
-{{--                                        <form class="form"--}}
-{{--                                              action="{{route('admin.product.image.update',$product)}}"--}}
-{{--                                              method="POST"--}}
-{{--                                              enctype="multipart/form-data">--}}
-{{--                                            @csrf--}}
-{{--                                            <div class="form-body">--}}
-
-{{--                                                <h4 class="form-section"><i class="ft-home"></i> صور المنتج </h4>--}}
-{{--                                                <div class="form-group">--}}
-
-{{--                                                </div>--}}
-
-{{--                                            </div>--}}
-{{--                                            <div class="form-actions">--}}
-{{--                                                <button type="button" class="btn btn-warning mr-1"--}}
-{{--                                                        onclick="history.back();">--}}
-{{--                                                    <i class="ft-x"></i> تراجع--}}
-{{--                                                </button>--}}
-{{--                                                <button type="submit" class="btn btn-primary">--}}
-{{--                                                    <i class="la la-check-square-o"></i> تحديث--}}
-{{--                                                </button>--}}
-{{--                                            </div>--}}
-{{--                                        </form>--}}
                                         <form id="image-upload-form" method="POST" enctype="multipart/form-data">
-                                            <input type="file" name="images[]" id="image-upload" multiple>
-                                            <button type="submit">Upload</button>
+                                            <div class="card-body">
+                                                <fieldset class="form-group">
+                                                    <div class="custom-file">
+                                                        <input type="file" name="images[]" id="image-upload" multiple class="custom-file-input">
+                                                        <label class="custom-file-label" for="inputGroupFile02" aria-describedby="inputGroupFile02">Choose file</label>
+                                                        <button class="btn btn-primary mt-2" type="submit">Upload</button>
+                                                    </div>
+                                                </fieldset>
+                                            </div>
                                         </form>
 
-                                        <table id="images-table">
-                                            <thead>
-                                            <tr>
-                                                <th>Image</th>
-                                                <th>Action</th>
-                                            </tr>
-                                            </thead>
-                                            <tbody>
-                                            <!-- Existing images will be listed here -->
-                                            </tbody>
-                                        </table>
+                                        <div class="table-responsive mt-1">
+                                            <table class="table" id="images-table">
+                                                <thead>
+                                                    <tr>
+                                                        <th>Image</th>
+                                                        <th>Action</th>
+                                                    </tr>
+                                                </thead>
+                                                <tbody>
+                                                @foreach ($product->images as $image)
+                                                    <tr>
+                                                        <td><img src="{{ url('uploads/images/' . $image->image) }}" style="width: 100px; height: auto;"></td>
+                                                        <td>
+                                                            <button type="button" class="remove-image btn btn-danger" data-id="{{ $image->id }}">Remove</button>
+                                                        </td>
+                                                    </tr>
+                                                @endforeach
+                                                </tbody>
+                                            </table>
+                                        </div>
 
                                     </div>
                                 </div>
@@ -99,9 +89,11 @@
     </div>
 
 
+
 @stop
 
 @section('script')
+    <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
 
     <script>
         $(document).ready(function() {
@@ -116,13 +108,19 @@
                 var formData = new FormData(this);
 
                 $.ajax({
-                    url: "{{ route('admin.product.image.update',$product) }}",
+                    url: "{{ route('admin.product.image.update', $product) }}",
                     type: 'POST',
                     data: formData,
                     success: function(data) {
-                        // Update the table with the new image
-                        data.uploadedImages.forEach(function(imageUrl) {
-                            $('#images-table tbody').append('<tr><td><img src="' + imageUrl + '" style="width: 100px; height: auto;"></td><td><button type="button" class="remove-image" data-url="' + imageUrl + '">Remove</button></td></tr>');
+                        data.uploadedImages.forEach(function(image) {
+                            $('#images-table tbody').append('<tr><td><img src="' + image.url + '" style="width: 100px; height: auto;"></td><td><button type="button" class="remove-image btn btn-danger" data-id="' + image.id + '">Remove</button></td></tr>');
+
+                            Swal.fire({
+                                title: 'Success!',
+                                text: 'Image uploaded successfully',
+                                icon: 'success',
+                                confirmButtonText: 'OK'
+                            });
                         });
                     },
                     cache: false,
@@ -132,21 +130,27 @@
             });
 
             $(document).on('click', '.remove-image', function() {
-                var imageUrl = $(this).data('url');
+                var imageId = $(this).data('id'); // Get the image ID
                 var row = $(this).closest('tr');
+
+                // Construct the URL for the AJAX request
+                var url = "{{ url('admin/product/images/delete') }}/" + imageId;
 
                 // AJAX request to remove the image
                 $.ajax({
-                    url: "{{ route('admin.product.image.destroy') }}",
+                    url: url,
                     type: 'POST',
-                    data: { url: imageUrl },
+                    data: { _method: 'DELETE', _token: "{{ csrf_token() }}" },
                     success: function(data) {
                         // Remove the row from the table
                         row.remove();
+                    },
+                    error: function(xhr, status, error) {
+                        console.log(error)
                     }
                 });
             });
         });
     </script>
-
 @stop
+

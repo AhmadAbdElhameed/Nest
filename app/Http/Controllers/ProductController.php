@@ -101,9 +101,9 @@ class ProductController extends Controller
     {
         return $this->productInterface->updateImages($request,$product);
     }
-    public function destroyImage(Request $request)
+    public function destroyImage($id)
     {
-        return $this->productInterface->destroyImage($request);
+        return $this->productInterface->destroyImage($id);
     }
 
 }
