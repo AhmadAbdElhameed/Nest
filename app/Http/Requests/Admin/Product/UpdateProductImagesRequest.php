@@ -24,7 +24,7 @@ class UpdateProductImagesRequest extends FormRequest
     public function rules(): array
     {
         return [
-
+            'images.*' => 'required|image|mimes:jpeg,png,jpg,gif,svg|max:2048',
         ];
     }
 }

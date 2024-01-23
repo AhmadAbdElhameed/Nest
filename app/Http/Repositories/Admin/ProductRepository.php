@@ -128,6 +128,7 @@ class ProductRepository implements ProductInterface
     public function updateInventory($request, $product)
     {
 
+        dd($request->all());
         DB::beginTransaction();
 
         if (!$request->has('manage_stock'))
@@ -158,6 +159,7 @@ class ProductRepository implements ProductInterface
 
     public function updateImages($request, $product)
     {
+
         $uploadedImages = [];
 
         if ($request->hasFile('images')) {
@@ -176,6 +178,11 @@ class ProductRepository implements ProductInterface
                     'id' => $imageRecord->id // Return the ID of the image
                 ];
             }
+
+        }
+        if (count($uploadedImages) === 0) {
+        // No files were uploaded or the array of uploaded images is empty
+        return response()->json(['error' => 'No images were uploaded'], 422);
         }
 
         return response()->json(['uploadedImages' => $uploadedImages]);

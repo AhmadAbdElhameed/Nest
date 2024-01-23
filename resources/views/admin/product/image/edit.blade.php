@@ -46,13 +46,13 @@
                                     <div class="card-body">
                                         <form id="image-upload-form" method="POST" enctype="multipart/form-data">
                                             <div class="card-body">
-                                                <fieldset class="form-group">
-                                                    <div class="custom-file">
-                                                        <input type="file" name="images[]" id="image-upload" multiple class="custom-file-input">
-                                                        <label class="custom-file-label" for="inputGroupFile02" aria-describedby="inputGroupFile02">Choose file</label>
-                                                        <button class="btn btn-primary mt-2" type="submit">Upload</button>
-                                                    </div>
-                                                </fieldset>
+
+                                                <div class="mb-3">
+                                                    <label for="formFile" class="form-label">Upload Product Images</label>
+                                                    <input class="form-control" type="file" name="images[]" id="image-upload" multiple>
+                                                    <button class="btn btn-primary mt-2" type="submit">Upload</button>
+                                                    <div class="mt-2" id="validation-errors"></div>
+                                                </div>
                                             </div>
                                         </form>
 
@@ -112,6 +112,8 @@
                     type: 'POST',
                     data: formData,
                     success: function(data) {
+                        // Clear the file input by resetting its value
+                        $('#image-upload').val('');
                         data.uploadedImages.forEach(function(image) {
                             $('#images-table tbody').append('<tr><td><img src="' + image.url + '" style="width: 100px; height: auto;"></td><td><button type="button" class="remove-image btn btn-danger" data-id="' + image.id + '">Remove</button></td></tr>');
 
@@ -123,6 +125,28 @@
                             });
                         });
                     },
+                    error: function(xhr) {
+                        // Clear the file input by resetting its value
+                        $('#image-upload').val('');
+                        $('#validation-errors').empty(); // Clear any existing errors
+
+                        // Check if there are validation errors (status code 422)
+                        if (xhr.status === 422) {
+                            var errors = xhr.responseJSON.errors;
+                            for (var key in errors) {
+                                if (errors.hasOwnProperty(key)) {
+                                    // Append each error to the validation-errors div
+                                    errors[key].forEach(function(error) {
+                                        $('#validation-errors').append('<div class="alert alert-danger">' + error + '</div>');
+                                    });
+                                }
+                            }
+                        } else {
+                            // For non-validation errors, you can add a generic error message
+                            $('#validation-errors').append('<div class="alert alert-danger">An error occurred. Please try again.</div>');
+                        }
+                    },
+
                     cache: false,
                     contentType: false,
                     processData: false
