@@ -8,6 +8,7 @@ use App\Http\Controllers\Admin\ProfileController;
 use App\Http\Controllers\Admin\SettingController;
 use App\Http\Controllers\Admin\SubCategoryController;
 use App\Http\Controllers\Admin\TagController;
+use App\Http\Controllers\AttributeController;
 use App\Http\Controllers\ProductController;
 use Illuminate\Support\Facades\Route;
 use Mcamara\LaravelLocalization\Facades\LaravelLocalization;
@@ -103,7 +104,6 @@ Route::group(
                 Route::put('update/{product}', 'update')->name('update');
                 Route::get('delete/{product}', 'destroy')->name('delete');
 
-
                 Route::get('get-price/{product}', 'getPrice')->name('price');
                 Route::put('update-price/{product}', 'updatePrice')->name('price.update');
 
@@ -115,6 +115,17 @@ Route::group(
                 Route::delete('/images/delete/{id}', 'destroyImage')->name('image.destroy');
             });
             ################################## Products Routes #######################################
+
+            ################################## Attributes Routes ####################################
+            Route::prefix('attribute')->as('attribute.')->controller(AttributeController::class)->group(function () {
+                Route::get('/', 'index')->name('index');
+                Route::get('create', 'create')->name('create');
+                Route::post('store', 'store')->name('store');
+                Route::get('edit/{attribute}', 'edit')->name('edit');
+                Route::put('update/{attribute}', 'update')->name('update');
+                Route::get('delete/{attribute}', 'destroy')->name('delete');
+            });
+            ################################## Attributes Routes #######################################
 
         });
 

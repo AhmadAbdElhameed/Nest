@@ -2,18 +2,27 @@
 
 namespace App\Http\Controllers;
 
+use App\Http\Interfaces\Admin\AttributeInterface;
 use App\Http\Requests\StoreAttributeRequest;
 use App\Http\Requests\UpdateAttributeRequest;
 use App\Models\Attribute;
 
 class AttributeController extends Controller
 {
+
+    private $attributeInterface;
+
+    public function __construct(AttributeInterface $attribute)
+    {
+        $this->attributeInterface = $attribute;
+    }
+
     /**
      * Display a listing of the resource.
      */
     public function index()
     {
-        //
+        return $this->attributeInterface->index();
     }
 
     /**
@@ -21,7 +30,7 @@ class AttributeController extends Controller
      */
     public function create()
     {
-        //
+        return $this->attributeInterface->create();
     }
 
     /**
@@ -29,7 +38,7 @@ class AttributeController extends Controller
      */
     public function store(StoreAttributeRequest $request)
     {
-        //
+        return $this->attributeInterface->store($request);
     }
 
     /**
@@ -37,7 +46,7 @@ class AttributeController extends Controller
      */
     public function show(Attribute $attribute)
     {
-        //
+        return $this->attributeInterface->show($attribute);
     }
 
     /**
@@ -45,7 +54,7 @@ class AttributeController extends Controller
      */
     public function edit(Attribute $attribute)
     {
-        //
+        return $this->attributeInterface->edit($attribute);
     }
 
     /**
@@ -53,7 +62,7 @@ class AttributeController extends Controller
      */
     public function update(UpdateAttributeRequest $request, Attribute $attribute)
     {
-        //
+        return $this->attributeInterface->update($request,$attribute);
     }
 
     /**
@@ -61,6 +70,6 @@ class AttributeController extends Controller
      */
     public function destroy(Attribute $attribute)
     {
-        //
+        return $this->attributeInterface->destroy($attribute);
     }
 }
