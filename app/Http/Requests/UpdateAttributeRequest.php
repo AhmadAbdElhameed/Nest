@@ -2,6 +2,8 @@
 
 namespace App\Http\Requests;
 
+use App\Rules\UniqueAttributeName;
+use App\Rules\UpdateUniqueAttributeName;
 use Illuminate\Foundation\Http\FormRequest;
 
 class UpdateAttributeRequest extends FormRequest
@@ -11,7 +13,7 @@ class UpdateAttributeRequest extends FormRequest
      */
     public function authorize(): bool
     {
-        return false;
+        return true;
     }
 
     /**
@@ -22,7 +24,7 @@ class UpdateAttributeRequest extends FormRequest
     public function rules(): array
     {
         return [
-            //
+            'name' => ['required','max:100',new UpdateUniqueAttributeName($this->attribute->id)]
         ];
     }
 }

@@ -2,6 +2,7 @@
 
 namespace App\Http\Requests;
 
+use App\Rules\UniqueAttributeName;
 use Illuminate\Foundation\Http\FormRequest;
 
 class StoreAttributeRequest extends FormRequest
@@ -22,7 +23,7 @@ class StoreAttributeRequest extends FormRequest
     public function rules(): array
     {
         return [
-            'name' => 'required|max:100'
+            'name' => ['required','max:100',new UniqueAttributeName($this->name)]
         ];
     }
 }
