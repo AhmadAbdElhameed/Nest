@@ -76,4 +76,9 @@ class Product extends Model
     {
         return $this->hasMany(Image::class);
     }
+
+    public function options(): \Illuminate\Database\Eloquent\Relations\HasMany
+    {
+        return $this->hasMany(Option::class);
+    }
 }

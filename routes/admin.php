@@ -9,6 +9,7 @@ use App\Http\Controllers\Admin\SettingController;
 use App\Http\Controllers\Admin\SubCategoryController;
 use App\Http\Controllers\Admin\TagController;
 use App\Http\Controllers\AttributeController;
+use App\Http\Controllers\OptionController;
 use App\Http\Controllers\ProductController;
 use Illuminate\Support\Facades\Route;
 use Mcamara\LaravelLocalization\Facades\LaravelLocalization;
@@ -118,6 +119,17 @@ Route::group(
 
             ################################## Attributes Routes ####################################
             Route::prefix('attribute')->as('attribute.')->controller(AttributeController::class)->group(function () {
+                Route::get('/', 'index')->name('index');
+                Route::get('create', 'create')->name('create');
+                Route::post('store', 'store')->name('store');
+                Route::get('edit/{attribute}', 'edit')->name('edit');
+                Route::put('update/{attribute}', 'update')->name('update');
+                Route::get('delete/{attribute}', 'destroy')->name('delete');
+            });
+            ################################## Attributes Routes #######################################
+
+            ################################## Attributes Routes ####################################
+            Route::prefix('option')->as('option.')->controller(OptionController::class)->group(function () {
                 Route::get('/', 'index')->name('index');
                 Route::get('create', 'create')->name('create');
                 Route::post('store', 'store')->name('store');
