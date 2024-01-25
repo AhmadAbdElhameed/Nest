@@ -32,6 +32,11 @@ class Category extends Model
        return $this->status == 1 ? __('admin/category.status_active') : __('admin/category.status_inactive');
      }
 
+
+    public function scopeActive($query){
+        return $query -> where('status',1) ;
+    }
+
     /**
      * Get the options for generating the slug.
      */

@@ -27,4 +27,7 @@ return [
     'tags' => 'كل العلامات',
     'tags_create' => 'اضافة علامة',
     'tags_title' => 'العلامات Tags',
+    'products' => 'كل المنتجات',
+    'products_create' => 'اضافة منتج',
+    'products_title' => 'المنتجات',
 ];
