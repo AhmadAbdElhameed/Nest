@@ -15,6 +15,7 @@ return new class extends Migration
             $table->id();
             $table->unsignedBigInteger('attribute_id')->nullable();
             $table->unsignedBigInteger('product_id')->nullable();
+            $table->string('price');
 
             $table->foreign('attribute_id')->references('id')->on('attributes')
                 ->onDelete('cascade');

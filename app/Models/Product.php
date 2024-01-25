@@ -47,6 +47,10 @@ class Product extends Model
     protected $translatedAttributes = ['name','description','short_description'];
 
 
+    public function scopeActive($query){
+        return $query->where('status' , 1);
+    }
+
     public function getActive(){
         return $this->status == 1 ? __('admin/category.status_active') : __('admin/category.status_inactive');
     }

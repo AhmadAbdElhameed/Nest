@@ -10,7 +10,7 @@ class Option extends Model
 {
     use HasFactory,Translatable;
 
-    protected $fillable = ['attribute_id','product_id'];
+    protected $fillable = ['attribute_id','product_id','price'];
 
     protected $with = ['translations'];
     protected $translatedAttributes = ['name'];
@@ -19,5 +19,8 @@ class Option extends Model
 
     public function product(){
         return $this->belongsTo(Product::class);
+    }
+    public function attribute(){
+        return $this->belongsTo(Attribute::class);
     }
 }
