@@ -14,10 +14,11 @@ use Illuminate\Support\Facades\Route;
 */
 
 Route::get('/', function () {
-     $category = \App\Models\Category::all();
-     $category->makeVisible(['translations']);
-
-     return $category;
+//     $category = \App\Models\Category::all();
+//     $category->makeVisible(['translations']);
+//
+//     return $category;
+    return view('front.index');
 });
 //Route::get('/admin', function () {
 //    return view('layouts.admin');
