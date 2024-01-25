@@ -68,7 +68,7 @@
                                                                  aria-label="Basic example">
                                                                 <a href="{{route('admin.option.edit',$option)}}"
                                                                    class="btn btn-outline-primary btn-min-width box-shadow-3 mr-1 mb-1">تعديل</a>
-                                                                <a href=""
+                                                                <a href="{{route('admin.option.delete',$option)}}"
                                                                    class="btn btn-outline-danger btn-min-width box-shadow-3 mr-1 mb-1">حذف</a>
                                                             </div>
                                                         </td>

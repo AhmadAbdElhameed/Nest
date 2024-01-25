@@ -1,5 +1,5 @@
 
-@extends('layouts.admin')
+@extends('admin.layouts.master')
 @section('content')
 
     <div class="app-content content">
@@ -11,7 +11,7 @@
                             <ol class="breadcrumb">
                                 <li class="breadcrumb-item"><a href="">الرئيسية </a>
                                 </li>
-                                <li class="breadcrumb-item"><a href="{{route('admin.options')}}"> options </a>
+                                <li class="breadcrumb-item"><a href="{{route('admin.option.index')}}"> options </a>
                                 </li>
                                 <li class="breadcrumb-item active"> update options
                                 </li>
@@ -39,21 +39,20 @@
                                         </ul>
                                     </div>
                                 </div>
-                                @include('dashboard.includes.alerts.success')
-                                @include('dashboard.includes.alerts.errors')
+                                @include('admin.includes.alerts.success')
+                                @include('admin.includes.alerts.errors')
                                 <div class="card-content collapse show">
                                     <div class="card-body">
                                         <form class="form"
-                                              action="{{route('admin.options.update',$option -> id)}}"
+                                              action="{{route('admin.option.update',$option)}}"
                                               method="POST"
                                               enctype="multipart/form-data">
                                             @csrf
-
-                                            <input name="id" value="{{$option -> id}}" type="hidden">
+                                            @method('PUT')
 
                                             <div class="form-body">
 
-                                                <h4 class="form-section"><i class="ft-home"></i> {{$option -> name}} </h4>
+                                                <h4 class="form-section"><i class="ft-home"></i> {{$option->name}} </h4>
                                                 <div class="row">
                                                     <div class="col-md-6">
                                                         <div class="form-group">
@@ -62,7 +61,7 @@
                                                             <input type="text" id="name"
                                                                    class="form-control"
                                                                    placeholder="  "
-                                                                   value=" {{$option -> name}}"
+                                                                   value=" {{$option->name}}"
                                                                    name="name">
                                                             @error("name")
                                                             <span class="text-danger">{{$message}}</span>
@@ -77,7 +76,7 @@
                                                             <input type="text" id="price"
                                                                    class="form-control"
                                                                    placeholder="  "
-                                                                   value=" {{$option -> price}}"
+                                                                   value=" {{$option->price}}"
                                                                    name="price">
                                                             @error("price")
                                                             <span class="text-danger">{{$message}}</span>

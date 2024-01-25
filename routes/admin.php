@@ -128,16 +128,16 @@ Route::group(
             });
             ################################## Attributes Routes #######################################
 
-            ################################## Attributes Routes ####################################
+            ################################## Options Routes ####################################
             Route::prefix('option')->as('option.')->controller(OptionController::class)->group(function () {
                 Route::get('/', 'index')->name('index');
                 Route::get('create', 'create')->name('create');
                 Route::post('store', 'store')->name('store');
-                Route::get('edit/{attribute}', 'edit')->name('edit');
-                Route::put('update/{attribute}', 'update')->name('update');
-                Route::get('delete/{attribute}', 'destroy')->name('delete');
+                Route::get('edit/{option}', 'edit')->name('edit');
+                Route::put('update/{option}', 'update')->name('update');
+                Route::get('delete/{option}', 'destroy')->name('delete');
             });
-            ################################## Attributes Routes #######################################
+            ################################## Options Routes #######################################
 
         });
 

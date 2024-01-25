@@ -59,16 +59,33 @@ class OptionRepository implements OptionInterface
 
     public function edit($option)
     {
-        // TODO: Implement edit() method.
+        $products = Product::active()->select('id')->get();
+        $attributes = Attribute::select('id')->get();
+        return view('admin.options.edit',compact('option','attributes','products'));
     }
 
     public function update($request, $option)
     {
-        // TODO: Implement update() method.
+        DB::beginTransaction();
+
+        $option->update([
+            'attribute_id' => $request->attribute_id,
+            'product_id' => $request->product_id,
+            'price' => $request->price,
+        ]);
+
+        $option->name = $request->name;
+        $option->save();
+
+        DB::commit();
+
+        return redirect()->route('admin.option.index')->with(['success' => 'Updated']);
     }
 
     public function destroy($option)
     {
-        // TODO: Implement destroy() method.
+        $option->delete();
+        toast('Option Has Been Deleted Successfully!','success');
+        return redirect()->back();
     }
 }
