@@ -177,7 +177,18 @@
                                             <a href="page-account.html"><i class="fi fi-rs-settings-sliders mr-10"></i>Setting</a>
                                         </li>
                                         <li>
-                                            <a href="page-login.html"><i class="fi fi-rs-sign-out mr-10"></i>Sign out</a>
+                                            <!-- Authentication -->
+                                            <form method="POST" action="{{ route('logout') }}">
+                                                @csrf
+
+                                                <i class="fi fi-rs-sign-out mr-10"></i><a href=""
+                                                                       onclick="event.preventDefault();
+                                                            this.closest('form').submit();">
+                                                    {{ __('Log Out') }}
+                                                </a>
+                                            </form>
+
+{{--                                            <a href="{{route('logout')}}"><i class="fi fi-rs-sign-out mr-10"></i>Sign out</a>--}}
                                         </li>
                                     </ul>
                                 </div>

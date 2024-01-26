@@ -17,7 +17,7 @@ use Mcamara\LaravelLocalization\Facades\LaravelLocalization;
 
 Route::get('/', function () {
     return view('front/index');
-});
+})->name('home');
 
 Route::get('/dashboard', function () {
     return view('dashboard');
