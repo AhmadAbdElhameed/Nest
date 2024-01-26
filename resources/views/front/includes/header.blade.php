@@ -105,14 +105,14 @@
 
                             <div class="header-action-icon-2">
                                 <a href="shop-wishlist.html">
-                                    <img class="svgInject" alt="Nest" src="assets/front/imgs/theme/icons/icon-heart.svg" />
+                                    <img class="svgInject" alt="Nest" src="{{asset('assets/front/imgs/theme/icons/icon-heart.svg')}}" />
                                     <span class="pro-count blue">6</span>
                                 </a>
                                 <a href="shop-wishlist.html"><span class="lable">Wishlist</span></a>
                             </div>
                             <div class="header-action-icon-2">
                                 <a class="mini-cart-icon" href="shop-cart.html">
-                                    <img alt="Nest" src="assets/front/imgs/theme/icons/icon-cart.svg" />
+                                    <img alt="Nest" src="{{asset('assets/front/imgs/theme/icons/icon-cart.svg')}}" />
                                     <span class="pro-count blue">2</span>
                                 </a>
                                 <a href="shop-cart.html"><span class="lable">Cart</span></a>
@@ -120,7 +120,7 @@
                                     <ul>
                                         <li>
                                             <div class="shopping-cart-img">
-                                                <a href="shop-product-right.html"><img alt="Nest" src="assets/front/imgs/shop/thumbnail-3.jpg" /></a>
+                                                <a href="shop-product-right.html"><img alt="Nest" src="{{asset('assets/front/imgs/shop/thumbnail-3.jpg')}}" /></a>
                                             </div>
                                             <div class="shopping-cart-title">
                                                 <h4><a href="shop-product-right.html">Daisy Casual Bag</a></h4>
@@ -132,7 +132,7 @@
                                         </li>
                                         <li>
                                             <div class="shopping-cart-img">
-                                                <a href="shop-product-right.html"><img alt="Nest" src="assets/front/imgs/shop/thumbnail-2.jpg" /></a>
+                                                <a href="shop-product-right.html"><img alt="Nest" src="{{asset('assets/front/imgs/shop/thumbnail-2.jpg')}}" /></a>
                                             </div>
                                             <div class="shopping-cart-title">
                                                 <h4><a href="shop-product-right.html">Corduroy Shirts</a></h4>
@@ -155,14 +155,20 @@
                                 </div>
                             </div>
                             <div class="header-action-icon-2">
+
+
+                                @auth
                                 <a href="page-account.html">
-                                    <img class="svgInject" alt="Nest" src="assets/front/imgs/theme/icons/icon-user.svg" />
+                                    <img class="svgInject" alt="Nest" src="{{asset('assets/front/imgs/theme/icons/icon-user.svg')}}" />
                                 </a>
                                 <a href="page-account.html"><span class="lable ml-0">Account</span></a>
                                 <div class="cart-dropdown-wrap cart-dropdown-hm2 account-dropdown">
                                     <ul>
                                         <li>
-                                            <a href="page-account.html"><i class="fi fi-rs-user mr-10"></i>My Account</a>
+                                            Welcome, {{auth()->user()->name}}
+                                        </li>
+                                        <li>
+                                            <a href="page-account.html"><i class="fi fi-rs-user mr-10"></i>Dashboard</a>
                                         </li>
                                         <li>
                                             <a href="page-account.html"><i class="fi fi-rs-location-alt mr-10"></i>Order Tracking</a>
@@ -192,6 +198,14 @@
                                         </li>
                                     </ul>
                                 </div>
+                                @else
+                                    <a href="{{route('login')}}">
+                                        <img class="svgInject" alt="Nest" src="{{asset('assets/front/imgs/theme/icons/icon-user.svg')}}" />
+                                        <span>
+                                            Login
+                                        </span>
+                                    </a>
+                                @endauth
                             </div>
                         </div>
                     </div>
