@@ -31,12 +31,16 @@
                                     <form method="POST" action="{{ route('login') }}">
                                         @csrf
                                         <div class="form-group">
-                                            <input type="email" name="email" value="{{old('email')}}" required  placeholder="Username or Email *" />
-                                            <x-input-error :messages="$errors->get('email')" class="mt-2" />
+                                            <input type="email" class="@error('email') is-invalid  @enderror" name="email" value="{{old('email')}}" required  placeholder="Username or Email *" />
+                                            @error('email')
+                                                <span class="text-danger">{{$message}}</span>
+                                            @enderror
                                         </div>
                                         <div class="form-group">
-                                            <input required id="password"  type="password" name="password" placeholder="Your password *" />
-                                            <x-input-error :messages="$errors->get('password')" class="mt-2" />
+                                            <input required id="password" class="@error('password') is-invalid  @enderror" type="password" name="password" placeholder="Your password *" />
+                                            @error('password')
+                                            <span class="text-danger">{{$message}}</span>
+                                            @enderror
                                         </div>
 {{--                                        <div class="login_footer form-group">--}}
 {{--                                            <div class="chek-form">--}}

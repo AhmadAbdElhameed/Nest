@@ -29,12 +29,21 @@
                                         @csrf
                                         <div class="form-group">
                                             <input type="text" id="name" required="" value="{{old('name')}}" name="name" placeholder="Name" />
+                                            @error('name')
+                                                <span class="text-danger">{{$message}}</span>
+                                            @enderror
                                         </div>
                                         <div class="form-group">
                                             <input type="email" id="email" required="" value="{{old('email')}}" name="email" placeholder="Email" />
+                                            @error('email')
+                                                <span class="text-danger">{{$message}}</span>
+                                            @enderror
                                         </div>
                                         <div class="form-group">
                                             <input required="" id="password" type="password" name="password" placeholder="Password" />
+                                            @error('password')
+                                                <span class="text-danger">{{$message}}</span>
+                                            @enderror
                                         </div>
                                         <div class="form-group">
                                             <input required="" id="password_confirmation" type="password" name="password_confirmation" placeholder="Confirm password" />
@@ -80,15 +89,15 @@
                         <div class="col-lg-6 pr-30 d-none d-lg-block">
                             <div class="card-login mt-115">
                                 <a href="#" class="social-login facebook-login">
-                                    <img src="assets/imgs/theme/icons/logo-facebook.svg" alt="" />
+                                    <img src="{{asset('assets/front/imgs/theme/icons/logo-facebook.svg')}}" alt="" />
                                     <span>Continue with Facebook</span>
                                 </a>
                                 <a href="#" class="social-login google-login">
-                                    <img src="assets/imgs/theme/icons/logo-google.svg" alt="" />
+                                    <img src="{{asset('assets/front/imgs/theme/icons/logo-google.svg')}}" alt="" />
                                     <span>Continue with Google</span>
                                 </a>
                                 <a href="#" class="social-login apple-login">
-                                    <img src="assets/imgs/theme/icons/logo-apple.svg" alt="" />
+                                    <img src="{{asset('assets/front/imgs/theme/icons/logo-apple.svg')}}" alt="" />
                                     <span>Continue with Apple</span>
                                 </a>
                             </div>
