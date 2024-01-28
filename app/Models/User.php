@@ -24,6 +24,8 @@ class User extends Authenticatable implements MustVerifyEmail
         'name',
         'email',
         'password',
+        'verification_token',
+        'verification_token_till'
     ];
 
     /**
@@ -47,13 +49,16 @@ class User extends Authenticatable implements MustVerifyEmail
     ];
 
     public function sendEmailVerificationNotification(){
-        $url = URL::temporarySignedRoute(
-            'verification.verify', now()->addMinutes(30), [
-                'id' => $this->getKey(),
-                'hash' => sha1($this->getEmailForVerification())
-            ]
-        );
+        if(config('verification.mode') == 'email') {
+            $url = URL::temporarySignedRoute(
+                'verification.verify', now()->addMinutes(30), [
+                    'id' => $this->getKey(),
+                    'hash' => sha1($this->getEmailForVerification())
+                ]
+            );
 
-        $this->notify(new EmailVerification($url));
+            $this->notify(new EmailVerification($url));
+        }
+
     }
 }
