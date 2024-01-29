@@ -3,6 +3,7 @@
 namespace App\Http\Controllers\Front;
 
 use App\Http\Controllers\Controller;
+use App\Http\Services\Twilio;
 use App\Models\User;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
@@ -27,7 +28,7 @@ class OTPController extends Controller
         $user->generateOTP();
 
         // Send OTP
-
+        (new  Twilio())->send($user);
 
         return view('front.auth.verify-otp')->with(['email' => $request->email]);
     }

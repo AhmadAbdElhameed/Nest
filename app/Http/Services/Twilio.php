@@ -4,11 +4,15 @@ namespace App\Http\Services;
 
 
 use Illuminate\Support\Facades\Log;
+use Twilio\Exceptions\ConfigurationException;
 use Twilio\Exceptions\TwilioException;
 use Twilio\Rest\Client;
 
 class Twilio
 {
+    /**
+     * @throws ConfigurationException
+     */
     public function send($user){
 
         // Your Account SID and Auth Token from console.twilio.com
@@ -26,7 +30,7 @@ class Twilio
                 $user->phone,
                 [
                     // A Twilio phone number you purchased at https://console.twilio.com
-                    'from' => '+201092990000',
+                    'from' => env('TWILIO_PHONE'),
                     // The body of the text message you'd like to send
                     'body' => "Hey $user->name! Your OTP is $user->otp"
                 ]
