@@ -6,5 +6,7 @@ return [
     // cvt => email verification with custom token
     // otp => otp verification
 //    'mode' => 'email',
-    'mode' => 'otp'
+    'mode' => 'otp',
+
+    'otp_provider' => 'vonage',
 ];
