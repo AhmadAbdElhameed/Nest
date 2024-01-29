@@ -1,5 +1,6 @@
 <?php
 
+use App\Http\Controllers\Admin\CustomVerificationTokenController;
 use App\Http\Controllers\Auth\AuthenticatedSessionController;
 use App\Http\Controllers\Auth\ConfirmablePasswordController;
 use App\Http\Controllers\Auth\EmailVerificationNotificationController;
@@ -48,6 +49,21 @@ Route::middleware('auth')->group(function () {
             ->middleware('throttle:6,1')
             ->name('verification.send');
         }
+
+    if(config('verification.mode') == 'cvt'){
+        Route::get('verify-email', [CustomVerificationTokenController::class,'notice'])
+            ->name('verification.notice');
+
+        Route::get('verify-email/{id}/{token}', [CustomVerificationTokenController::class,'verify'])
+            ->middleware(['throttle:6,1'])
+            ->name('verification.verify');
+
+        Route::post('email/verification-notification', [CustomVerificationTokenController::class, 'store'])
+            ->middleware('throttle:6,1')
+            ->name('verification.send');
+        }
+
+
         Route::get('confirm-password', [ConfirmablePasswordController::class, 'show'])
             ->name('password.confirm');
 

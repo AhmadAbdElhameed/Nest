@@ -61,13 +61,22 @@ class User extends Authenticatable implements MustVerifyEmail
             $this->notify(new EmailVerification($url));
         }
 
+        if(config('verification.mode') == 'cvt') {
+            $this->generateVerificationToken();
+            $url = route('verification.verify',[
+                'id' => $this->getKey(),
+                'token' => $this->verification_token,
+            ]);
+            $this->notify(new EmailVerification($url));
+        }
+
     }
 
 
     public function generateVerificationToken(){
         if(config('verification.mode') == 'cvt'){
             $this->verification_token = Str::random(60);
-            $this->verification_token_till = now()->addMinutes(10);
+            $this->verification_token_till = now()->addMinutes(240);
             $this->save();
         }
     }
