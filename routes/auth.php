@@ -24,6 +24,7 @@ Route::middleware('guest')->group(function () {
 
     if(config('verification.mode') == 'otp'){
         Route::post('login', [OTPController::class, 'store']);
+        Route::post('verify-otp', [OTPController::class, 'verifyOTP'])->name('user.verify.otp');
     }else{
         Route::post('login', [AuthenticatedSessionController::class, 'store']);
     }
