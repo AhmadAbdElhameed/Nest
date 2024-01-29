@@ -36,6 +36,7 @@ class EmailVerification extends Notification
     {
         return (new MailMessage)
                     ->line('Email Verification.')
+                    ->line('This link is valid for 30 minutes only.')
                     ->action('Verify Account', url($this->url))
                     ->line('Thank you for using our application!');
     }

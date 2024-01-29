@@ -76,7 +76,7 @@ class User extends Authenticatable implements MustVerifyEmail
     public function generateVerificationToken(){
         if(config('verification.mode') == 'cvt'){
             $this->verification_token = Str::random(60);
-            $this->verification_token_till = now()->addMinutes(240);
+            $this->verification_token_till = now()->addMinutes(30);
             $this->save();
         }
     }

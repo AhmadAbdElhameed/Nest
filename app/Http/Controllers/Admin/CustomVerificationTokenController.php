@@ -3,9 +3,11 @@
 namespace App\Http\Controllers\Admin;
 
 use App\Http\Controllers\Controller;
+use App\Models\User;
 use App\Providers\RouteServiceProvider;
 
 use Illuminate\Auth\Events\Verified;
+use App\Http\Requests\Front\Verification\CustomEmailVerificationRequest;
 use Illuminate\Foundation\Auth\EmailVerificationRequest;
 use Illuminate\Http\RedirectResponse;
 use Illuminate\Http\Request;
@@ -20,17 +22,15 @@ class CustomVerificationTokenController extends Controller
             : view('auth.verify-email');
     }
 
-    public function verify(EmailVerificationRequest $request)
+    public function verify(CustomEmailVerificationRequest $request)
     {
-        if ($request->user()->hasVerifiedEmail()) {
-            return redirect()->intended(RouteServiceProvider::HOME.'?verified=1');
+        $user = User::where('verification_token' , $request->token)->firstOrFail();
+        if(now() < $user->verification_token_till){
+            $user->verifyUsingVerificationToken();
+            return to_route('dashboard');
         }
 
-        if ($request->user()->markEmailAsVerified()) {
-            event(new Verified($request->user()));
-        }
-
-        return redirect()->intended(RouteServiceProvider::HOME.'?verified=1');
+        abort(401);
     }
 
     public function store(Request $request)
