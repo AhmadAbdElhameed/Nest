@@ -89,5 +89,19 @@ class User extends Authenticatable implements MustVerifyEmail
         }
     }
 
+    public function generateOTP(){
+        if(config('verification.mode') == 'otp'){
+            $this->otp = rand(111111,999999);
+            $this->otp_till = now()->addMinutes(1);
+            $this->save();
+        }
+    }
+    public function resetOTP(){
+        if(config('verification.mode') == 'otp'){
+            $this->otp = null;
+            $this->otp_till = null;
+            $this->save();
+        }
+    }
 
 }

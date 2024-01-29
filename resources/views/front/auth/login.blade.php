@@ -31,17 +31,20 @@
                                     <form method="POST" action="{{ route('login') }}">
                                         @csrf
                                         <div class="form-group">
-                                            <input type="email" class="@error('email') is-invalid  @enderror" name="email" value="{{old('email')}}" required  placeholder="Username or Email *" />
+                                            <input type="email" class="@error('email') is-invalid  @enderror" name="email" value="{{old('email')}}" required  placeholder="Your Email *" />
                                             @error('email')
                                                 <span class="text-danger">{{$message}}</span>
                                             @enderror
                                         </div>
-                                        <div class="form-group">
-                                            <input required id="password" class="@error('password') is-invalid  @enderror" type="password" name="password" placeholder="Your password *" />
-                                            @error('password')
-                                            <span class="text-danger">{{$message}}</span>
-                                            @enderror
-                                        </div>
+                                        @if(config('verification.mode' != 'otp'))
+                                            <div class="form-group">
+                                                <input required id="password" class="@error('password') is-invalid  @enderror" type="password" name="password" placeholder="Your password *" />
+                                                @error('password')
+                                                <span class="text-danger">{{$message}}</span>
+                                                @enderror
+                                            </div>
+                                        @endif
+
 {{--                                        <div class="login_footer form-group">--}}
 {{--                                            <div class="chek-form">--}}
 {{--                                                <input type="text" required="" name="email" placeholder="Security code *" />--}}
