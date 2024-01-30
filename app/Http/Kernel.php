@@ -70,5 +70,8 @@ class Kernel extends HttpKernel
         'localeCookieRedirect'    => \Mcamara\LaravelLocalization\Middleware\LocaleCookieRedirect::class,
         'localeViewPath'          => \Mcamara\LaravelLocalization\Middleware\LaravelLocalizationViewPath::class,
         'admin'          => \App\Http\Middleware\Admin::class,
+        'ensure_2fa'          => \App\Http\Middleware\EnsureAdminIsAwaiting2FA::class,
+        '2fa.completed' => \App\Http\Middleware\Ensure2FACompleted::class,
+
     ];
 }

@@ -154,7 +154,11 @@
                             </li>
                             <li><a class="menu-item" href="{{route('admin.settings.shipping-method','outer')}}">{{ __('admin/sidebar.outer_shipping') }}</a>
                             </li>
+
                         </ul>
+
+                    <li><a class="menu-item" href="{{route('admin.settings.edit.2fa',auth()->guard('admin')->user())}}">Edit 2 FA</a>
+                    </li>
                     </li>
                 </ul>
             </li>

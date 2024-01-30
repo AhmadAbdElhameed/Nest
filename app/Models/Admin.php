@@ -9,9 +9,10 @@ use Illuminate\Notifications\Notifiable;
 
 class Admin extends Authenticatable
 {
-    use HasFactory, Notifiable;
+    use HasFactory, Notifiable ;
 
-    protected $fillable = ['name','email','password'];
+
+    protected $fillable = ['name','email','password','is_2fa_enabled','auth_2fa_secret'];
 
 
 }

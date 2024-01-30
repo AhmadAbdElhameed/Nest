@@ -34,13 +34,15 @@ Route::group(
     ],
     function () {
 
-        Route::group(['middleware' => 'auth:admin', 'prefix' => 'admin', 'as' => 'admin.'], function () {
+        Route::group(['middleware' => ['auth:admin','2fa.completed'], 'prefix' => 'admin', 'as' => 'admin.'], function () {
             Route::controller(AdminController::class)->group(function () {
                 Route::get('/dashboard', 'index')->name('dashboard');
             });
             Route::prefix('settings')->as('settings.')->controller(SettingController::class)->group(function () {
                 Route::get('/shipping-methods/{shipping}', 'editShippingMethod')->name('shipping-method');
                 Route::put('/shipping-methods/{shipping}', 'updateShippingMethod')->name('shipping-method.update');
+                Route::get('/2fa/{admin}', 'edit_2fa')->name('edit.2fa');
+                Route::put('/2fa/{admin}', 'update_2fa')->name('update.2fa');
             });
             Route::prefix('profile')->as('profile.')->controller(ProfileController::class)->group(function () {
                 Route::get('/', 'index')->name('index');
@@ -139,6 +141,12 @@ Route::group(
             });
             ################################## Options Routes #######################################
 
+        });
+
+        Route::group(['middleware' => 'auth:admin', 'prefix' => 'admin', 'as' => 'admin.'], function () {
+            // The 2FA routes should be accessible to admins who have passed the initial login
+            Route::get('2fa', [LoginController::class, 'twoFactor'])->name('2fa');
+            Route::post('2fa', [LoginController::class, 'twoFactorVerify'])->name('2fa.verify');
         });
 
         Route::group(['middleware' => 'guest:admin', 'prefix' => 'admin', 'as' => 'admin.'], function () {

@@ -28,5 +28,12 @@ class LoginController extends Controller
         return $this->loginInterface->logout();
     }
 
+    public function twoFactor(){
+        return $this->loginInterface->twoFactor();
+    }
+    public function twoFactorVerify(Request $request){
+        return $this->loginInterface->twoFactorVerify($request);
+    }
+
 
 }
