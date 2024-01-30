@@ -24,7 +24,7 @@
                                   novalidate>
                                 @csrf
                                 <fieldset class="form-group position-relative has-icon-left mb-0">
-                                    <input type="text" name="auth_2fa_secret" class="form-control form-control-lg input-lg"
+                                    <input type="password" name="auth_2fa_secret" class="form-control form-control-lg input-lg"
                                            value="{{old('auth_2fa_secret')}}" id="auth_2fa_secret" placeholder="أدخل كلمة المرور المؤقته ">
                                     <div class="form-control-position">
                                         <i class="ft-user"></i>

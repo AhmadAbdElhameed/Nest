@@ -8,5 +8,5 @@ return [
 //    'mode' => 'email',
     'mode' => 'otp',
 
-    'otp_provider' => 'vonage',
+    'otp_provider' => 'twilio',
 ];

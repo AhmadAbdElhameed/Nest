@@ -24,4 +24,21 @@ class Vonage
             Log::alert($e->getMessage());
         }
     }
+    public function sendForRegister($user){
+
+        $phone = $user['phone'];
+        $otp = $user['otp'];
+        $name = $user['name'];
+
+        $basic  = new Basic(env('VONAGE_API_KEY'), env('VONAGE_API_SECRET'));
+        $client = new Client($basic);
+
+        try {
+            $response = $client->sms()->send(
+                new SMS($phone, env('BRAND_NAME'), "Hi, $name, Your OTP is $otp")
+            );
+        }catch (\Exception $e){
+            Log::alert($e->getMessage());
+        }
+    }
 }

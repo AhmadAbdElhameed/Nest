@@ -1,5 +1,6 @@
 <?php
 
+use App\Http\Controllers\Auth\RegisteredUserController;
 use App\Http\Controllers\ProfileController;
 use Illuminate\Support\Facades\Route;
 use Mcamara\LaravelLocalization\Facades\LaravelLocalization;
@@ -36,11 +37,14 @@ Route::group(
         'middleware' => ['localeSessionRedirect', 'localizationRedirect', 'localeViewPath']
     ],
     function () {
-        Route::middleware('auth:user')->group(function () {
+        Route::middleware('auth')->group(function () {
 
         });
 
-        Route::middleware('guest:user')->group(function () {
+        Route::middleware('guest')->group(function () {
+
+            Route::get('verify-phone', [RegisteredUserController::class, 'twoFactor'])->name('register.2fa');
+            Route::post('verify-phone', [RegisteredUserController::class, 'verifyOTP'])->name('register.verify.phone');
 
         });
 
