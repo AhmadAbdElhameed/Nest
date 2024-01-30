@@ -42,10 +42,7 @@ Route::group(
         });
 
         Route::middleware('guest')->group(function () {
-
-            Route::get('verify-phone', [RegisteredUserController::class, 'twoFactor'])->name('register.2fa');
             Route::post('verify-phone', [RegisteredUserController::class, 'verifyOTP'])->name('register.verify.phone');
-
         });
 
     }
