@@ -5,8 +5,8 @@ return [
     // email => email verification ON
     // cvt => email verification with custom token
     // otp => otp verification
-//    'mode' => 'email',
-    'mode' => 'otp',
+    'mode' => 'email',
+//    'mode' => 'otp',
 
     'otp_provider' => 'twilio',
 ];

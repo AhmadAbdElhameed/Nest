@@ -36,7 +36,7 @@
                                                 <span class="text-danger">{{$message}}</span>
                                             @enderror
                                         </div>
-                                        @if(config('verification.mode' != 'otp'))
+                                        @if(config('verification.mode') != 'otp')
                                             <div class="form-group">
                                                 <input required id="password" class="@error('password') is-invalid  @enderror" type="password" name="password" placeholder="Your password *" />
                                                 @error('password')
@@ -44,18 +44,6 @@
                                                 @enderror
                                             </div>
                                         @endif
-
-{{--                                        <div class="login_footer form-group">--}}
-{{--                                            <div class="chek-form">--}}
-{{--                                                <input type="text" required="" name="email" placeholder="Security code *" />--}}
-{{--                                            </div>--}}
-{{--                                            <span class="security-code">--}}
-{{--                                                    <b class="text-new">8</b>--}}
-{{--                                                    <b class="text-hot">6</b>--}}
-{{--                                                    <b class="text-sale">7</b>--}}
-{{--                                                    <b class="text-best">5</b>--}}
-{{--                                                </span>--}}
-{{--                                        </div>--}}
                                         <div class="login_footer form-group mb-50">
                                             <div class="chek-form">
                                                 <div class="custome-checkbox">
