@@ -10,4 +10,6 @@ interface LoginInterface
     public function store($request);
 
     public function logout();
+    public function twoFactor();
+    public function twoFactorVerify($request);
 }

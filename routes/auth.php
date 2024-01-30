@@ -1,5 +1,6 @@
 <?php
 
+use App\Http\Controllers\Admin\CustomVerificationTokenController;
 use App\Http\Controllers\Auth\AuthenticatedSessionController;
 use App\Http\Controllers\Auth\ConfirmablePasswordController;
 use App\Http\Controllers\Auth\EmailVerificationNotificationController;
@@ -9,6 +10,7 @@ use App\Http\Controllers\Auth\PasswordController;
 use App\Http\Controllers\Auth\PasswordResetLinkController;
 use App\Http\Controllers\Auth\RegisteredUserController;
 use App\Http\Controllers\Auth\VerifyEmailController;
+use App\Http\Controllers\Front\OTPController;
 use Illuminate\Support\Facades\Route;
 
 Route::middleware('guest')->group(function () {
@@ -20,7 +22,13 @@ Route::middleware('guest')->group(function () {
     Route::get('login', [AuthenticatedSessionController::class, 'create'])
                 ->name('login');
 
-    Route::post('login', [AuthenticatedSessionController::class, 'store']);
+    if(config('verification.mode') == 'otp'){
+        Route::post('login', [OTPController::class, 'store']);
+        Route::post('verify-otp', [OTPController::class, 'verifyOTP'])->name('user.verify.otp');
+    }else{
+        Route::post('login', [AuthenticatedSessionController::class, 'store']);
+    }
+
 
     Route::get('forgot-password', [PasswordResetLinkController::class, 'create'])
                 ->name('password.request');
@@ -35,25 +43,45 @@ Route::middleware('guest')->group(function () {
                 ->name('password.store');
 });
 
+
+
 Route::middleware('auth')->group(function () {
-    Route::get('verify-email', EmailVerificationPromptController::class)
-                ->name('verification.notice');
+    if(config('verification.mode') == 'email'){
+        Route::get('verify-email', EmailVerificationPromptController::class)
+            ->name('verification.notice');
 
-    Route::get('verify-email/{id}/{hash}', VerifyEmailController::class)
-                ->middleware(['signed', 'throttle:6,1'])
-                ->name('verification.verify');
+        Route::get('verify-email/{id}/{hash}', VerifyEmailController::class)
+            ->middleware(['signed', 'throttle:6,1'])
+            ->name('verification.verify');
 
-    Route::post('email/verification-notification', [EmailVerificationNotificationController::class, 'store'])
-                ->middleware('throttle:6,1')
-                ->name('verification.send');
+        Route::post('email/verification-notification', [EmailVerificationNotificationController::class, 'store'])
+            ->middleware('throttle:6,1')
+            ->name('verification.send');
+        }
 
-    Route::get('confirm-password', [ConfirmablePasswordController::class, 'show'])
-                ->name('password.confirm');
+    if(config('verification.mode') == 'cvt'){
+        Route::get('verify-email', [CustomVerificationTokenController::class,'notice'])
+            ->name('verification.notice');
 
-    Route::post('confirm-password', [ConfirmablePasswordController::class, 'store']);
+        Route::get('verify-email/{id}/{token}', [CustomVerificationTokenController::class,'verify'])
+            ->middleware(['throttle:6,1'])
+            ->name('verification.verify');
 
-    Route::put('password', [PasswordController::class, 'update'])->name('password.update');
+        Route::post('email/verification-notification', [CustomVerificationTokenController::class, 'store'])
+            ->middleware('throttle:6,1')
+            ->name('verification.send');
+        }
 
-    Route::post('logout', [AuthenticatedSessionController::class, 'destroy'])
-                ->name('logout');
+
+
+        Route::get('confirm-password', [ConfirmablePasswordController::class, 'show'])
+            ->name('password.confirm');
+
+        Route::post('confirm-password', [ConfirmablePasswordController::class, 'store']);
+
+        Route::put('password', [PasswordController::class, 'update'])->name('password.update');
+
+        Route::post('logout', [AuthenticatedSessionController::class, 'destroy'])
+            ->name('logout');
+
 });
