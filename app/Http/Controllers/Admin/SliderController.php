@@ -4,8 +4,8 @@ namespace App\Http\Controllers\Admin;
 
 use App\Http\Controllers\Controller;
 use App\Http\Interfaces\Admin\SliderInterface;
-use App\Http\Requests\StoreSliderRequest;
-use App\Http\Requests\UpdateSliderRequest;
+use App\Http\Requests\Admin\Slider\StoreSliderRequest;
+use App\Http\Requests\Admin\Slider\UpdateSliderRequest;
 use App\Models\Slider;
 
 class SliderController extends Controller

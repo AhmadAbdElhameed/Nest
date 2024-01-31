@@ -93,9 +93,9 @@
                                                             <input type="text" id="name"
                                                                    class="form-control"
                                                                    placeholder="  "
-                                                                   value="{{old('name')}}"
-                                                                   name="name">
-                                                            @error("name")
+                                                                   value="{{old('title')}}"
+                                                                   name="title">
+                                                            @error("title")
                                                             <span class="text-danger">{{$message}}</span>
                                                             @enderror
                                                         </div>
@@ -119,7 +119,22 @@
 
                                                 <div class="row">
                                                     <div class="col-md-6">
-                                                        <div class="form-group mt-1">
+                                                        <div class="form-group">
+                                                            <label for="projectinput1">{{__('admin/brand.edit_form_name')}}
+                                                            </label>
+                                                            <input type="text" id="name"
+                                                                   class="form-control"
+                                                                   placeholder="  "
+                                                                   value="{{old('sub_title')}}"
+                                                                   name="sub_title">
+                                                            @error("sub_title")
+                                                            <span class="text-danger">{{$message}}</span>
+                                                            @enderror
+                                                        </div>
+                                                    </div>
+
+                                                    <div class="col-md-6 mt-3">
+                                                        <div class="form-group">
                                                             <input type="checkbox" value="1"
                                                                    name="status"
                                                                    id="switcheryColor4"
