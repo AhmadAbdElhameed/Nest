@@ -156,9 +156,20 @@
                             </li>
 
                         </ul>
+                    </li>
+                    <li><a class="menu-item" href="#" data-i18n="nav.templates.vert.main">Sliders</a>
+                        <ul class="menu-content">
+                            <li><a class="menu-item" href="{{route('admin.slider.index')}}"
+                                   data-i18n="nav.templates.vert.classic_menu">All Sliders</a>
+                            </li>
+                            <li><a class="menu-item" href="{{route('admin.slider.create')}}"
+                                        data-i18n="nav.templates.vert.classic_menu">Create New Slider</a>
+                            </li>
+
+                        </ul>
+                    </li>
 
                     <li><a class="menu-item" href="{{route('admin.settings.edit.2fa',auth()->guard('admin')->user())}}">Edit 2 FA</a>
-                    </li>
                     </li>
                 </ul>
             </li>

@@ -8,6 +8,7 @@ use App\Http\Interfaces\Admin\CategoryInterface;
 use App\Http\Interfaces\Admin\LoginInterface;
 use App\Http\Interfaces\Admin\OptionInterface;
 use App\Http\Interfaces\Admin\ProductInterface;
+use App\Http\Interfaces\Admin\SliderInterface;
 use App\Http\Interfaces\Admin\SubCategoryInterface;
 use App\Http\Interfaces\Admin\TagInterface;
 use App\Http\Repositories\Admin\AdminRepository;
@@ -17,6 +18,7 @@ use App\Http\Repositories\Admin\CategoryRepository;
 use App\Http\Repositories\Admin\LoginRepository;
 use App\Http\Repositories\Admin\OptionRepository;
 use App\Http\Repositories\Admin\ProductRepository;
+use App\Http\Repositories\Admin\SliderRepository;
 use App\Http\Repositories\Admin\SubCategoryRepository;
 use App\Http\Repositories\Admin\TagRepository;
 use Illuminate\Support\ServiceProvider;
@@ -46,6 +48,7 @@ class RepositoryServiceProvider extends ServiceProvider
         $this->app->bind(ProductInterface::class, ProductRepository::class);
         $this->app->bind(AttributeInterface::class, AttributeRepository::class);
         $this->app->bind(OptionInterface::class, OptionRepository::class);
+        $this->app->bind(SliderInterface::class, SliderRepository::class);
     }
 
     /**

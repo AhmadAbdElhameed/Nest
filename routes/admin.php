@@ -6,6 +6,7 @@ use App\Http\Controllers\Admin\CategoryController;
 use App\Http\Controllers\Admin\LoginController;
 use App\Http\Controllers\Admin\ProfileController;
 use App\Http\Controllers\Admin\SettingController;
+use App\Http\Controllers\Admin\SliderController;
 use App\Http\Controllers\Admin\SubCategoryController;
 use App\Http\Controllers\Admin\TagController;
 use App\Http\Controllers\AttributeController;
@@ -132,6 +133,17 @@ Route::group(
 
             ################################## Options Routes ####################################
             Route::prefix('option')->as('option.')->controller(OptionController::class)->group(function () {
+                Route::get('/', 'index')->name('index');
+                Route::get('create', 'create')->name('create');
+                Route::post('store', 'store')->name('store');
+                Route::get('edit/{option}', 'edit')->name('edit');
+                Route::put('update/{option}', 'update')->name('update');
+                Route::get('delete/{option}', 'destroy')->name('delete');
+            });
+            ################################## Options Routes #######################################
+
+            ################################## Options Routes ####################################
+            Route::prefix('slider')->as('slider.')->controller(SliderController::class)->group(function () {
                 Route::get('/', 'index')->name('index');
                 Route::get('create', 'create')->name('create');
                 Route::post('store', 'store')->name('store');
