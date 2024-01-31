@@ -20,4 +20,9 @@ class Slider extends Model
     public function getActive(){
         return $this->status == 1 ? __('admin/category.status_active') : __('admin/category.status_inactive');
     }
+
+    public function getRouteKeyName()
+    {
+        return 'slug';
+    }
 }
