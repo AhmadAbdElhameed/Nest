@@ -30,7 +30,7 @@ class SliderRepository implements SliderInterface
 
     public function store($request)
     {
-//        try {
+        try {
 
             if (!$request->has('status'))
                 $request->request->add(['status' => 0]);
@@ -53,10 +53,10 @@ class SliderRepository implements SliderInterface
 
             toast( __('admin/brand.create_success'),'success');
             return redirect()->route('admin.slider.index')->with(['success' => __('admin/brand.create_success')]);
-//        } catch (\Exception $ex) {
-//            toast('Failed ','error');
-//            return redirect()->route('admin.slider.index')->with(['error' => __('admin/brand.failed_message')]);
-//        }
+        } catch (\Exception $ex) {
+            toast('Failed ','error');
+            return redirect()->route('admin.slider.index')->with(['error' => __('admin/brand.failed_message')]);
+        }
     }
 
     public function show($slider)
@@ -66,16 +66,49 @@ class SliderRepository implements SliderInterface
 
     public function edit($slider)
     {
-        // TODO: Implement edit() method.
+        return view('admin.slider.edit',compact('slider'));
     }
 
     public function update($request, $slider)
     {
-        // TODO: Implement update() method.
+//        dd($request->all());
+        try {
+            if (!$slider)
+                return redirect()->route('admin.slider.index')->with(['error' => __('admin/brand.not_exist')]);
+
+            if (!$request->has('status'))
+                $request->request->add(['status' => 0]);
+            else
+                $request->request->add(['status' => 1]);
+
+            if($request->image){
+                $image = $this->updateAnyImage($request,'image',$this->sliderModel::PATH,$slider->image);
+            }
+
+            $slider->update([
+                'slug' => $request->slug,
+                'status' => $request->status,
+                'image' => $image ?? $slider->image,
+            ]);
+
+            //save translations
+            $slider->title = $request->title;
+            $slider->sub_title = $request->sub_title;
+            $slider->save();
+
+            toast( __('admin/brand.update_success'),'success');
+            return redirect()->route('admin.slider.index')->with(['success' => __('admin/brand.update_success')]);
+        } catch (\Exception $ex) {
+            toast('Failed ','error');
+            return redirect()->route('admin.slider.index')->with(['error' => __('admin/brand.failed_message')]);
+        }
     }
 
     public function destroy($slider)
     {
-        // TODO: Implement destroy() method.
+        $this->deleteImage($slider->image);
+        $slider->delete();
+        toast(__('admin/brand.delete_success'),'success');
+        return redirect()->back();
     }
 }

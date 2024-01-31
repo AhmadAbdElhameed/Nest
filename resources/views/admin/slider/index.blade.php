@@ -54,7 +54,8 @@
                                             class="table display nowrap table-striped table-bordered scroll-horizontal">
                                             <thead class="">
                                             <tr>
-                                                <th>{{__('admin/brand.form_name')}} </th>
+                                                <th>title</th>
+                                                <th>sub title</th>
                                                 <th> {{__('admin/brand.form_slug')}} </th>
                                                 <th>{{__('admin/brand.form_status')}}</th>
                                                 <th>{{__('admin/brand.form_image')}}</th>
@@ -66,7 +67,8 @@
                                             @isset($sliders)
                                                 @foreach($sliders as $slider)
                                                     <tr>
-                                                        <td>{{$slider -> name}}</td>
+                                                        <td>{{$slider -> title}}</td>
+                                                        <td>{{$slider -> sub_title}}</td>
                                                         <td>{{$slider -> slug}}</td>
                                                         <td>{{$slider -> getActive()}}</td>
                                                         <td> <img style="width: 150px; height: 100px;" src="{{asset($slider->image)}}"></td>

@@ -147,9 +147,9 @@ Route::group(
                 Route::get('/', 'index')->name('index');
                 Route::get('create', 'create')->name('create');
                 Route::post('store', 'store')->name('store');
-                Route::get('edit/{option}', 'edit')->name('edit');
-                Route::put('update/{option}', 'update')->name('update');
-                Route::get('delete/{option}', 'destroy')->name('delete');
+                Route::get('edit/{slider}', 'edit')->name('edit');
+                Route::put('update/{slider}', 'update')->name('update');
+                Route::get('delete/{slider}', 'destroy')->name('delete');
             });
             ################################## Options Routes #######################################
 

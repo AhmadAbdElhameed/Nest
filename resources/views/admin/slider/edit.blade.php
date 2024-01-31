@@ -17,7 +17,7 @@
                                 </li>
                                 <li class="breadcrumb-item"><a href=""> {{__('admin/brand.main_title')}} </a>
                                 </li>
-                                <li class="breadcrumb-item active"> {{__('admin/brand.main_title_edit')}} - {{$brand->name}}
+                                <li class="breadcrumb-item active"> {{__('admin/brand.main_title_edit')}} - {{$slider->title}}
                                 </li>
                             </ol>
                         </div>
@@ -48,7 +48,7 @@
                                 <div class="card-content collapse show">
                                     <div class="card-body">
                                         <form class="form"
-                                              action="{{route('admin.brand.update',$brand)}}"
+                                              action="{{route('admin.slider.update',$slider)}}"
                                               method="POST"
                                               enctype="multipart/form-data">
                                             @csrf
@@ -60,7 +60,7 @@
                                                 <div class="form-group">
                                                     <div class="text-center">
                                                         <img
-                                                            src="{{asset($brand->image)}}"
+                                                            src="{{asset($slider->image)}}"
                                                             class="rounded-circle  height-150" alt="صورة القسم  ">
                                                     </div>
                                                 </div>
@@ -82,12 +82,12 @@
                                                         <div class="form-group">
                                                             <label for="projectinput1"> {{__('admin/brand.edit_form_name')}}
                                                             </label>
-                                                            <input type="text" id="name"
+                                                            <input type="text" id="title"
                                                                    class="form-control"
                                                                    placeholder="  "
-                                                                   value="{{$brand->name}}"
-                                                                   name="name">
-                                                            @error("name")
+                                                                   value="{{$slider->title}}"
+                                                                   name="title">
+                                                            @error("title")
                                                             <span class="text-danger">{{$message}}</span>
                                                             @enderror
                                                         </div>
@@ -100,7 +100,7 @@
                                                             <input type="text" id="name"
                                                                    class="form-control"
                                                                    placeholder="  "
-                                                                   value="{{$brand->slug}}"
+                                                                   value="{{$slider->slug}}"
                                                                    name="slug">
                                                             @error("slug")
                                                             <span class="text-danger">{{$message}}</span>
@@ -111,13 +111,29 @@
 
 
                                                 <div class="row">
+
                                                     <div class="col-md-6">
-                                                        <div class="form-group mt-1">
-                                                            <input type="checkbox" value="{{$brand->status}}"
+                                                        <div class="form-group">
+                                                            <label for="projectinput1"> {{__('admin/brand.edit_form_name')}}
+                                                            </label>
+                                                            <input type="text" id="sub_title"
+                                                                   class="form-control"
+                                                                   placeholder=""
+                                                                   value="{{$slider->sub_title}}"
+                                                                   name="sub_title">
+                                                            @error("sub_title")
+                                                            <span class="text-danger">{{$message}}</span>
+                                                            @enderror
+                                                        </div>
+                                                    </div>
+
+                                                    <div class="col-md-6 mt-3">
+                                                        <div class="form-group">
+                                                            <input type="checkbox" value="{{$slider->status}}"
                                                                    name="status"
                                                                    id="switcheryColor4"
                                                                    class="switchery" data-color="success"
-                                                                   {{$brand->status == 1 ? 'checked' : ''}}/>
+                                                                   {{$slider->status == 1 ? 'checked' : ''}}/>
                                                             <label for="switcheryColor4"
                                                                    class="card-title ml-1">{{__('admin/brand.edit_form_status')}} </label>
 
