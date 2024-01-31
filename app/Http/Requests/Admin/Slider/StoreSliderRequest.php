@@ -3,7 +3,7 @@
 namespace App\Http\Requests\Admin\Slider;
 
 use Illuminate\Foundation\Http\FormRequest;
-
+use Illuminate\Validation\Rule;
 class StoreSliderRequest extends FormRequest
 {
     /**
@@ -22,7 +22,12 @@ class StoreSliderRequest extends FormRequest
     public function rules(): array
     {
         return [
-            //
+            'image' => 'required|image|max:2048|mimes:jpg,jpeg,png,webp',
+            'slug' => 'required|string|max:255|unique:sliders,slug',
+            'title' => ['required','string','max:255',Rule::unique('slider_translations','title')
+            ->where('locale',app()->getLocale())],
+            'sub_title' => ['required','string','max:255',Rule::unique('slider_translations','sub_title')
+                ->where('locale',app()->getLocale())],
         ];
     }
 }

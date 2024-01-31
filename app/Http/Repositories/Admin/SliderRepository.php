@@ -71,7 +71,6 @@ class SliderRepository implements SliderInterface
 
     public function update($request, $slider)
     {
-//        dd($request->all());
         try {
             if (!$slider)
                 return redirect()->route('admin.slider.index')->with(['error' => __('admin/brand.not_exist')]);
