@@ -312,7 +312,7 @@
                                     <ul class="sub-menu">
                                             @foreach($categories as $category)
                                                 <li>
-                                                    <a href="#">{{ $category->name }}
+                                                    <a href="{{route('category',$category)}}">{{ $category->name }}
                                                         @if($category->subCategories->isNotEmpty())
                                                             <i class="fi-rs-angle-right"></i>
                                                         @endif

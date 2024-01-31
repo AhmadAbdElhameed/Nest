@@ -38,6 +38,8 @@ Route::group(
 
         Route::group([],function () {
             Route::get('/',[HomeController::class,'home'])->name('home');
+            Route::get('/category/{category}',[HomeController::class,'category'])->name('category');
+            Route::get('/product/{product}',[HomeController::class,'productDetails'])->name('product_details');
             Route::post('verify-phone', [RegisteredUserController::class, 'verifyOTP'])->name('register.verify.phone');
         });
 

@@ -6,4 +6,8 @@ interface HomeInterface
 {
 
     public function home();
+
+    public function category($category);
+
+    public function productDetails($product);
 }
