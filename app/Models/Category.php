@@ -80,4 +80,8 @@ class Category extends Model
     {
         return 'slug';
     }
+
+    public function subCategories(){
+        return $this->hasMany(SubCategory::class);
+    }
 }
