@@ -1,6 +1,7 @@
 <?php
 
 use App\Http\Controllers\Auth\RegisteredUserController;
+use App\Http\Controllers\Front\HomeController;
 use App\Http\Controllers\ProfileController;
 use Illuminate\Support\Facades\Route;
 use Mcamara\LaravelLocalization\Facades\LaravelLocalization;
@@ -16,9 +17,6 @@ use Mcamara\LaravelLocalization\Facades\LaravelLocalization;
 |
 */
 
-Route::get('/', function () {
-    return view('front/index');
-})->name('home');
 
 Route::get('/dashboard', function () {
     return view('dashboard');
@@ -37,13 +35,17 @@ Route::group(
         'middleware' => ['localeSessionRedirect', 'localizationRedirect', 'localeViewPath']
     ],
     function () {
+
+        Route::group([],function () {
+            Route::get('/',[HomeController::class,'home'])->name('home');
+            Route::post('verify-phone', [RegisteredUserController::class, 'verifyOTP'])->name('register.verify.phone');
+        });
+
         Route::middleware('auth')->group(function () {
 
         });
 
-        Route::middleware('guest')->group(function () {
-            Route::post('verify-phone', [RegisteredUserController::class, 'verifyOTP'])->name('register.verify.phone');
-        });
+
 
     }
 );
