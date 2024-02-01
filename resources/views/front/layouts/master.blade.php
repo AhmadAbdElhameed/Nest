@@ -22,7 +22,7 @@
     <!-- Modal -->
 
     <!-- Quick view -->
-    @include('front.includes.quick_view')
+{{--    @include('front.includes.quick_view')--}}
     <!-- Header  -->
     @include('front.includes.header')
    <!-- End Header  -->
@@ -58,6 +58,7 @@
     <!-- Template  JS -->
     <script src="{{asset('assets/front/js/main.js?v=5.3')}}"></script>
     <script src="{{asset('assets/front/js/shop.js?v=5.3')}}"></script>
+    @stack('scripts')
 </body>
 
 </html>

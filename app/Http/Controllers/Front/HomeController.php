@@ -26,4 +26,7 @@ class HomeController extends Controller
     public function productDetails(Product $product){
         return $this->homeInterface->productDetails($product);
     }
+    public function showModalContent($id){
+        return $this->homeInterface->showModalContent($id);
+    }
 }

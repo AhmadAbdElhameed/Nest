@@ -10,4 +10,6 @@ interface HomeInterface
     public function category($category);
 
     public function productDetails($product);
+
+    public function showModalContent($id);
 }

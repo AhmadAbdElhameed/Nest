@@ -40,6 +40,7 @@ Route::group(
             Route::get('/',[HomeController::class,'home'])->name('home');
             Route::get('/category/{category}',[HomeController::class,'category'])->name('category');
             Route::get('/product/{product}',[HomeController::class,'productDetails'])->name('product_details');
+            Route::get('/product-details/{id}', [HomeController::class,'showModalContent'])->name('get-product-details');
             Route::post('verify-phone', [RegisteredUserController::class, 'verifyOTP'])->name('register.verify.phone');
         });
 

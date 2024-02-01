@@ -34,6 +34,7 @@
             </div>
         </div>
     </div>
+
     <div class="container mb-30">
         <div class="row flex-row-reverse">
             <div class="col-lg-4-5 content-container">
@@ -84,6 +85,7 @@
                 </div>
                 <div class="row product-grid products" >
                     @foreach($category->products as $product)
+                      @include('front.includes.quick_view',$product)
                         <div class="col-lg-1-2 col-md-4 col-12 col-sm-6">
                             <div class="product-cart-wrap mb-30">
                                 <div class="product-img-action-wrap">
@@ -97,7 +99,10 @@
                                     <div class="product-action-1">
                                         <a aria-label="Add To Wishlist" class="action-btn" href="shop-wishlist.html"><i class="fi-rs-heart"></i></a>
                                         <a aria-label="Compare" class="action-btn" href="shop-compare.html"><i class="fi-rs-shuffle"></i></a>
-                                        <a aria-label="Quick view" class="action-btn" data-bs-toggle="modal" data-bs-target="#quickViewModal"><i class="fi-rs-eye"></i></a>
+                                        <a aria-label="Quick view" class="action-btn show_product_modal" data-bs-toggle="modal" data-bs-target="#quickViewModal"  data-id="">
+
+                                            <i class="fi-rs-eye"></i>
+                                        </a>
                                     </div>
                                     <div class="product-badges product-badges-position product-badges-mrg">
                                         <span class="hot">Hot</span>
@@ -274,3 +279,29 @@
         </div>
     </div>
 @endsection
+
+
+@push('scripts')
+{{--    <script>--}}
+{{--        $(document).ready(function() {--}}
+{{--            $('.show_product_modal').on('click', function() {--}}
+{{--                let id = $(this).data('id');  // This grabs the correct ID from the button's data-id attribute--}}
+
+{{--                $.ajax({--}}
+{{--                    method: 'GET',--}}
+{{--                    url: '/product-details/' + id,  // Make sure this URL is correct and returns the modal content for the product--}}
+{{--                    success: function(response) {--}}
+{{--                        $('#quickViewModal').html(response);  // Inject the response into the modal's container--}}
+{{--                        $('#quickViewModal').modal('show');   // Show the modal--}}
+{{--                    },--}}
+{{--                    error: function(xhr, status, error) {--}}
+{{--                        // Handle error--}}
+{{--                        console.error("Error: " + error);--}}
+{{--                    }--}}
+{{--                });--}}
+{{--            });--}}
+{{--        });--}}
+{{--    </script>--}}
+
+
+@endpush
