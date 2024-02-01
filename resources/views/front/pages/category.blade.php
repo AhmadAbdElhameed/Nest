@@ -97,9 +97,9 @@
                                         </a>
                                     </div>
                                     <div class="product-action-1">
-                                        <a aria-label="Add To Wishlist" class="action-btn" href="shop-wishlist.html"><i class="fi-rs-heart"></i></a>
-                                        <a aria-label="Compare" class="action-btn" href="shop-compare.html"><i class="fi-rs-shuffle"></i></a>
-                                        <a aria-label="Quick view" class="action-btn show_product_modal" data-bs-toggle="modal" data-bs-target="#quickViewModal"  data-id="">
+                                        <a aria-label="Add To Wishlist" class="action-btn" id="add_to_wishlist" data-product-id="{{$product->id}}" href="shop-wishlist.html"><i class="fi-rs-heart"></i></a>
+                                        <a aria-label="Compare" class="action-btn" id="compare" href="shop-compare.html"><i class="fi-rs-shuffle"></i></a>
+                                        <a aria-label="Quick view" id="quick_view" class="action-btn show_product_modal" data-bs-toggle="modal" data-bs-target="#quickViewModal"  data-id="">
 
                                             <i class="fi-rs-eye"></i>
                                         </a>
@@ -282,26 +282,36 @@
 
 
 @push('scripts')
-{{--    <script>--}}
-{{--        $(document).ready(function() {--}}
-{{--            $('.show_product_modal').on('click', function() {--}}
-{{--                let id = $(this).data('id');  // This grabs the correct ID from the button's data-id attribute--}}
+    <script>
 
-{{--                $.ajax({--}}
-{{--                    method: 'GET',--}}
-{{--                    url: '/product-details/' + id,  // Make sure this URL is correct and returns the modal content for the product--}}
-{{--                    success: function(response) {--}}
-{{--                        $('#quickViewModal').html(response);  // Inject the response into the modal's container--}}
-{{--                        $('#quickViewModal').modal('show');   // Show the modal--}}
-{{--                    },--}}
-{{--                    error: function(xhr, status, error) {--}}
-{{--                        // Handle error--}}
-{{--                        console.error("Error: " + error);--}}
-{{--                    }--}}
-{{--                });--}}
-{{--            });--}}
-{{--        });--}}
-{{--    </script>--}}
+        $.ajaxSetup({
+            headers: {
+                'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
+            }
+        });
+
+        $(document).on('click', '#add_to_wishlist', function (e) {
+            e.preventDefault();
+
+{{--            @guest()--}}
+{{--            $('.not-loggedin-modal').css('display','block');--}}
+{{--            @endguest--}}
+            $.ajax({
+                type: 'post',
+                url: "{{Route('wishlist.store')}}",
+                data: {
+                    'productId': $(this).attr('data-product-id'),
+                },
+                success: function (data) {
+                    // if(data.wished )
+                    //     $('.alert-modal').css('display','block');
+                    // else
+                    //     $('.alert-modal2').css('display','block');
+                }
+            });
+        });
+    </script>
+
 
 
 @endpush

@@ -2,6 +2,7 @@
 
 use App\Http\Controllers\Auth\RegisteredUserController;
 use App\Http\Controllers\Front\HomeController;
+use App\Http\Controllers\Front\WishlistController;
 use App\Http\Controllers\ProfileController;
 use Illuminate\Support\Facades\Route;
 use Mcamara\LaravelLocalization\Facades\LaravelLocalization;
@@ -45,7 +46,9 @@ Route::group(
         });
 
         Route::middleware('auth')->group(function () {
-
+            Route::post('wishlist', [WishlistController::class,'store'])->name('wishlist.store');
+            Route::delete('wishlist', [WishlistController::class,'destroy'])->name('wishlist.destroy');
+            Route::get('wishlist/products', [WishlistController::class,'index'])->name('wishlist.index');
         });
 
 

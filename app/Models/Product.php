@@ -85,4 +85,11 @@ class Product extends Model
     {
         return $this->hasMany(Option::class);
     }
+
+    public function users(): \Illuminate\Database\Eloquent\Relations\BelongsToMany
+    {
+        return $this->belongsToMany(User::class);
+    }
+
+
 }

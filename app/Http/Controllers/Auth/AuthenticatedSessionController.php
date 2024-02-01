@@ -4,6 +4,7 @@ namespace App\Http\Controllers\Auth;
 
 use App\Http\Controllers\Controller;
 use App\Http\Requests\Auth\LoginRequest;
+use App\Models\Category;
 use App\Providers\RouteServiceProvider;
 use Illuminate\Http\RedirectResponse;
 use Illuminate\Http\Request;
@@ -17,7 +18,10 @@ class AuthenticatedSessionController extends Controller
      */
     public function create(): View
     {
-        return view('front.auth.login');
+        $categories = Category::with(['subCategories' => function ($query) {
+            $query->where('status',1)->select('id', 'category_id', 'slug','image');
+        }, 'translations'])->where('status', 1)->select('id', 'slug','image')->get();
+        return view('front.auth.login',compact('categories'));
     }
 
     /**
