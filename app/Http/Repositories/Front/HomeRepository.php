@@ -35,7 +35,15 @@ class HomeRepository implements HomeInterface
             $query->where('status',1)->select('id', 'category_id', 'slug','image');
         }, 'translations'])->where('status', 1)->select('id', 'slug','image')->get();
 
-        return view('front.pages.product-details',compact('product','categories'));
+        // Get the IDs of the categories this product belongs to
+        $categoryIds = $product->categories->pluck('id');
+//        dd($categoryIds);
+        // Find other products in the same categories, excluding the current product
+        $relatedProducts = Product::whereHas('categories', function ($query) use ($categoryIds) {
+            $query->whereIn('category_id', $categoryIds);
+        })->where('id', '!=', $product->id)->take(4)->get();
+
+        return view('front.pages.product-details',compact('product','categories','relatedProducts'));
     }
 
     public function showModalContent($id)

@@ -18,14 +18,6 @@ class WishlistController extends Controller
         return view('front.pages.wishlist',compact('categories','products'));
     }
 
-//    public function store(){
-//        if (! auth()->user()->wishlistHas(request('productId'))) {
-//            auth()->user()->products()->attach(request('productId'));
-//            return response() -> json(['status' => true , 'wished' => true]);
-//        }
-//        return response() -> json(['status' => true , 'wished' => false]);  // added before we can use enumeration here
-//    }
-
     public function store(Request $request)
     {
         if (!auth()->check()) {
