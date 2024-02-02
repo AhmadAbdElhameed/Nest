@@ -36,13 +36,13 @@
                         </tr>
                         </thead>
                         <tbody>
-                            @foreach(auth()->user()->products as $product)
+                            @forelse($products as $product)
                                 <tr class="pt-30">
                                     <td class="custome-checkbox pl-30">
                                         <input class="form-check-input" type="checkbox" name="checkbox" id="exampleCheckbox1" value="" />
                                         <label class="form-check-label" for="exampleCheckbox1"></label>
                                     </td>
-                                    <td class="image product-thumbnail pt-40"><img src="{{asset('uploads/images/'.$product->images[0]->image)}}" alt="#" /></td>
+                                    <td class="image product-thumbnail pt-40"><img src="{{asset('uploads/images/'.$product->images[0]->image)}}" alt="{{$product->name}}" /></td>
                                     <td class="product-des product-name">
                                         <h6><a class="product-name mb-10" href="{{route('product_details',$product)}}">{{$product->name}}</a></h6>
                                         <div class="product-rate-cover">
@@ -67,7 +67,11 @@
                                         </a>
                                     </td>
                                 </tr>
-                            @endforeach
+                            @empty
+                                <tr>
+                                    <td colspan="7" class="text-center"><h5>Your wishlist is empty</h5></td>
+                                </tr>
+                            @endforelse
                         </tbody>
                     </table>
                 </div>
@@ -79,30 +83,6 @@
 
 
 @push('scripts')
-
-{{--    <script>--}}
-{{--        $(document).ready(function() {--}}
-{{--            $('.delete-wishlist-item').on('click', function(e) {--}}
-{{--                e.preventDefault(); // Prevent the default anchor action--}}
-{{--                let productId = $(this).data('product-id');--}}
-
-{{--                $.ajax({--}}
-{{--                    url: "{{ route('wishlist.destroy', '') }}/" + productId,--}}
-{{--                    type: 'DELETE',--}}
-{{--                    data: {--}}
-{{--                        _token: "{{ csrf_token() }}",--}}
-{{--                    },--}}
-{{--                    success: function(response) {--}}
-{{--                        // Assuming you want to remove the entire row from the table--}}
-{{--                        $(self).closest('tr').remove();--}}
-{{--                    },--}}
-{{--                    error: function(xhr) {--}}
-{{--                        console.error(xhr.responseText);--}}
-{{--                    }--}}
-{{--                });--}}
-{{--            });--}}
-{{--        });--}}
-{{--    </script>--}}
 
 <script>
     $(document).ready(function() {

@@ -13,7 +13,9 @@ class WishlistController extends Controller
         $categories = Category::with(['subCategories' => function ($query) {
             $query->where('status',1)->select('id', 'category_id', 'slug','image');
         }, 'translations'])->where('status', 1)->select('id', 'slug','image')->get();
-        return view('front.pages.wishlist',compact('categories'));
+
+        $products = auth()->user()->products;
+        return view('front.pages.wishlist',compact('categories','products'));
     }
 
     public function store(){
