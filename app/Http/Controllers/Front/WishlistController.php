@@ -23,4 +23,13 @@ class WishlistController extends Controller
         }
         return response() -> json(['status' => true , 'wished' => false]);  // added before we can use enumeration here
     }
+
+    public function destroy($productId)
+    {
+        $user = auth()->user();
+        $user->products()->detach($productId);
+
+        return response()->json(['success' => 'Product removed from wishlist']);
+    }
+
 }

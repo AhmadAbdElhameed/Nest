@@ -59,10 +59,12 @@
                                         <span class="stock-status in-stock mb-0"> In Stock </span>
                                     </td>
                                     <td class="text-right" data-title="Cart">
-                                        <button class="btn btn-sm">Add to cart</button>
+                                        <button  class="btn btn-sm cart_btn_action_test">Add to cart</button>
                                     </td>
                                     <td class="action text-center" data-title="Remove">
-                                        <a href="#" class="text-body"><i class="fi-rs-trash"></i></a>
+                                        <a href="#" class="delete-wishlist-item text-body" data-product-id="{{ $product->id }}">
+                                            <i class="fi-rs-trash"></i>
+                                        </a>
                                     </td>
                                 </tr>
                             @endforeach
@@ -74,3 +76,80 @@
     </div>
 
 @endsection
+
+
+@push('scripts')
+
+{{--    <script>--}}
+{{--        $(document).ready(function() {--}}
+{{--            $('.delete-wishlist-item').on('click', function(e) {--}}
+{{--                e.preventDefault(); // Prevent the default anchor action--}}
+{{--                let productId = $(this).data('product-id');--}}
+
+{{--                $.ajax({--}}
+{{--                    url: "{{ route('wishlist.destroy', '') }}/" + productId,--}}
+{{--                    type: 'DELETE',--}}
+{{--                    data: {--}}
+{{--                        _token: "{{ csrf_token() }}",--}}
+{{--                    },--}}
+{{--                    success: function(response) {--}}
+{{--                        // Assuming you want to remove the entire row from the table--}}
+{{--                        $(self).closest('tr').remove();--}}
+{{--                    },--}}
+{{--                    error: function(xhr) {--}}
+{{--                        console.error(xhr.responseText);--}}
+{{--                    }--}}
+{{--                });--}}
+{{--            });--}}
+{{--        });--}}
+{{--    </script>--}}
+
+<script>
+    $(document).ready(function() {
+        $('.delete-wishlist-item').on('click', function(e) {
+            e.preventDefault();
+            let productId = $(this).data('product-id');
+            // Cache the clicked element
+            let _this = $(this);
+
+            $.ajax({
+                url: "{{ route('wishlist.destroy', '') }}/" + productId,
+                type: 'DELETE',
+                data: {
+                    _token: "{{ csrf_token() }}",
+                },
+                success: function(response) {
+                    // Use the cached element to remove its closest 'tr' ancestor
+                    _this.closest('tr').remove();
+                    Swal.fire({
+                        toast: true,
+                        position: 'top-end',
+                        showConfirmButton: false,
+                        timer: 3000,
+                        timerProgressBar: true,
+                        icon: 'success',
+                        title: 'Product removed successfully'
+                    });
+
+                },
+                error: function(xhr) {
+                    console.error(xhr.responseText);
+                    // Trigger an error toast notification
+                    Swal.fire({
+                        toast: true,
+                        position: 'top-end',
+                        showConfirmButton: false,
+                        timer: 3000,
+                        timerProgressBar: true,
+                        icon: 'error',
+                        title: 'Failed to remove product'
+                    });
+
+                }
+            });
+        });
+    });
+</script>
+
+
+@endpush

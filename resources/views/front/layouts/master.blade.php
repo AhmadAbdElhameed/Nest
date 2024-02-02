@@ -32,10 +32,11 @@
     <main class="main">
         @yield('content')
     </main>
-
+    @include('sweetalert::alert')
     @include('front.includes.footer')
     <!-- Preloader Start -->
     @include('front.includes.preloader')
+    <script src="//cdn.jsdelivr.net/npm/sweetalert2@11"></script>
     <!-- Vendor JS-->
     <script src="{{asset('assets/front/js/vendor/modernizr-3.6.0.min.js')}}"></script>
     <script src="{{asset('assets/front/js/vendor/jquery-3.6.0.min.js')}}"></script>
