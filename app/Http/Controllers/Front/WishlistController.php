@@ -18,6 +18,34 @@ class WishlistController extends Controller
         return view('front.pages.wishlist',compact('categories','products'));
     }
 
+//    public function store(Request $request)
+//    {
+//        if (!auth()->check()) {
+//            return response()->json(['status' => 'unauthorized'], 401);
+//        }
+//
+//        $user = auth()->user();
+//        $productId = $request->input('productId');
+//
+//        // Check if the product is already in the user's wishlist
+//        if ($user->products()->where('product_id', $productId)->exists()) {
+//            return response()->json(['status' => 'exists']);
+//        }
+//
+//        // Add the product to the wishlist
+//        $user->products()->attach($productId);
+//        return response()->json(['status' => 'success']);
+//    }
+//
+//
+//    public function destroy($productId)
+//    {
+//        $user = auth()->user();
+//        $user->products()->detach($productId);
+//
+//        return response()->json(['success' => 'Product removed from wishlist']);
+//    }
+
     public function store(Request $request)
     {
         if (!auth()->check()) {
@@ -29,21 +57,42 @@ class WishlistController extends Controller
 
         // Check if the product is already in the user's wishlist
         if ($user->products()->where('product_id', $productId)->exists()) {
-            return response()->json(['status' => 'exists']);
+            return response()->json([
+                'status' => 'exists',
+                'wishlistCount' => $user->products()->count() // return the count even if it exists
+            ]);
         }
 
         // Add the product to the wishlist
         $user->products()->attach($productId);
-        return response()->json(['status' => 'success']);
+        return response()->json([
+            'status' => 'success',
+            'wishlistCount' => $user->products()->count() // return the updated count
+        ]);
     }
-
 
     public function destroy($productId)
     {
+        if (!auth()->check()) {
+            return response()->json(['status' => 'unauthorized'], 401);
+        }
+
         $user = auth()->user();
         $user->products()->detach($productId);
 
-        return response()->json(['success' => 'Product removed from wishlist']);
+        return response()->json([
+            'success' => 'Product removed from wishlist',
+            'wishlistCount' => $user->products()->count() // return the updated count
+        ]);
+    }
+
+    public function count(){
+        if (!auth()->check()) {
+            return response()->json(['wishlistCount' => 0]);
+        }
+
+        $wishlistCount = auth()->user()->products()->count();
+        return response()->json(['wishlistCount' => $wishlistCount]);
     }
 
 }

@@ -60,6 +60,7 @@
     <!-- Template  JS -->
     <script src="{{asset('assets/front/js/main.js?v=5.3')}}"></script>
     <script src="{{asset('assets/front/js/shop.js?v=5.3')}}"></script>
+    @include('front.includes.scripts')
     @stack('scripts')
 </body>
 

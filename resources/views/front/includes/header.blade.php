@@ -109,14 +109,14 @@
                             <div class="header-action-icon-2">
                                 <a href="{{route('wishlist.index')}}">
                                     <img class="svgInject" alt="Nest" src="{{asset('assets/front/imgs/theme/icons/icon-heart.svg')}}" />
-                                    <span class="pro-count blue">6</span>
+                                    <span class="pro-count blue" id="wishlist-counter">3</span>
                                 </a>
                                 <a href="{{route('wishlist.index')}}"><span class="lable">Wishlist</span></a>
                             </div>
                             <div class="header-action-icon-2">
                                 <a class="mini-cart-icon" href="shop-cart.html">
                                     <img alt="Nest" src="{{asset('assets/front/imgs/theme/icons/icon-cart.svg')}}" />
-                                    <span class="pro-count blue">2</span>
+                                    <span class="pro-count blue" >9</span>
                                 </a>
                                 <a href="shop-cart.html"><span class="lable">Cart</span></a>
                                 <div class="cart-dropdown-wrap cart-dropdown-hm2">

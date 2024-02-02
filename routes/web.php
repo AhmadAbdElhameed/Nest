@@ -49,6 +49,8 @@ Route::group(
             Route::post('wishlist', [WishlistController::class,'store'])->name('wishlist.store');
             Route::delete('wishlist/{product_id}', [WishlistController::class,'destroy'])->name('wishlist.destroy');
             Route::get('wishlist/products', [WishlistController::class,'index'])->name('wishlist.index');
+            Route::get('/wishlist/count', [WishlistController::class, 'count'])->name('wishlist.count');
+
         });
 
 

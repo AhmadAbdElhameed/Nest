@@ -321,11 +321,13 @@
                             icon: 'success',
                             title: 'Product added to your wishlist successfully.'
                         });
+                        updateWishlistCounter();
                     } else if (response.status === 'exists') {
                         Toast.fire({
                             icon: 'info',
                             title: 'This product is already in your wishlist.'
                         });
+                        updateWishlistCounter();
                     }
                 },
                 error: function(xhr) {
