@@ -85,7 +85,7 @@
                 </div>
                 <div class="row product-grid products" >
                     @foreach($category->products as $product)
-                      @include('front.includes.quick_view',$product)
+
                         <div class="col-lg-1-2 col-md-4 col-12 col-sm-6">
                             <div class="product-cart-wrap mb-30">
                                 <div class="product-img-action-wrap">
@@ -134,6 +134,7 @@
                                 </div>
                             </div>
                         </div>
+                        @include('front.includes.quick_view',$product)
                     @endforeach
 
                     <!--end product card-->
