@@ -9,17 +9,17 @@
                             <span class="zoom-icon"><i class="fi-rs-search"></i></span>
                             <!-- MAIN SLIDES -->
                             <div class="product-image-slider">
-                                @foreach($product->images as $image)
+{{--                                @foreach($product->images as $image)--}}
                                     <figure class="border-radius-10">
-                                        <img src="{{asset('uploads/images/'.$image->image)}}" alt="{{$product->name}}" />
+{{--                                        <img src="{{asset('uploads/images/'.$image->image)}}" alt="{{$product->name}}" />--}}
                                     </figure>
-                                @endforeach
+{{--                                @endforeach--}}
                             </div>
                             <!-- THUMBNAILS -->
                             <div class="slider-nav-thumbnails">
-                                @foreach($product->images as $image)
-                                    <div><img src="{{asset('uploads/images/'.$image->image)}}" alt="{{$product->name}}" /></div>
-                                @endforeach
+{{--                                @foreach($product->images as $image)--}}
+{{--                                    <div><img src="{{asset('uploads/images/'.$image->image)}}" alt="{{$product->name}}" /></div>--}}
+{{--                                @endforeach--}}
                             </div>
                         </div>
                         <!-- End Gallery -->
@@ -27,7 +27,7 @@
                     <div class="col-md-6 col-sm-12 col-xs-12">
                         <div class="detail-info pr-30 pl-30">
                             <span class="stock-status out-stock"> Sale Off </span>
-                            <h3 class="title-detail"><a href="shop-product-right.html" class="text-heading">{{$product->name}}</a></h3>
+                            <h3 class="title-detail"><a href="shop-product-right.html" class="text-heading">name</a></h3>
                             <div class="product-detail-rating">
                                 <div class="product-rate-cover text-end">
                                     <div class="product-rate d-inline-block">

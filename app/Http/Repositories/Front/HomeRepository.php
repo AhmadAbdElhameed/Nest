@@ -26,7 +26,18 @@ class HomeRepository implements HomeInterface
         $categories = Category::with(['subCategories' => function ($query) {
             $query->where('status',1)->select('id', 'category_id', 'slug','image');
         }, 'translations'])->where('status', 1)->select('id', 'slug','image')->get();
-        return view('front.pages.category',compact('category','categories'));
+
+
+        $newProducts = $category->products()
+            ->where('status', 1)
+            ->latest()
+            ->take(3)
+            ->with('images') // Simplify this, as you're loading all related images
+            ->get(['id', 'price', 'special_price', 'slug']);
+
+
+
+        return view('front.pages.category',compact('category','categories','newProducts'));
     }
 
     public function productDetails($product)

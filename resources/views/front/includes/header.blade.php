@@ -116,7 +116,7 @@
                             <div class="header-action-icon-2">
                                 <a class="mini-cart-icon" href="{{route('cart.index')}}">
                                     <img alt="Nest" src="{{asset('assets/front/imgs/theme/icons/icon-cart.svg')}}" />
-                                    <span class="pro-count blue" >9</span>
+                                    <span class="pro-count blue" id="cart-counter">{{ Cart::content()->count() }}</span>
                                 </a>
                                 <a href="{{route('cart.index')}}"><span class="lable">Cart</span></a>
                                 <div class="cart-dropdown-wrap cart-dropdown-hm2">

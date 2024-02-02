@@ -53,9 +53,10 @@ Route::group(
             Route::get('/wishlist/count', [WishlistController::class, 'count'])->name('wishlist.count');
 
 
-            Route::group(['prefix' => 'cart', 'as' => 'cart.'],function (){
-                Route::get('/', [CartController::class,'index'])->name('index');
-                Route::get('/add/{slug}', [CartController::class,'addToCart'])->name('add');
+            Route::group(['prefix' => 'cart', 'as' => 'cart.'], function() {
+                Route::get('/', [CartController::class, 'index'])->name('index');
+                Route::post('/add', [CartController::class, 'addToCart'])->name('add'); // Changed to '/add'
+                Route::get('/count', [CartController::class, 'cartCount'])->name('count');
             });
         });
 

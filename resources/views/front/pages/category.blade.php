@@ -127,15 +127,17 @@
                                             <span>${{$product->price}}</span>
                                             <span class="old-price">$32.8</span>
                                         </div>
+
                                         <div class="add-cart">
-                                            <a class="add add_to_cart" data-product-id="{{$product->id}}" data-product-slug="{{$product->slug}}"
-                                               href="#"><i class="fi-rs-shopping-cart mr-5"></i>Add </a>
+                                            <button type="button" class="btn add_to_cart" data-product-id="{{$product->id}}" data-product-slug="{{$product->slug}}">
+                                                <i class="fi-rs-shopping-cart mr-5"></i>Add
+                                            </button>
                                         </div>
+
                                     </div>
                                 </div>
                             </div>
                         </div>
-                        @include('front.includes.quick_view',$product)
                     @endforeach
 
                     <!--end product card-->
@@ -169,21 +171,11 @@
                 <div class="sidebar-widget widget-category-2 mb-30">
                     <h5 class="section-title style-1 mb-30">Category</h5>
                     <ul>
-                        <li>
-                            <a href="shop-grid-right.html"> <img src="assets/imgs/theme/icons/category-1.svg" alt="" />Milks & Dairies</a><span class="count">30</span>
-                        </li>
-                        <li>
-                            <a href="shop-grid-right.html"> <img src="assets/imgs/theme/icons/category-2.svg" alt="" />Clothing</a><span class="count">35</span>
-                        </li>
-                        <li>
-                            <a href="shop-grid-right.html"> <img src="assets/imgs/theme/icons/category-3.svg" alt="" />Pet Foods </a><span class="count">42</span>
-                        </li>
-                        <li>
-                            <a href="shop-grid-right.html"> <img src="assets/imgs/theme/icons/category-4.svg" alt="" />Baking material</a><span class="count">68</span>
-                        </li>
-                        <li>
-                            <a href="shop-grid-right.html"> <img src="assets/imgs/theme/icons/category-5.svg" alt="" />Fresh Fruit</a><span class="count">87</span>
-                        </li>
+                        @foreach($categories as $category)
+                            <li>
+                                <a href="shop-grid-right.html"> <img src="{{asset($category->image)}}" alt="" />{{$category->name}}</a><span class="count">{{count($category->products)}}</span>
+                            </li>
+                        @endforeach
                     </ul>
                 </div>
                 <!-- Fillter By Price -->
@@ -224,47 +216,27 @@
                             </div>
                         </div>
                     </div>
-                    <a href="shop-grid-right.html" class="btn btn-sm btn-default"><i class="fi-rs-filter mr-5"></i> Fillter</a>
+                    <a href="shop-grid-right.html" class="btn btn-sm btn-default"><i class="fi-rs-filter mr-5"></i> Filter</a>
                 </div>
                 <!-- Product sidebar Widget -->
                 <div class="sidebar-widget product-sidebar mb-30 p-30 bg-grey border-radius-10">
                     <h5 class="section-title style-1 mb-30">New products</h5>
-                    <div class="single-post clearfix">
-                        <div class="image">
-                            <img src="assets/imgs/shop/thumbnail-3.jpg" alt="#" />
-                        </div>
-                        <div class="content pt-10">
-                            <h5><a href="shop-product-detail.html">Chen Cardigan</a></h5>
-                            <p class="price mb-0 mt-5">$99.50</p>
-                            <div class="product-rate">
-                                <div class="product-rating" style="width: 90%"></div>
+                    @foreach($newProducts as $product)
+                        <div class="single-post clearfix">
+                            <div class="image">
+                                <img src="{{asset('uploads/images/'.$product->images[0]->image)}}" alt="#" />
+                            </div>
+                            <div class="content pt-10">
+                                <h5><a href="{{route('product_details',$product)}}">{{$product->name}}</a></h5>
+                                <p class="price mb-0 mt-5">{{$product->special_price ?? $product->price}}</p>
+                                <div class="product-rate">
+                                    <div class="product-rating" style="width: 90%"></div>
+                                </div>
                             </div>
                         </div>
-                    </div>
-                    <div class="single-post clearfix">
-                        <div class="image">
-                            <img src="assets/imgs/shop/thumbnail-4.jpg" alt="#" />
-                        </div>
-                        <div class="content pt-10">
-                            <h6><a href="shop-product-detail.html">Chen Sweater</a></h6>
-                            <p class="price mb-0 mt-5">$89.50</p>
-                            <div class="product-rate">
-                                <div class="product-rating" style="width: 80%"></div>
-                            </div>
-                        </div>
-                    </div>
-                    <div class="single-post clearfix">
-                        <div class="image">
-                            <img src="assets/imgs/shop/thumbnail-5.jpg" alt="#" />
-                        </div>
-                        <div class="content pt-10">
-                            <h6><a href="shop-product-detail.html">Colorful Jacket</a></h6>
-                            <p class="price mb-0 mt-5">$25</p>
-                            <div class="product-rate">
-                                <div class="product-rating" style="width: 60%"></div>
-                            </div>
-                        </div>
-                    </div>
+                    @endforeach
+
+
                 </div>
                 <div class="banner-img wow fadeIn mb-lg-0 animated d-lg-block d-none">
                     <img src="assets/imgs/banner/banner-11.png" alt="" />
