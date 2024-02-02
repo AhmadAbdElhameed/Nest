@@ -97,7 +97,7 @@
                                         </a>
                                     </div>
                                     <div class="product-action-1">
-                                        <a aria-label="Add To Wishlist" class="action-btn" id="add_to_wishlist" data-product-id="{{$product->id}}" href="shop-wishlist.html"><i class="fi-rs-heart"></i></a>
+                                        <a aria-label="Add To Wishlist" class="action-btn" id="add_to_wishlist" data-product-id="{{$product->id}}" href="#"><i class="fi-rs-heart"></i></a>
                                         <a aria-label="Compare" class="action-btn" id="compare" href="shop-compare.html"><i class="fi-rs-shuffle"></i></a>
                                         <a aria-label="Quick view" id="quick_view" class="action-btn show_product_modal" data-bs-toggle="modal" data-bs-target="#quickViewModal"  data-id="">
 
@@ -128,7 +128,8 @@
                                             <span class="old-price">$32.8</span>
                                         </div>
                                         <div class="add-cart">
-                                            <a class="add" href="shop-cart.html"><i class="fi-rs-shopping-cart mr-5"></i>Add </a>
+                                            <a class="add add_to_cart" data-product-id="{{$product->id}}" data-product-slug="{{$product->slug}}"
+                                               href="#"><i class="fi-rs-shopping-cart mr-5"></i>Add </a>
                                         </div>
                                     </div>
                                 </div>

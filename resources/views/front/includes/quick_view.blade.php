@@ -4,7 +4,7 @@
             <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
             <div class="modal-body">
                 <div class="row">
-                    <div class="col-md-6 col-sm-12 col-xs-12 mb-md-0 mb-sm-5">
+                    <div class="col-md-6 col-sm-12 col-xs-12 mb-md-0 mb-sm-5" style="height: 50%">
                         <div class="detail-gallery">
                             <span class="zoom-icon"><i class="fi-rs-search"></i></span>
                             <!-- MAIN SLIDES -->

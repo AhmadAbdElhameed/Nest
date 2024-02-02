@@ -1,6 +1,7 @@
 <?php
 
 use App\Http\Controllers\Auth\RegisteredUserController;
+use App\Http\Controllers\Front\CartController;
 use App\Http\Controllers\Front\HomeController;
 use App\Http\Controllers\Front\WishlistController;
 use App\Http\Controllers\ProfileController;
@@ -51,6 +52,11 @@ Route::group(
             Route::get('wishlist/products', [WishlistController::class,'index'])->name('wishlist.index');
             Route::get('/wishlist/count', [WishlistController::class, 'count'])->name('wishlist.count');
 
+
+            Route::group(['prefix' => 'cart', 'as' => 'cart.'],function (){
+                Route::get('/', [CartController::class,'index'])->name('index');
+                Route::get('/add/{slug}', [CartController::class,'addToCart'])->name('add');
+            });
         });
 
 

@@ -23,7 +23,7 @@
     <!-- Modal -->
 
     <!-- Quick view -->
-{{--    @include('front.includes.quick_view')--}}
+    @include('front.includes.quick_view')
     <!-- Header  -->
     @include('front.includes.header')
    <!-- End Header  -->
