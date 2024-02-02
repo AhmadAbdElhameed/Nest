@@ -283,85 +283,25 @@
 
 
 @push('scripts')
-{{--    <script>--}}
 
-{{--        $.ajaxSetup({--}}
-{{--            headers: {--}}
-{{--                'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')--}}
-{{--            }--}}
-{{--        });--}}
-
-{{--        $(document).on('click', '#add_to_wishlist', function (e) {--}}
-{{--            e.preventDefault();--}}
-{{--            $.ajax({--}}
-{{--                type: 'post',--}}
-{{--                url: "{{Route('wishlist.store')}}",--}}
-{{--                data: {--}}
-{{--                    'productId': $(this).attr('data-product-id'),--}}
-{{--                },--}}
-{{--                success: function (data) {--}}
-
-{{--                }--}}
-{{--            });--}}
-{{--        });--}}
-{{--    </script>--}}
-
-
-{{--<script>--}}
-{{--    $.ajaxSetup({--}}
-{{--        headers: {--}}
-{{--            'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')--}}
-{{--        }--}}
-{{--    });--}}
-
-{{--    $(document).on('click', '#add_to_wishlist', function(e) {--}}
-{{--        e.preventDefault();--}}
-{{--        $.ajax({--}}
-{{--            type: 'post',--}}
-{{--            url: "{{ route('wishlist.store') }}",--}}
-{{--            data: {--}}
-{{--                'productId': $(this).attr('data-product-id'),--}}
-{{--            },--}}
-{{--            success: function(response) {--}}
-{{--                if (response.status === 'success') {--}}
-{{--                    Swal.fire({--}}
-{{--                        icon: 'success',--}}
-{{--                        title: 'Added!',--}}
-{{--                        text: 'Product added to your wishlist successfully.',--}}
-{{--                    });--}}
-{{--                } else if (response.status === 'exists') {--}}
-{{--                    Swal.fire({--}}
-{{--                        icon: 'info',--}}
-{{--                        title: 'Already there!',--}}
-{{--                        text: 'This product is already in your wishlist.',--}}
-{{--                    });--}}
-{{--                }--}}
-{{--            },--}}
-{{--            error: function(xhr) {--}}
-{{--                if (xhr.status === 401) { // HTTP status 401: Unauthorized--}}
-{{--                    Swal.fire({--}}
-{{--                        icon: 'warning',--}}
-{{--                        title: 'Login Required',--}}
-{{--                        text: 'You must log in to add products to your wishlist.',--}}
-{{--                    });--}}
-{{--                } else {--}}
-{{--                    console.error(xhr.responseText);--}}
-{{--                    Swal.fire({--}}
-{{--                        icon: 'error',--}}
-{{--                        title: 'Error!',--}}
-{{--                        text: 'An error occurred. Please try again.',--}}
-{{--                    });--}}
-{{--                }--}}
-{{--            }--}}
-{{--        });--}}
-{{--    });--}}
-{{--</script>--}}
-
-<script>
+    <script>
     $(document).ready(function() {
         $.ajaxSetup({
             headers: {
                 'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
+            }
+        });
+
+        // Define Toast outside the AJAX call
+        const Toast = Swal.mixin({
+            toast: true,
+            position: 'top-end',
+            showConfirmButton: false,
+            timer: 3000,
+            timerProgressBar: true,
+            didOpen: (toast) => {
+                toast.addEventListener('mouseenter', Swal.stopTimer)
+                toast.addEventListener('mouseleave', Swal.resumeTimer)
             }
         });
 
@@ -376,18 +316,6 @@
                     'productId': productId,
                 },
                 success: function(response) {
-                    const Toast = Swal.mixin({
-                        toast: true,
-                        position: 'top-end',
-                        showConfirmButton: false,
-                        timer: 3000,
-                        timerProgressBar: true,
-                        didOpen: (toast) => {
-                            toast.addEventListener('mouseenter', Swal.stopTimer)
-                            toast.addEventListener('mouseleave', Swal.resumeTimer)
-                        }
-                    });
-
                     if (response.status === 'success') {
                         Toast.fire({
                             icon: 'success',
@@ -418,4 +346,5 @@
         });
     });
 </script>
+
 @endpush
