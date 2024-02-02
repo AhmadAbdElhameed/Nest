@@ -18,13 +18,33 @@ class WishlistController extends Controller
         return view('front.pages.wishlist',compact('categories','products'));
     }
 
-    public function store(){
-        if (! auth()->user()->wishlistHas(request('productId'))) {
-            auth()->user()->products()->attach(request('productId'));
-            return response() -> json(['status' => true , 'wished' => true]);
+//    public function store(){
+//        if (! auth()->user()->wishlistHas(request('productId'))) {
+//            auth()->user()->products()->attach(request('productId'));
+//            return response() -> json(['status' => true , 'wished' => true]);
+//        }
+//        return response() -> json(['status' => true , 'wished' => false]);  // added before we can use enumeration here
+//    }
+
+    public function store(Request $request)
+    {
+        if (!auth()->check()) {
+            return response()->json(['status' => 'unauthorized'], 401);
         }
-        return response() -> json(['status' => true , 'wished' => false]);  // added before we can use enumeration here
+
+        $user = auth()->user();
+        $productId = $request->input('productId');
+
+        // Check if the product is already in the user's wishlist
+        if ($user->products()->where('product_id', $productId)->exists()) {
+            return response()->json(['status' => 'exists']);
+        }
+
+        // Add the product to the wishlist
+        $user->products()->attach($productId);
+        return response()->json(['status' => 'success']);
     }
+
 
     public function destroy($productId)
     {
