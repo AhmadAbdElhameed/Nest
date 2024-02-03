@@ -43,14 +43,15 @@
                         <tbody>
 {{--                            @isset($basket)--}}
 {{--                                @foreach($basket -> all() as $product)--}}
-                                    <tr class="pt-30">
+                            @forelse($cartProducts as $product)
+                                <tr class="pt-30">
                                 <td class="custome-checkbox pl-30">
                                     <input class="form-check-input" type="checkbox" name="checkbox" id="exampleCheckbox1" value="">
                                     <label class="form-check-label" for="exampleCheckbox1"></label>
                                 </td>
-                                <td class="image product-thumbnail pt-40"><img src="assets/imgs/shop/product-1-1.jpg" alt="#"></td>
+                                <td class="image product-thumbnail pt-40"><img src="{{asset('uploads/images/'.$product['product']->images[0]->image)}}" alt="#"></td>
                                 <td class="product-des product-name">
-                                    <h6 class="mb-5"><a class="product-name mb-10 text-heading" href="shop-product-right.html">Field Roast Chao Cheese Creamy Original</a></h6>
+                                    <h6 class="mb-5"><a class="product-name mb-10 text-heading" href="{{route('product_details',$product['product'])}}">{{$product['product']->name}}</a></h6>
                                     <div class="product-rate-cover">
                                         <div class="product-rate d-inline-block">
                                             <div class="product-rating" style="width:90%">
@@ -60,7 +61,7 @@
                                     </div>
                                 </td>
                                 <td class="price" data-title="Price">
-                                    <h4 class="text-body">$2.51 </h4>
+                                    <h4 class="text-body">${{$product['price']}} </h4>
                                 </td>
                                 <td class="text-center detail-info" data-title="Stock">
                                     <div class="detail-extralink mr-15">
@@ -72,10 +73,12 @@
                                     </div>
                                 </td>
                                 <td class="price" data-title="Price">
-                                    <h4 class="text-brand">$2.51 </h4>
+                                    <h4 class="text-brand">$ {{$product['price'] * $product['qty']}} </h4>
                                 </td>
                                 <td class="action text-center" data-title="Remove"><a href="#" class="text-body"><i class="fi-rs-trash"></i></a></td>
                             </tr>
+                            @empty
+                            @endforelse
 {{--                                @endforeach--}}
 {{--                            @endisset--}}
                         </tbody>
@@ -113,7 +116,7 @@
                                             <h6 class="text-muted">Subtotal</h6>
                                         </td>
                                         <td class="cart_total_amount">
-                                            <h4 class="text-brand text-end">$12.31</h4>
+                                            <h4 class="text-brand text-end">${{$total}}</h4>
                                         </td>
                                     </tr>
                                     <tr>
