@@ -92,4 +92,21 @@ class CartController extends Controller
         return response()->json(['cartCount' => $totalQuantity]);
     }
 
+
+    public function removeFromCart(Request $request) {
+        $rowId = $request->input('rowId');
+        Cart::remove($rowId);
+
+        return response()->json(['success' => 'Product removed from cart']);
+    }
+
+
+    public function updateCart(Request $request) {
+        $rowId = $request->input('rowId');
+        $qty = $request->input('qty');
+        Cart::update($rowId, $qty);
+
+        return response()->json(['success' => 'Cart updated']);
+    }
+
 }

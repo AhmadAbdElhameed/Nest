@@ -57,6 +57,10 @@ Route::group(
                 Route::get('/', [CartController::class, 'index'])->name('index');
                 Route::post('/add', [CartController::class, 'addToCart'])->name('add'); // Changed to '/add'
                 Route::get('/count', [CartController::class, 'cartCount'])->name('count');
+
+                Route::delete('/remove', [CartController::class, 'removeFromCart'])->name('remove');
+                Route::post('/update', [CartController::class, 'updateCart'])->name('update');
+
             });
         });
 

@@ -41,8 +41,7 @@
                         </tr>
                         </thead>
                         <tbody>
-{{--                            @isset($basket)--}}
-{{--                                @foreach($basket -> all() as $product)--}}
+
                             @forelse($cartProducts as $product)
                                 <tr class="pt-30">
                                 <td class="custome-checkbox pl-30">
@@ -66,21 +65,19 @@
                                 <td class="text-center detail-info" data-title="Stock">
                                     <div class="detail-extralink mr-15">
                                         <div class="detail-qty border radius">
-                                            <a href="#" class="qty-down"><i class="fi-rs-angle-small-down"></i></a>
-                                            <input type="text" name="quantity" class="qty-val" value="1" min="1">
-                                            <a href="#" class="qty-up"><i class="fi-rs-angle-small-up"></i></a>
+                                            <a href="#" class="qty-down" data-row-id="{{ $product['rowId'] }}"><i class="fi-rs-angle-small-down"></i></a>
+                                            <input type="text" name="quantity" class="qty-val" value="{{ $product['qty'] }}" min="1">
+                                            <a href="#" class="qty-up" data-row-id="{{ $product['rowId'] }}"><i class="fi-rs-angle-small-up"></i></a>
                                         </div>
                                     </div>
                                 </td>
                                 <td class="price" data-title="Price">
                                     <h4 class="text-brand">$ {{$product['price'] * $product['qty']}} </h4>
                                 </td>
-                                <td class="action text-center" data-title="Remove"><a href="#" class="text-body"><i class="fi-rs-trash"></i></a></td>
+                                <td class="action text-center" data-title="Remove"><a href="#" class="text-body remove-from-cart" data-row-id="{{ $product['rowId'] }}"><i class="fi-rs-trash"></i></a></td>
                             </tr>
                             @empty
                             @endforelse
-{{--                                @endforeach--}}
-{{--                            @endisset--}}
                         </tbody>
                     </table>
                 </div>
@@ -167,4 +164,46 @@
 
 @push('scripts')
 
+    <script>
+        $(document).on('click', '.qty-up, .qty-down', function(e) {
+            e.preventDefault();
+            let rowId = $(this).data('row-id');
+            let qtyInput = $(this).siblings('.qty-val');
+            let newQty = $(this).hasClass('qty-up') ? parseInt(qtyInput.val()) + 1 : parseInt(qtyInput.val()) - 1;
+            qtyInput.val(newQty);
+
+            // Send AJAX request to update the cart quantity
+            $.ajax({
+                type: 'POST',
+                url: "{{ route('cart.update') }}",
+                data: { rowId: rowId, qty: newQty },
+                success: function(response) {
+                    // Update the total price and cart count, show success message
+                },
+                error: function(xhr) {
+                    // Handle error
+                }
+            });
+        });
+
+        $(document).on('click', '.remove-from-cart', function(e) {
+            e.preventDefault();
+            let rowId = $(this).data('row-id');
+            let productRow = $(this).closest('tr');
+
+            // Send AJAX request to remove the item from the cart
+            $.ajax({
+                type: 'DELETE',
+                url: "{{ route('cart.remove') }}",
+                data: { rowId: rowId },
+                success: function(response) {
+                    // Remove the product row from the table, update the total price and cart count, show success message
+                    productRow.remove();
+                },
+                error: function(xhr) {
+                    // Handle error
+                }
+            });
+        });
+    </script>
 @endpush
