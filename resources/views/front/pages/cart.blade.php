@@ -43,7 +43,8 @@
                         <tbody>
 
                             @forelse($cartProducts as $product)
-                                <tr class="pt-30">
+{{--                                @dd($product)--}}
+                                <tr class="pt-30" data-row-id="{{ $product['rowId'] }}">
                                 <td class="custome-checkbox pl-30">
                                     <input class="form-check-input" type="checkbox" name="checkbox" id="exampleCheckbox1" value="">
                                     <label class="form-check-label" for="exampleCheckbox1"></label>
@@ -71,12 +72,13 @@
                                         </div>
                                     </div>
                                 </td>
-                                <td class="price" data-title="Price">
-                                    <h4 class="text-brand">$ {{$product['price'] * $product['qty']}} </h4>
+                                <td class="price" data-title="Subtotal">
+                                    <h4 class="text-brand">$ {{ number_format($product['price'] * $product['qty'], 2) }}</h4>
                                 </td>
                                 <td class="action text-center" data-title="Remove"><a href="#" class="text-body remove-from-cart" data-row-id="{{ $product['rowId'] }}"><i class="fi-rs-trash"></i></a></td>
                             </tr>
                             @empty
+                                <tr><td colspan="7">Your cart is empty.</td></tr>
                             @endforelse
                         </tbody>
                     </table>
@@ -113,7 +115,7 @@
                                             <h6 class="text-muted">Subtotal</h6>
                                         </td>
                                         <td class="cart_total_amount">
-                                            <h4 class="text-brand text-end">${{$total}}</h4>
+                                            <h4 class="text-brand text-end" id="cart-subtotal">${{$total}}</h4>
                                         </td>
                                     </tr>
                                     <tr>
@@ -126,7 +128,10 @@
                                             <h6 class="text-muted">Shipping</h6>
                                         </td>
                                         <td class="cart_total_amount">
-                                            <h4 class="text-heading text-end">Free</h4></td> </tr> <tr>
+                                            <h4 class="text-heading text-end" id="cart-shipping">Free</h4>
+                                        </td>
+                                    </tr>
+                                    <tr>
                                         <td class="cart_total_label">
                                             <h6 class="text-muted">Estimate for</h6>
                                         </td>
@@ -141,7 +146,7 @@
                                             <h6 class="text-muted">Total</h6>
                                         </td>
                                         <td class="cart_total_amount">
-                                            <h4 class="text-brand text-end">$12.31</h4>
+                                            <h4 class="text-brand text-end" id="cart-total">$ {{$total}}</h4>
                                         </td>
                                     </tr>
                                     </tbody>
@@ -163,25 +168,126 @@
 
 
 @push('scripts')
-
     <script>
+        function updateTotalPrice() {
+            // Your logic to sum up the subtotals of all items in the cart and update the total price field
+            let total = 0;
+            $('.price[data-title="Subtotal"] h4').each(function() {
+                total += parseFloat($(this).text().replace('$', ''));
+            });
+            $('#total-price').text('$' + total.toFixed(2)); // Format to 2 decimal places
+        }
+
+        function updateCartCounter() {
+            // Sum up all quantities from the cart items
+            let totalQuantity = 0;
+            $('.qty-val').each(function() {
+                totalQuantity += parseInt($(this).val());
+            });
+
+            // Update the cart counter on the page
+            $('#cart-counter').text(totalQuantity);
+        }
+
+        function updateCartAmounts() {
+            $.ajax({
+                type: 'GET',
+                url: "{{ route('cart.index') }}",
+                success: function(response) {
+                    // Update the subtotal for each item and the total amount
+                    $('#cart-subtotal').text(`$ ${response.subtotal}`);
+                    $('#cart-shipping').text(response.shipping); // If shipping is a string like "Free"
+                    $('#cart-total').text(`$ ${response.total}`);
+                },
+                error: function(xhr) {
+                    console.error('Error fetching cart data:', xhr.responseText);
+                }
+            });
+        }
+
+
+
+        {{--$(document).on('click', '.qty-up, .qty-down', function(e) {--}}
+        {{--    e.preventDefault();--}}
+        {{--    let rowId = $(this).data('row-id');--}}
+        {{--    let qtyInput = $(this).closest('.detail-info').find('.qty-val');--}}
+        {{--    let currentQty = parseInt(qtyInput.val());--}}
+        {{--    let newQty = $(this).hasClass('qty-up') ? currentQty + 1 : (currentQty > 1 ? currentQty - 1 : currentQty);--}}
+
+        {{--    qtyInput.val(newQty);--}}
+
+        {{--    // Cache the clicked element for use in the success callback--}}
+        {{--    let clickedElement = $(this);--}}
+        {{--    --}}
+        {{--    // Send AJAX request to update the cart quantity--}}
+        {{--    $.ajax({--}}
+        {{--        type: 'POST',--}}
+        {{--        url: "/cart/update/" + rowId,--}}
+        {{--        data: {--}}
+        {{--            rowId: rowId,--}}
+        {{--            qty: newQty,--}}
+        {{--            _token: "{{ csrf_token() }}"--}}
+        {{--        },--}}
+        {{--        success: function(response) {--}}
+        {{--            // Update the subtotal for this product--}}
+
+        {{--            let updatedSubtotal = response.subtotal;--}}
+        {{--            let itemElement = $(`tr[data-row-id="${rowId}"]`);--}}
+        {{--            itemElement.find('.price[data-title="Subtotal"] h4').text(updatedSubtotal);--}}
+
+        {{--            // Update the total price of the cart--}}
+        {{--            updateTotalPrice();--}}
+
+        {{--            // Update cart counter--}}
+        {{--            updateCartCounter();--}}
+
+        {{--            updateCartAmounts();--}}
+        {{--        },--}}
+        {{--        error: function(xhr) {--}}
+        {{--            console.error('Error updating cart:', xhr.responseText);--}}
+        {{--        }--}}
+        {{--    });--}}
+
+        {{--});--}}
+
+
         $(document).on('click', '.qty-up, .qty-down', function(e) {
             e.preventDefault();
             let rowId = $(this).data('row-id');
-            let qtyInput = $(this).siblings('.qty-val');
-            let newQty = $(this).hasClass('qty-up') ? parseInt(qtyInput.val()) + 1 : parseInt(qtyInput.val()) - 1;
+            let qtyInput = $(this).closest('.detail-info').find('.qty-val');
+            let currentQty = parseInt(qtyInput.val());
+            let newQty = $(this).hasClass('qty-up') ? currentQty + 1 : (currentQty > 1 ? currentQty - 1 : currentQty);
+
             qtyInput.val(newQty);
+
+            // Cache the clicked element for use in the success callback
+            let clickedElement = $(this);
 
             // Send AJAX request to update the cart quantity
             $.ajax({
                 type: 'POST',
-                url: "{{ route('cart.update') }}",
-                data: { rowId: rowId, qty: newQty },
+                url: "/cart/update/" + rowId,
+                data: {
+                    rowId: rowId,
+                    qty: newQty,
+                    _token: "{{ csrf_token() }}"
+                },
                 success: function(response) {
-                    // Update the total price and cart count, show success message
+                    // Use the cached clicked element to find the closest 'tr' element
+                    let itemElement = clickedElement.closest('tr');
+                    itemElement.find('.price[data-title="Subtotal"] h4').text('$' + parseFloat(response.subtotal).toFixed(2));
+
+                    // Update the total price of the cart
+                    updateTotalPrice();
+
+                    // Update cart counter
+                    updateCartCounter();
+
+                    // Update the cart amounts (subtotal, shipping, total)
+                    updateCartAmounts();
                 },
                 error: function(xhr) {
-                    // Handle error
+                    console.error('Error updating cart:', xhr.responseText);
                 }
             });
         });
@@ -199,6 +305,8 @@
                 success: function(response) {
                     // Remove the product row from the table, update the total price and cart count, show success message
                     productRow.remove();
+
+                    updateCartAmounts();
                 },
                 error: function(xhr) {
                     // Handle error

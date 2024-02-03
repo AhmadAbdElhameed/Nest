@@ -20,7 +20,7 @@ class CartController extends Controller
         $this->basket = $basket;
     }
 
-    public function index(){
+    public function index(Request $request){
 
         $categories = Category::with(['subCategories' => function ($query) {
             $query->where('status',1)->select('id', 'category_id', 'slug','image');
@@ -47,9 +47,28 @@ class CartController extends Controller
                 ];
             }
         }
+//
+//
+//        // Calculate the total price of the cart items
+//        $total = Cart::subtotal();
+
+
 
         // Calculate the total price of the cart items
-        $total = Cart::subtotal();
+        $subtotal = Cart::subtotal(2, '.', ''); // Get the subtotal without formatting
+        $shipping = 'Free'; // Define shipping cost or logic
+        $total = Cart::total(2, '.', ''); // Get the total without formatting
+
+        // Check if the request is AJAX
+        if ($request->ajax()) {
+            // Return JSON response for AJAX request
+            return response()->json([
+                'cartProducts' => $cartProducts,
+                'subtotal' => $subtotal,
+                'shipping' => $shipping,
+                'total' => $total,
+            ]);
+        }
 
         return view('front.pages.cart',compact('categories','cartProducts','total'));
     }
@@ -97,16 +116,38 @@ class CartController extends Controller
         $rowId = $request->input('rowId');
         Cart::remove($rowId);
 
-        return response()->json(['success' => 'Product removed from cart']);
+        $cartCount = Cart::content()->count(); // This could also be the sum of the quantities
+        $total = Cart::subtotal(); // The total price after removal
+
+        return response()->json([
+            'success' => 'Product removed from cart',
+            'cartCount' => $cartCount,
+            'total' => $total
+        ]);
     }
 
-
-    public function updateCart(Request $request) {
+    public function updateCart(Request $request)
+    {
         $rowId = $request->input('rowId');
-        $qty = $request->input('qty');
-        Cart::update($rowId, $qty);
+        $newQty = $request->input('qty');
 
-        return response()->json(['success' => 'Cart updated']);
+        // Update the quantity in the cart
+        Cart::update($rowId, $newQty);
+
+        // Get the updated item to return the new subtotal
+        $item = Cart::get($rowId);
+        $subtotal = $item->subtotal; // Get the subtotal for the item
+
+        // Calculate the total price of the cart items
+        $total = Cart::subtotal(); // Get the total for the cart
+
+        return response()->json([
+            'subtotal' => $subtotal,
+            'total' => $total,
+            'qty' => $newQty
+        ]);
     }
+
+
 
 }

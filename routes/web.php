@@ -59,7 +59,8 @@ Route::group(
                 Route::get('/count', [CartController::class, 'cartCount'])->name('count');
 
                 Route::delete('/remove', [CartController::class, 'removeFromCart'])->name('remove');
-                Route::post('/update', [CartController::class, 'updateCart'])->name('update');
+                Route::post('/update/{rowId}', [CartController::class, 'updateCart'])->name('update');
+
 
             });
         });
