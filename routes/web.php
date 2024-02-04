@@ -4,6 +4,7 @@ use App\Http\Controllers\Auth\RegisteredUserController;
 use App\Http\Controllers\Front\CartController;
 use App\Http\Controllers\Front\CheckoutController;
 use App\Http\Controllers\Front\HomeController;
+use App\Http\Controllers\Front\StripeController;
 use App\Http\Controllers\Front\WishlistController;
 use App\Http\Controllers\ProfileController;
 use Illuminate\Support\Facades\Route;
@@ -67,7 +68,11 @@ Route::group(
 
             Route::group(['prefix' => 'checkout', 'as' => 'checkout.'], function() {
                 Route::get('/', [CheckoutController::class, 'index'])->name('index');
+                Route::post('/store', [CheckoutController::class, 'store'])->name('store');
+                Route::get('/success',[CheckoutController::class,'stripeSuccess'])->name('stripe.success');
+                Route::get('/cancel',[CheckoutController::class,'stripeCancel'])->name('stripe.cancel');
             });
+
         });
 
 
