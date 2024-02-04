@@ -18,7 +18,9 @@
             <div class="col-lg-8 mb-40">
                 <h3 class="heading-2 mb-10">Checkout</h3>
                 <div class="d-flex justify-content-between">
-                    <h6 class="text-body">There are products in your cart</h6>
+                    <h6 class="text-body">There are
+                        <span style="color: red;font-weight: bold">{{Cart::content()->count()}}</span>
+                        products in your cart</h6>
                 </div>
             </div>
         </div>
