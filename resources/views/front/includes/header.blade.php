@@ -62,7 +62,7 @@
         <div class="container">
             <div class="header-wrap">
                 <div class="logo logo-width-1">
-                    <a href="index.html"><img src="{{asset('assets/front/imgs/theme/logo.svg')}}" alt="logo" /></a>
+                    <a href="{{route('home')}}"><img src="{{asset('assets/front/imgs/theme/logo.svg')}}" alt="logo" /></a>
                 </div>
                 <div class="header-right">
                     <div class="search-style-2">
@@ -107,18 +107,18 @@
                             </div>
 
                             <div class="header-action-icon-2">
-                                <a href="shop-wishlist.html">
+                                <a href="{{route('wishlist.index')}}">
                                     <img class="svgInject" alt="Nest" src="{{asset('assets/front/imgs/theme/icons/icon-heart.svg')}}" />
-                                    <span class="pro-count blue">6</span>
+                                    <span class="pro-count blue" id="wishlist-counter">0</span>
                                 </a>
-                                <a href="shop-wishlist.html"><span class="lable">Wishlist</span></a>
+                                <a href="{{route('wishlist.index')}}"><span class="lable">Wishlist</span></a>
                             </div>
                             <div class="header-action-icon-2">
-                                <a class="mini-cart-icon" href="shop-cart.html">
+                                <a class="mini-cart-icon" href="{{route('cart.index')}}">
                                     <img alt="Nest" src="{{asset('assets/front/imgs/theme/icons/icon-cart.svg')}}" />
-                                    <span class="pro-count blue">2</span>
+                                    <span class="pro-count blue" id="header-cart-counter">{{ Cart::content()->count() }}</span>
                                 </a>
-                                <a href="shop-cart.html"><span class="lable">Cart</span></a>
+                                <a href="{{route('cart.index')}}"><span class="lable">Cart</span></a>
                                 <div class="cart-dropdown-wrap cart-dropdown-hm2">
                                     <ul>
                                         <li>
@@ -180,7 +180,7 @@
                                             <a href="page-account.html"><i class="fi fi-rs-label mr-10"></i>My Voucher</a>
                                         </li>
                                         <li>
-                                            <a href="shop-wishlist.html"><i class="fi fi-rs-heart mr-10"></i>My Wishlist</a>
+                                            <a href="{{route('wishlist.index')}}"><i class="fi fi-rs-heart mr-10"></i>My Wishlist</a>
                                         </li>
                                         <li>
                                             <a href="page-account.html"><i class="fi fi-rs-settings-sliders mr-10"></i>Setting</a>
@@ -240,7 +240,7 @@
                             <div class="d-flex categori-dropdown-inner">
                                 <ul>
                                     <li>
-                                        <a href="shop-grid-right.html"> <img src="assets/front/imgs/theme/icons/category-1.svg" alt="" />Milks and Dairies</a>
+                                        <a href="shop-grid-right.html"> <img src="assets/front/imgs/theme/icons/category-1.svg" alt="" />Milks and Dairies 22</a>
                                     </li>
                                     <li>
                                         <a href="shop-grid-right.html"> <img src="assets/front/imgs/theme/icons/category-2.svg" alt="" />Clothing & beauty</a>
@@ -308,38 +308,28 @@
                                     <a href="page-about.html">About</a>
                                 </li>
                                 <li>
-                                    <a href="shop-grid-right.html">Shop <i class="fi-rs-angle-down"></i></a>
+                                    <a href="shop-grid-right.html">All Categories <i class="fi-rs-angle-down"></i></a>
                                     <ul class="sub-menu">
-                                        <li><a href="shop-grid-right.html">Shop Grid – Right Sidebar</a></li>
-                                        <li><a href="shop-grid-left.html">Shop Grid – Left Sidebar</a></li>
-                                        <li><a href="shop-list-right.html">Shop List – Right Sidebar</a></li>
-                                        <li><a href="shop-list-left.html">Shop List – Left Sidebar</a></li>
-                                        <li><a href="shop-fullwidth.html">Shop - Wide</a></li>
-                                        <li>
-                                            <a href="#">Single Product <i class="fi-rs-angle-right"></i></a>
-                                            <ul class="level-menu">
-                                                <li><a href="shop-product-right.html">Product – Right Sidebar</a></li>
-                                                <li><a href="shop-product-left.html">Product – Left Sidebar</a></li>
-                                                <li><a href="shop-product-full.html">Product – No sidebar</a></li>
-                                                <li><a href="shop-product-vendor.html">Product – Vendor Info</a></li>
-                                            </ul>
-                                        </li>
-                                        <li><a href="shop-filter.html">Shop – Filter</a></li>
-                                        <li><a href="shop-wishlist.html">Shop – Wishlist</a></li>
-                                        <li><a href="shop-cart.html">Shop – Cart</a></li>
-                                        <li><a href="shop-checkout.html">Shop – Checkout</a></li>
-                                        <li><a href="shop-compare.html">Shop – Compare</a></li>
-                                        <li>
-                                            <a href="#">Shop Invoice<i class="fi-rs-angle-right"></i></a>
-                                            <ul class="level-menu">
-                                                <li><a href="shop-invoice-1.html">Shop Invoice 1</a></li>
-                                                <li><a href="shop-invoice-2.html">Shop Invoice 2</a></li>
-                                                <li><a href="shop-invoice-3.html">Shop Invoice 3</a></li>
-                                                <li><a href="shop-invoice-4.html">Shop Invoice 4</a></li>
-                                                <li><a href="shop-invoice-5.html">Shop Invoice 5</a></li>
-                                                <li><a href="shop-invoice-6.html">Shop Invoice 6</a></li>
-                                            </ul>
-                                        </li>
+                                            @foreach($categories as $category)
+                                                <li>
+                                                    <a href="{{route('category',$category)}}">{{ $category->name }}
+                                                        @if($category->subCategories->isNotEmpty())
+                                                            <i class="fi-rs-angle-right"></i>
+                                                        @endif
+                                                    </a>
+
+                                                    @if($category->subCategories->isNotEmpty())
+                                                        <ul class="level-menu">
+                                                            @foreach($category->subCategories as $subCategory)
+                                                                <li>
+                                                                    <a href="">{{ $subCategory->name }}</a>
+                                                                </li>
+                                                            @endforeach
+                                                        </ul>
+                                                    @endif
+                                                </li>
+                                            @endforeach
+
                                     </ul>
                                 </li>
                                 <li>
@@ -471,7 +461,7 @@
                 <div class="header-action-right d-block d-lg-none">
                     <div class="header-action-2">
                         <div class="header-action-icon-2">
-                            <a href="shop-wishlist.html">
+                            <a href="{{route('wishlist.index')}}">
                                 <img alt="Nest" src="assets/front/imgs/theme/icons/icon-heart.svg" />
                                 <span class="pro-count white">4</span>
                             </a>

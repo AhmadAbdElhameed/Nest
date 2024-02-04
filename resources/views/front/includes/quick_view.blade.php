@@ -1,45 +1,25 @@
-<div class="modal fade custom-modal" id="quickViewModal" tabindex="-1" aria-labelledby="quickViewModalLabel" aria-hidden="true">
+<div class="modal fade custom-modal" data-bs-dismiss="modal" id="quickViewModal" tabindex="-1" aria-labelledby="quickViewModalLabel" aria-hidden="true">
     <div class="modal-dialog">
         <div class="modal-content">
             <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
             <div class="modal-body">
                 <div class="row">
-                    <div class="col-md-6 col-sm-12 col-xs-12 mb-md-0 mb-sm-5">
+                    <div class="col-md-6 col-sm-12 col-xs-12 mb-md-0 mb-sm-5" style="height: 50%">
                         <div class="detail-gallery">
                             <span class="zoom-icon"><i class="fi-rs-search"></i></span>
                             <!-- MAIN SLIDES -->
                             <div class="product-image-slider">
-                                <figure class="border-radius-10">
-                                    <img src="{{asset('assets/front/imgs/shop/product-16-2.jpg')}}" alt="product image" />
-                                </figure>
-                                <figure class="border-radius-10">
-                                    <img src="{{asset('assets/front/imgs/shop/product-16-1.jpg')}}" alt="product image" />
-                                </figure>
-                                <figure class="border-radius-10">
-                                    <img src="{{asset('assets/front/imgs/shop/product-16-3.jpg')}}" alt="product image" />
-                                </figure>
-                                <figure class="border-radius-10">
-                                    <img src="{{asset('assets/front/imgs/shop/product-16-4.jpg')}}" alt="product image" />
-                                </figure>
-                                <figure class="border-radius-10">
-                                    <img src="{{asset('assets/front/imgs/shop/product-16-5.jpg')}}" alt="product image" />
-                                </figure>
-                                <figure class="border-radius-10">
-                                    <img src="{{asset('assets/front/imgs/shop/product-16-6.jpg')}}" alt="product image" />
-                                </figure>
-                                <figure class="border-radius-10">
-                                    <img src="{{asset('assets/front/imgs/shop/product-16-7.jpg')}}" alt="product image" />
-                                </figure>
+{{--                                @foreach($product->images as $image)--}}
+                                    <figure class="border-radius-10">
+{{--                                        <img src="{{asset('uploads/images/'.$image->image)}}" alt="{{$product->name}}" />--}}
+                                    </figure>
+{{--                                @endforeach--}}
                             </div>
                             <!-- THUMBNAILS -->
                             <div class="slider-nav-thumbnails">
-                                <div><img src="{{asset('assets/front/imgs/shop/thumbnail-3.jpg')}}" alt="product image" /></div>
-                                <div><img src="{{asset('assets/front/imgs/shop/thumbnail-4.jpg')}}" alt="product image" /></div>
-                                <div><img src="{{asset('assets/front/imgs/shop/thumbnail-5.jpg')}}" alt="product image" /></div>
-                                <div><img src="{{asset('assets/front/imgs/shop/thumbnail-6.jpg')}}" alt="product image" /></div>
-                                <div><img src="{{asset('assets/front/imgs/shop/thumbnail-7.jpg')}}" alt="product image" /></div>
-                                <div><img src="{{asset('assets/front/imgs/shop/thumbnail-8.jpg')}}" alt="product image" /></div>
-                                <div><img src="{{asset('assets/front/imgs/shop/thumbnail-9.jpg')}}" alt="product image" /></div>
+{{--                                @foreach($product->images as $image)--}}
+{{--                                    <div><img src="{{asset('uploads/images/'.$image->image)}}" alt="{{$product->name}}" /></div>--}}
+{{--                                @endforeach--}}
                             </div>
                         </div>
                         <!-- End Gallery -->
@@ -47,7 +27,7 @@
                     <div class="col-md-6 col-sm-12 col-xs-12">
                         <div class="detail-info pr-30 pl-30">
                             <span class="stock-status out-stock"> Sale Off </span>
-                            <h3 class="title-detail"><a href="shop-product-right.html" class="text-heading">Seeds of Change Organic Quinoa, Brown</a></h3>
+                            <h3 class="title-detail"><a href="shop-product-right.html" class="text-heading">name</a></h3>
                             <div class="product-detail-rating">
                                 <div class="product-rate-cover text-end">
                                     <div class="product-rate d-inline-block">

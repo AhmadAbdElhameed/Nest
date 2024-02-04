@@ -105,4 +105,12 @@ class User extends Authenticatable implements MustVerifyEmail
         }
     }
 
+    public function products(): \Illuminate\Database\Eloquent\Relations\BelongsToMany
+    {
+        return $this->belongsToMany(Product::class);
+    }
+    public function wishlistHas($productId)
+    {
+        return self::products()->where('product_id', $productId)->exists();
+    }
 }
