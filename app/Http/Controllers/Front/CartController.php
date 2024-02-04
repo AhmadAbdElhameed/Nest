@@ -108,34 +108,6 @@ class CartController extends Controller
     }
 
 
-//    public function addToCart(Request $request) {
-//        $productId = $request->input('productId');
-//        $product = Product::findOrFail($productId);
-//
-//        // Check if the product is already in the cart
-//        $cartItem = Cart::search(function ($cartItem) use ($productId) {
-//            return $cartItem->id == $productId;
-//        })->first();
-//
-//        if ($cartItem) {
-//            // If the product is already in the cart, increase its quantity
-//            Cart::update($cartItem->rowId, ['qty' => $cartItem->qty + 1]); // Adjusted to use an array
-//        } else {
-//            // If the product is not in the cart, add it as a new item
-//            Cart::add([
-//                'id' => $product->id,
-//                'name' => $product->name,
-//                'price' => $product->price,
-//                'qty' => 1, // 'quantity' should be 'qty'
-//                'weight' => 0, // Optional, only include if necessary for your application
-//            ]);
-//        }
-//
-//        $cartCount = Cart::content()->count();
-//        return response()->json(['cartCount' => $cartCount]);
-//    }
-
-
     public function cartCount() {
         $cartItems = Cart::content();
         $totalQuantity = 0;

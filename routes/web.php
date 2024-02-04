@@ -2,6 +2,7 @@
 
 use App\Http\Controllers\Auth\RegisteredUserController;
 use App\Http\Controllers\Front\CartController;
+use App\Http\Controllers\Front\CheckoutController;
 use App\Http\Controllers\Front\HomeController;
 use App\Http\Controllers\Front\WishlistController;
 use App\Http\Controllers\ProfileController;
@@ -62,6 +63,10 @@ Route::group(
                 Route::post('/update/{rowId}', [CartController::class, 'updateCart'])->name('update');
 
 
+            });
+
+            Route::group(['prefix' => 'checkout', 'as' => 'checkout.'], function() {
+                Route::get('/', [CheckoutController::class, 'index'])->name('index');
             });
         });
 
