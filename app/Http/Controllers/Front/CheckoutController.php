@@ -130,15 +130,15 @@ class CheckoutController extends Controller
             'payment_status' => 'success',
             'total_amount' => $checkout_details['total']
         ]);
-//        $cartProducts = $checkout_details['cart_items'];
-//        foreach ($cartProducts as $product){
-//            OrderItem::create([
-//                'order_id' => $order->id,
-//                'product_id' => $product->id,
-//                'quantity' => $product->qty,
-//                'price' => $product->price,
-//            ]);
-//        }
+        $cartProducts = $checkout_details['cart_items'];
+        foreach ($cartProducts as $product){
+            OrderItem::create([
+                'order_id' => $order->id,
+                'product_id' => $product['id'],
+                'quantity' => $product['qty'],
+                'price' => $product['price'],
+            ]);
+        }
 
 //        OrderPlacedNotificationEvent::dispatch($order);
         Cart::destroy();
@@ -149,7 +149,7 @@ class CheckoutController extends Controller
 
     public function stripeCancel()
     {
-        toastr()->error('Payment failed, Please try again.');
-        return redirect()->route('shop.checkout');
+        toast()->error('Payment failed, Please try again.');
+        return redirect()->route('home');
     }
 }
