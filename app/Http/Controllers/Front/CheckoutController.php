@@ -150,6 +150,6 @@ class CheckoutController extends Controller
     public function stripeCancel()
     {
         toast()->error('Payment failed, Please try again.');
-        return redirect()->route('home');
+        return redirect()->route('checkout.index');
     }
 }
