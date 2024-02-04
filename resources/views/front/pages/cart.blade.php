@@ -205,50 +205,19 @@
             });
         }
 
-
-
-        {{--$(document).on('click', '.qty-up, .qty-down', function(e) {--}}
-        {{--    e.preventDefault();--}}
-        {{--    let rowId = $(this).data('row-id');--}}
-        {{--    let qtyInput = $(this).closest('.detail-info').find('.qty-val');--}}
-        {{--    let currentQty = parseInt(qtyInput.val());--}}
-        {{--    let newQty = $(this).hasClass('qty-up') ? currentQty + 1 : (currentQty > 1 ? currentQty - 1 : currentQty);--}}
-
-        {{--    qtyInput.val(newQty);--}}
-
-        {{--    // Cache the clicked element for use in the success callback--}}
-        {{--    let clickedElement = $(this);--}}
-        {{--    --}}
-        {{--    // Send AJAX request to update the cart quantity--}}
-        {{--    $.ajax({--}}
-        {{--        type: 'POST',--}}
-        {{--        url: "/cart/update/" + rowId,--}}
-        {{--        data: {--}}
-        {{--            rowId: rowId,--}}
-        {{--            qty: newQty,--}}
-        {{--            _token: "{{ csrf_token() }}"--}}
-        {{--        },--}}
-        {{--        success: function(response) {--}}
-        {{--            // Update the subtotal for this product--}}
-
-        {{--            let updatedSubtotal = response.subtotal;--}}
-        {{--            let itemElement = $(`tr[data-row-id="${rowId}"]`);--}}
-        {{--            itemElement.find('.price[data-title="Subtotal"] h4').text(updatedSubtotal);--}}
-
-        {{--            // Update the total price of the cart--}}
-        {{--            updateTotalPrice();--}}
-
-        {{--            // Update cart counter--}}
-        {{--            updateCartCounter();--}}
-
-        {{--            updateCartAmounts();--}}
-        {{--        },--}}
-        {{--        error: function(xhr) {--}}
-        {{--            console.error('Error updating cart:', xhr.responseText);--}}
-        {{--        }--}}
-        {{--    });--}}
-
-        {{--});--}}
+        // Update Cart Counter
+        function updateHeaderCartCounter() {
+            $.ajax({
+                type: 'GET',
+                url: "{{ route('cart.count') }}",
+                success: function(response) {
+                    $('#header-cart-counter').text(response.cartCount);
+                },
+                error: function(xhr) {
+                    console.error('Error fetching cart count:', xhr.responseText);
+                }
+            });
+        }
 
 
         $(document).on('click', '.qty-up, .qty-down', function(e) {
@@ -285,6 +254,8 @@
 
                     // Update the cart amounts (subtotal, shipping, total)
                     updateCartAmounts();
+
+                    updateHeaderCartCounter()
                 },
                 error: function(xhr) {
                     console.error('Error updating cart:', xhr.responseText);
@@ -307,6 +278,8 @@
                     productRow.remove();
 
                     updateCartAmounts();
+
+                    updateHeaderCartCounter()
                 },
                 error: function(xhr) {
                     // Handle error

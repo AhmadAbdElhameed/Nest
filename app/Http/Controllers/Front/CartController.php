@@ -76,29 +76,64 @@ class CartController extends Controller
     public function addToCart(Request $request) {
         $productId = $request->input('productId');
         $product = Product::findOrFail($productId);
+        $userId = auth()->id(); // Get the current user's ID
 
         // Check if the product is already in the cart
-        $cartItem = Cart::search(function ($cartItem) use ($productId) {
-            return $cartItem->id == $productId;
+        $cartItem = Cart::search(function ($cartItem) use ($productId, $userId) {
+            return $cartItem->id == $productId && $cartItem->options->user_id == $userId;
         })->first();
 
         if ($cartItem) {
             // If the product is already in the cart, increase its quantity
-            Cart::update($cartItem->rowId, ['qty' => $cartItem->qty + 1]); // Adjusted to use an array
+            Cart::update($cartItem->rowId, $cartItem->qty + 1);
         } else {
-            // If the product is not in the cart, add it as a new item
+            // If the product is not in the cart, add it as a new item with the user_id in the options
             Cart::add([
                 'id' => $product->id,
                 'name' => $product->name,
                 'price' => $product->price,
-                'qty' => 1, // 'quantity' should be 'qty'
-                'weight' => 0, // Optional, only include if necessary for your application
+                'qty' => 1,
+                'weight' => 0,
+                'options' => ['user_id' => $userId]
             ]);
         }
 
-        $cartCount = Cart::content()->count();
+        // Fetch the cart items for the current user
+        $cartItems = Cart::content()->filter(function ($cartItem) use ($userId) {
+            return $cartItem->options->user_id == $userId;
+        });
+
+        $cartCount = $cartItems->count();
         return response()->json(['cartCount' => $cartCount]);
     }
+
+
+//    public function addToCart(Request $request) {
+//        $productId = $request->input('productId');
+//        $product = Product::findOrFail($productId);
+//
+//        // Check if the product is already in the cart
+//        $cartItem = Cart::search(function ($cartItem) use ($productId) {
+//            return $cartItem->id == $productId;
+//        })->first();
+//
+//        if ($cartItem) {
+//            // If the product is already in the cart, increase its quantity
+//            Cart::update($cartItem->rowId, ['qty' => $cartItem->qty + 1]); // Adjusted to use an array
+//        } else {
+//            // If the product is not in the cart, add it as a new item
+//            Cart::add([
+//                'id' => $product->id,
+//                'name' => $product->name,
+//                'price' => $product->price,
+//                'qty' => 1, // 'quantity' should be 'qty'
+//                'weight' => 0, // Optional, only include if necessary for your application
+//            ]);
+//        }
+//
+//        $cartCount = Cart::content()->count();
+//        return response()->json(['cartCount' => $cartCount]);
+//    }
 
 
     public function cartCount() {
