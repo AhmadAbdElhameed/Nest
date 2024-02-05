@@ -34,16 +34,26 @@
                         <div class="row">
                             <div class="form-group col-lg-6">
                                 <input type="text" required="" name="name" placeholder="Full Name *">
+                                @if ($errors->has('name'))
+                                    <div class="alert alert-danger">
+                                        {{ $errors->first('name') }}
+                                    </div>
+                                @endif
                             </div>
                             <div class="form-group col-lg-6">
                                 <input type="email" required="" name="email" placeholder="Email *">
+                                @if ($errors->has('email'))
+                                    <div class="alert alert-danger">
+                                        {{ $errors->first('email') }}
+                                    </div>
+                                @endif
                             </div>
                         </div>
 
                         <div class="row shipping_calculator">
                             <div class="form-group col-lg-6">
                                 <div class="custom_select">
-                                    <select name="city" class="form-control select-active">
+                                    <select required name="city" class="form-control select-active">
                                         <option value="">Select Your City *</option>
                                         <option value="dubai">Dubai</option>
                                         <option value="abu_dhabi">Abu Dhabi</option>
@@ -54,20 +64,40 @@
                                         <option value="fujairah">Fujairah</option>
                                     </select>
                                 </div>
+                                @if ($errors->has('city'))
+                                    <div class="alert alert-danger">
+                                        {{ $errors->first('city') }}
+                                    </div>
+                                @endif
                             </div>
                             <div class="form-group col-lg-6">
                                 <input required="" type="text" name="phone" placeholder="Phone*">
+                                @if ($errors->has('phone'))
+                                    <div class="alert alert-danger">
+                                        {{ $errors->first('phone') }}
+                                    </div>
+                                @endif
                             </div>
                         </div>
 
                         <div class="row">
                             <div class="form-group col-lg-12">
                                 <input type="text" required="" name="address" placeholder="Address *">
+                                @if ($errors->has('address'))
+                                    <div class="alert alert-danger">
+                                        {{ $errors->first('address') }}
+                                    </div>
+                                @endif
                             </div>
                         </div>
 
                         <div class="form-group mb-30">
                             <textarea rows="5" name="notes" placeholder="Additional information"></textarea>
+                            @if ($errors->has('notes'))
+                                <div class="alert alert-danger">
+                                    {{ $errors->first('notes') }}
+                                </div>
+                            @endif
                         </div>
 
                         <div class="payment ml-30">
@@ -81,6 +111,11 @@
                                     <input class="form-check-input" required="" type="radio" value="stripe" name="payment_method" id="exampleRadios5" checked="">
                                     <label class="form-check-label" for="exampleRadios5" data-bs-toggle="collapse" data-target="#paypal" aria-controls="paypal">Stripe</label>
                                 </div>
+                                @if ($errors->has('payment_method'))
+                                    <div class="alert alert-danger">
+                                        {{ $errors->first('payment_method') }}
+                                    </div>
+                                @endif
                             </div>
                             <div class="payment-logo d-flex">
                                 <img class="mr-15" src="{{asset('assets/front/imgs/theme/icons/payment-paypal.svg')}}" alt="">

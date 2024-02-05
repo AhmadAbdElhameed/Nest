@@ -3,6 +3,7 @@
 namespace App\Http\Controllers\Front;
 
 use App\Http\Controllers\Controller;
+use App\Http\Requests\Front\Checkout\StoreCheckoutRequest;
 use App\Http\Services\CashOnDeliveryService;
 use App\Http\Services\StripeService;
 use App\Models\Category;
@@ -68,7 +69,7 @@ class CheckoutController extends Controller
     }
 
 
-    public function store(Request $request)
+    public function store(StoreCheckoutRequest $request)
     {
         $order_details = Session::get('order_details');
 
@@ -79,7 +80,7 @@ class CheckoutController extends Controller
           "city" => $request->city,
           "phone" => $request->phone,
           "address" => $request->address,
-          "notes" => $request->additional_info,
+          "notes" => $request->notes,
           "payment_method" => $request->payment_method,
           'total' => $order_details['total'],
           'cart_items' => $order_details['cartItems'],
