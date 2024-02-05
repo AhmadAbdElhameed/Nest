@@ -3,6 +3,8 @@
 namespace App\Http\Controllers\Front;
 
 use App\Http\Controllers\Controller;
+use App\Http\Services\CashOnDeliveryService;
+use App\Http\Services\StripeService;
 use App\Models\Category;
 use App\Models\Order;
 use App\Models\OrderItem;
@@ -15,6 +17,13 @@ use Stripe\Stripe;
 
 class CheckoutController extends Controller
 {
+
+    public function __construct(StripeService $stripeService, CashOnDeliveryService $codService)
+    {
+        $this->stripeService = $stripeService;
+        $this->codService = $codService;
+    }
+
     public function index(){
     // Retrieve categories for the dropdown or other UI elements
     $categories = Category::with(['subCategories' => function ($query) {
@@ -77,42 +86,57 @@ class CheckoutController extends Controller
         ];
 //        dd($checkoutDetails);
         Session::put('checkout_details', $checkoutDetails);
-
-        if($request->payment_method === 'stripe'){
-            return $this->stripePayment($order_details['total']);
-        }elseif ($request->payment_method === 'cod'){
-            return $this->codPayment();
-        }else{
-            toast()->error('Something went wrong please try again later!');
-            return redirect()->route('shop');
+        $paymentMethod = $request->payment_method;
+        $total = $order_details['total'];
+        try {
+            switch ($paymentMethod) {
+                case 'stripe':
+                    return $this->stripeService->stripePayment($total);
+                case 'cod':
+                    return $this->codService->codPayment();
+                default:
+                    throw new \Exception('Invalid payment method selected.');
+            }
+        } catch (\Exception $e) {
+            report($e);
+            return back()->withErrors('Error processing your request: ' . $e->getMessage());
         }
+
+//        if($request->payment_method === 'stripe'){
+//            return $this->stripePayment($order_details['total']);
+//        }elseif ($request->payment_method === 'cod'){
+//            return $this->codPayment();
+//        }else{
+//            toast()->error('Something went wrong please try again later!');
+//            return redirect()->route('shop');
+//        }
     }
 
 
-    private function stripePayment($total){
-        $stripeSetting = StripeSetting::first();
-        Stripe::setApiKey($stripeSetting->client_secret);
-
-        $response = \Stripe\Checkout\Session::create([
-            'line_items' => [
-                [
-                    'price_data' => [
-                        'currency' => 'usd',
-                        'product_data' => [
-                            'name' => 'Nest Mart',
-                        ],
-                        'unit_amount' => $total * 100, // $100 = 10000 cents
-                    ],
-                    'quantity' => 1,
-                ]
-            ],
-            'mode' => 'payment',
-            'success_url' => route('checkout.stripe.success'),
-            'cancel_url' => route('checkout.stripe.cancel'),
-        ]);
-        return redirect()->away($response->url);
-
-    }
+//    private function stripePayment($total){
+//        $stripeSetting = StripeSetting::first();
+//        Stripe::setApiKey($stripeSetting->client_secret);
+//
+//        $response = \Stripe\Checkout\Session::create([
+//            'line_items' => [
+//                [
+//                    'price_data' => [
+//                        'currency' => 'usd',
+//                        'product_data' => [
+//                            'name' => 'Nest Mart',
+//                        ],
+//                        'unit_amount' => $total * 100, // $100 = 10000 cents
+//                    ],
+//                    'quantity' => 1,
+//                ]
+//            ],
+//            'mode' => 'payment',
+//            'success_url' => route('checkout.stripe.success'),
+//            'cancel_url' => route('checkout.stripe.cancel'),
+//        ]);
+//        return redirect()->away($response->url);
+//
+//    }
 
     public function stripeSuccess(Request $request)
     {
@@ -153,34 +177,34 @@ class CheckoutController extends Controller
         return redirect()->route('checkout.index');
     }
 
-    private function codPayment(){
-        $checkout_details = Session::get('checkout_details');
-        $order = Order::create([
-            'payment_method' => 'cod',
-            'phone' => $checkout_details['phone'],
-            'user_id' =>$checkout_details['user_id'],
-            'name' => $checkout_details['name'],
-            'email' => $checkout_details['email'],
-            'city' => $checkout_details['city'],
-            'address' => $checkout_details['address'],
-            'notes' => $checkout_details['notes'] ?? NULL,
-            'payment_status' => 'pending',
-            'total_amount' => $checkout_details['total']
-        ]);
-        $cartProducts = $checkout_details['cart_items'];
-        foreach ($cartProducts as $product){
-            OrderItem::create([
-                'order_id' => $order->id,
-                'product_id' => $product['id'],
-                'quantity' => $product['qty'],
-                'price' => $product['price'],
-            ]);
-        }
-
-//        OrderPlacedNotificationEvent::dispatch($order);
-        Cart::destroy();
-
-        toast()->success('Order confirmed & our team will call you soon.');
-        return redirect()->route('home');
-    }
+//    private function codPayment(){
+//        $checkout_details = Session::get('checkout_details');
+//        $order = Order::create([
+//            'payment_method' => 'cod',
+//            'phone' => $checkout_details['phone'],
+//            'user_id' =>$checkout_details['user_id'],
+//            'name' => $checkout_details['name'],
+//            'email' => $checkout_details['email'],
+//            'city' => $checkout_details['city'],
+//            'address' => $checkout_details['address'],
+//            'notes' => $checkout_details['notes'] ?? NULL,
+//            'payment_status' => 'pending',
+//            'total_amount' => $checkout_details['total']
+//        ]);
+//        $cartProducts = $checkout_details['cart_items'];
+//        foreach ($cartProducts as $product){
+//            OrderItem::create([
+//                'order_id' => $order->id,
+//                'product_id' => $product['id'],
+//                'quantity' => $product['qty'],
+//                'price' => $product['price'],
+//            ]);
+//        }
+//
+////        OrderPlacedNotificationEvent::dispatch($order);
+//        Cart::destroy();
+//
+//        toast()->success('Order confirmed & our team will call you soon.');
+//        return redirect()->route('home');
+//    }
 }
