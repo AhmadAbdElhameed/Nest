@@ -201,6 +201,15 @@ class CheckoutController extends Controller
                         'price' => $product['price'],
                     ]);
                 }
+
+                $transaction = Transaction::create([
+                    'order_id' => $order->id,
+                    'transaction_id' => $invoiceDetails['Data']['InvoiceId'],
+                    'user_id' => $order->user_id,
+                    'payment_method' => $order->payment_method,
+                    'amount' => $order->total_amount,
+                ]);
+
             });
 
             // Clear the cart after successful payment
