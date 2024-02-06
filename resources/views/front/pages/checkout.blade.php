@@ -28,6 +28,15 @@
             <div class="col-lg-7">
 
                 <div class="row">
+                    @if($errors->any())
+                        <div class="alert alert-danger">
+                            <ul>
+                                @foreach($errors->all() as $error)
+                                    <li>{{ $error }}</li>
+                                @endforeach
+                            </ul>
+                        </div>
+                    @endif
                     <h4 class="mb-30">Billing Details</h4>
                     <form method="post" action="{{route('checkout.store')}}">
                         @csrf
@@ -105,11 +114,15 @@
                             <div class="payment_option">
                                 <div class="custome-radio">
                                     <input class="form-check-input" required="" type="radio" value="cod" name="payment_method" id="exampleRadios4" checked="">
-                                    <label class="form-check-label" for="exampleRadios4" data-bs-toggle="collapse" data-target="#checkPayment" aria-controls="checkPayment">Cash on delivery</label>
+                                    <label class="form-check-label" for="exampleRadios4" data-bs-toggle="collapse" data-target="#cod" aria-controls="checkPayment">Cash on delivery</label>
                                 </div>
                                 <div class="custome-radio">
                                     <input class="form-check-input" required="" type="radio" value="stripe" name="payment_method" id="exampleRadios5" checked="">
-                                    <label class="form-check-label" for="exampleRadios5" data-bs-toggle="collapse" data-target="#paypal" aria-controls="paypal">Stripe</label>
+                                    <label class="form-check-label" for="exampleRadios5" data-bs-toggle="collapse" data-target="#stripe" aria-controls="paypal">Stripe</label>
+                                </div>
+                                <div class="custome-radio">
+                                    <input class="form-check-input" required="" type="radio" value="myfatoorah" name="payment_method" id="exampleRadios5" checked="">
+                                    <label class="form-check-label" for="exampleRadios5" data-bs-toggle="collapse" data-target="#myfatoorah" aria-controls="paypal">MyFatoorah</label>
                                 </div>
                                 @if ($errors->has('payment_method'))
                                     <div class="alert alert-danger">

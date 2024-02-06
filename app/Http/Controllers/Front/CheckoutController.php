@@ -5,6 +5,7 @@ namespace App\Http\Controllers\Front;
 use App\Http\Controllers\Controller;
 use App\Http\Requests\Front\Checkout\StoreCheckoutRequest;
 use App\Http\Services\CashOnDeliveryService;
+use App\Http\Services\MyFatoorahService;
 use App\Http\Services\StripeService;
 use App\Models\Category;
 use App\Models\Order;
@@ -13,16 +14,19 @@ use App\Models\Product;
 use App\Models\StripeSetting;
 use Gloudemans\Shoppingcart\Facades\Cart;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\DB;
+use Illuminate\Support\Facades\Log;
 use Illuminate\Support\Facades\Session;
 use Stripe\Stripe;
 
 class CheckoutController extends Controller
 {
 
-    public function __construct(StripeService $stripeService, CashOnDeliveryService $codService)
+    public function __construct(StripeService $stripeService, CashOnDeliveryService $codService , MyFatoorahService $fatoorah)
     {
         $this->stripeService = $stripeService;
         $this->codService = $codService;
+        $this->myfatoorahService = $fatoorah;
     }
 
     public function index(){
@@ -95,6 +99,8 @@ class CheckoutController extends Controller
                     return $this->stripeService->stripePayment($total);
                 case 'cod':
                     return $this->codService->codPayment();
+                case 'myfatoorah':
+                    return $this->myfatoorahService->checkout($request , $checkoutDetails);
                 default:
                     throw new \Exception('Invalid payment method selected.');
             }
@@ -103,67 +109,37 @@ class CheckoutController extends Controller
             return back()->withErrors('Error processing your request: ' . $e->getMessage());
         }
 
-//        if($request->payment_method === 'stripe'){
-//            return $this->stripePayment($order_details['total']);
-//        }elseif ($request->payment_method === 'cod'){
-//            return $this->codPayment();
-//        }else{
-//            toast()->error('Something went wrong please try again later!');
-//            return redirect()->route('shop');
-//        }
     }
 
 
-//    private function stripePayment($total){
-//        $stripeSetting = StripeSetting::first();
-//        Stripe::setApiKey($stripeSetting->client_secret);
-//
-//        $response = \Stripe\Checkout\Session::create([
-//            'line_items' => [
-//                [
-//                    'price_data' => [
-//                        'currency' => 'usd',
-//                        'product_data' => [
-//                            'name' => 'Nest Mart',
-//                        ],
-//                        'unit_amount' => $total * 100, // $100 = 10000 cents
-//                    ],
-//                    'quantity' => 1,
-//                ]
-//            ],
-//            'mode' => 'payment',
-//            'success_url' => route('checkout.stripe.success'),
-//            'cancel_url' => route('checkout.stripe.cancel'),
-//        ]);
-//        return redirect()->away($response->url);
-//
-//    }
 
     public function stripeSuccess(Request $request)
     {
         $checkout_details = Session::get('checkout_details');
-//        dd($checkout_details,$checkout_details['payment_method']);
-        $order = Order::create([
-            'payment_method' => 'stripe',
-            'phone' => $checkout_details['phone'],
-            'user_id' =>$checkout_details['user_id'],
-            'name' => $checkout_details['name'],
-            'email' => $checkout_details['email'],
-            'city' => $checkout_details['city'],
-            'address' => $checkout_details['address'],
-            'notes' => $checkout_details['notes'] ?? NULL,
-            'payment_status' => 'success',
-            'total_amount' => $checkout_details['total']
-        ]);
         $cartProducts = $checkout_details['cart_items'];
-        foreach ($cartProducts as $product){
-            OrderItem::create([
-                'order_id' => $order->id,
-                'product_id' => $product['id'],
-                'quantity' => $product['qty'],
-                'price' => $product['price'],
+        DB::transaction(function () use ($checkout_details, $cartProducts) {
+            $order = Order::create([
+                'payment_method' => 'stripe',
+                'phone' => $checkout_details['phone'],
+                'user_id' => $checkout_details['user_id'],
+                'name' => $checkout_details['name'],
+                'email' => $checkout_details['email'],
+                'city' => $checkout_details['city'],
+                'address' => $checkout_details['address'],
+                'notes' => $checkout_details['notes'] ?? NULL,
+                'payment_status' => 'success',
+                'total_amount' => $checkout_details['total']
             ]);
-        }
+
+            foreach ($cartProducts as $product) {
+                OrderItem::create([
+                    'order_id' => $order->id,
+                    'product_id' => $product['id'],
+                    'quantity' => $product['qty'],
+                    'price' => $product['price'],
+                ]);
+            }
+        });
 
 //        OrderPlacedNotificationEvent::dispatch($order);
         Cart::destroy();
@@ -178,34 +154,67 @@ class CheckoutController extends Controller
         return redirect()->route('checkout.index');
     }
 
-//    private function codPayment(){
-//        $checkout_details = Session::get('checkout_details');
-//        $order = Order::create([
-//            'payment_method' => 'cod',
-//            'phone' => $checkout_details['phone'],
-//            'user_id' =>$checkout_details['user_id'],
-//            'name' => $checkout_details['name'],
-//            'email' => $checkout_details['email'],
-//            'city' => $checkout_details['city'],
-//            'address' => $checkout_details['address'],
-//            'notes' => $checkout_details['notes'] ?? NULL,
-//            'payment_status' => 'pending',
-//            'total_amount' => $checkout_details['total']
-//        ]);
-//        $cartProducts = $checkout_details['cart_items'];
-//        foreach ($cartProducts as $product){
-//            OrderItem::create([
-//                'order_id' => $order->id,
-//                'product_id' => $product['id'],
-//                'quantity' => $product['qty'],
-//                'price' => $product['price'],
-//            ]);
-//        }
-//
-////        OrderPlacedNotificationEvent::dispatch($order);
-//        Cart::destroy();
-//
-//        toast()->success('Order confirmed & our team will call you soon.');
-//        return redirect()->route('home');
-//    }
+
+    public function myfatoorahSuccess(Request $request)
+    {
+        $paymentId = $request->paymentId;
+
+        // This call will handle the API response
+        $invoiceDetails = $this->myfatoorahService->handleCallback($paymentId);
+//        dd($invoiceDetails['Data']['InvoiceId']);
+        // Assuming $invoiceDetails['Data']['InvoiceStatus'] is available and contains the status
+        if ($invoiceDetails['Data']['InvoiceStatus'] === 'Paid') {
+            $checkoutDetails = Session::get('checkout_details');
+            $cartProducts = $checkoutDetails['cart_items'];
+
+            DB::transaction(function () use ($invoiceDetails, $checkoutDetails, $cartProducts) {
+                $order = Order::create([
+                    'payment_method' => 'myfatoorah',
+                    'phone' => $checkoutDetails['phone'],
+                    'user_id' => $checkoutDetails['user_id'],
+                    'name' => $checkoutDetails['name'],
+                    'email' => $checkoutDetails['email'],
+                    'city' => $checkoutDetails['city'],
+                    'address' => $checkoutDetails['address'],
+                    'notes' => $checkoutDetails['notes'] ?? null,
+                    'payment_status' => 'success',
+                    'total_amount' => $checkoutDetails['total'],
+                    'invoice_id' => $invoiceDetails['Data']['InvoiceId'],
+                ]);
+
+                foreach ($cartProducts as $product) {
+                    OrderItem::create([
+                        'order_id' => $order->id,
+                        'product_id' => $product['id'],
+                        'quantity' => $product['qty'],
+                        'price' => $product['price'],
+                    ]);
+                }
+            });
+
+            // Clear the cart after successful payment
+            Cart::destroy();
+            Session::forget('checkout_details');
+            Session::forget('order_details');
+
+            // Return success message and redirect to a thank you page or home page
+            toast()->success('Payment successful and order confirmed!');
+            return redirect()->route('home');
+        } else {
+            // Handle non-successful payment statuses
+            toast()->error('Payment failed or is pending.');
+            return redirect()->route('checkout.index');
+        }
+    }
+
+    public function myfatoorahError(Request $request)
+    {
+        // Log the error or handle it as needed
+        Log::error('MyFatoorah payment error', ['request' => $request->all()]);
+
+        // Return error message and redirect to the checkout page
+        toast()->error('Payment failed, Please try again.');
+        return redirect()->route('checkout.index');
+    }
+
 }

@@ -30,7 +30,7 @@ class StoreCheckoutRequest extends FormRequest
             'phone' => 'required|string',
             'address' => 'required|string|max:255',
             'notes' => 'sometimes|nullable|string|max:500',
-            'payment_method' => ['required', Rule::in(['stripe', 'cod'])],
+            'payment_method' => ['required', Rule::in(['stripe', 'cod','myfatoorah'])],
         ];
     }
 }
