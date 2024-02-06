@@ -126,7 +126,17 @@
 
 
 
+            <li><a class="nav-item" href="#" data-i18n="nav.templates.vert.main">Roles & Permissions</a>
+                <ul class="menu-content">
+                    <li><a class="menu-item" href="{{route('admin.role.index')}}"
+                           data-i18n="nav.templates.vert.classic_menu">All Roles</a>
+                    </li>
+                    <li><a class="menu-item" href="{{route('admin.role.create')}}"
+                           data-i18n="nav.templates.vert.classic_menu">Create New Role</a>
+                    </li>
 
+                </ul>
+            </li>
 
 {{--            <li class="nav-item">--}}
 {{--                <a href=""><i class="la la-male"></i>--}}
@@ -168,17 +178,7 @@
 
                         </ul>
                     </li>
-                    <li><a class="menu-item" href="#" data-i18n="nav.templates.vert.main">Roles & Permissions</a>
-                        <ul class="menu-content">
-                            <li><a class="menu-item" href="{{route('admin.role.index')}}"
-                                   data-i18n="nav.templates.vert.classic_menu">All Roles</a>
-                            </li>
-                            <li><a class="menu-item" href="{{route('admin.role.create')}}"
-                                        data-i18n="nav.templates.vert.classic_menu">Create New Role</a>
-                            </li>
 
-                        </ul>
-                    </li>
 
                     <li><a class="menu-item" href="{{route('admin.settings.edit.2fa',auth()->guard('admin')->user())}}">Edit 2 FA</a>
                     </li>

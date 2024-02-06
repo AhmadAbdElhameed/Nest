@@ -74,8 +74,8 @@
                                                             </div>
                                                         @endforeach
                                                     </div>
-                                                    @error('categories.0')
-                                                    <span class="text-danger"> {{$message}}</span>
+                                                    @error('permissions')
+                                                        <span class="text-danger"> {{$message}}</span>
                                                     @enderror
                                                 </div>
                                             </div>

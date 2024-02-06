@@ -1,6 +1,6 @@
 <?php
 
-namespace App\Http\Requests;
+namespace App\Http\Requests\Admin\Role;
 
 use Illuminate\Foundation\Http\FormRequest;
 
@@ -22,7 +22,9 @@ class StoreRoleRequest extends FormRequest
     public function rules(): array
     {
         return [
-            //
+            'name' => 'required|string|max:255|unique:roles,name',
+            'permissions' => 'required|array|min:1',
+            'permissions.*' => 'string', // Optionally validate each permission item as a string
         ];
     }
 }

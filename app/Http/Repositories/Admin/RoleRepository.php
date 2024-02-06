@@ -3,13 +3,17 @@
 namespace App\Http\Repositories\Admin;
 
 use App\Http\Interfaces\Admin\RoleInterface;
+use App\Models\Role;
 
 class RoleRepository implements RoleInterface
 {
 
     public function index()
     {
-        return view('admin.roles.index');
+        $roles = Role::get();
+//        $roles = Role::get(['name' , 'permissions']);
+
+        return view('admin.roles.index',compact('roles'));
     }
 
     public function create()
@@ -19,7 +23,18 @@ class RoleRepository implements RoleInterface
 
     public function store($request)
     {
-        // TODO: Implement store() method.
+        try {
+            $role = Role::create([
+                'name' => $request->name,
+                'permissions' => json_encode($request->permissions)
+            ]);
+            toast('Role Created Successfully','success');
+            return redirect()->route('admin.role.index');
+        }catch (\Exception $e){
+            toast('Something wrong happened, try later','error');
+            return redirect()->route('admin.role.index')->with(['error' => 'Something wrong happened, try later']);
+        }
+
     }
 
     public function show($role)
@@ -41,4 +56,5 @@ class RoleRepository implements RoleInterface
     {
         // TODO: Implement destroy() method.
     }
+
 }
