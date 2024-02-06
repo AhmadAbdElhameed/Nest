@@ -5,6 +5,7 @@ use App\Http\Controllers\Front\CartController;
 use App\Http\Controllers\Front\CheckoutController;
 use App\Http\Controllers\Front\HomeController;
 use App\Http\Controllers\Front\WishlistController;
+use App\Http\Controllers\MyFatoorahController;
 use App\Http\Controllers\ProfileController;
 use Illuminate\Support\Facades\Route;
 use Mcamara\LaravelLocalization\Facades\LaravelLocalization;
@@ -67,13 +68,30 @@ Route::group(
 
             Route::group(['prefix' => 'checkout', 'as' => 'checkout.'], function() {
                 Route::get('/', [CheckoutController::class, 'index'])->name('index');
+                Route::post('/store', [CheckoutController::class, 'store'])->name('store');
+                Route::get('stripe/success',[CheckoutController::class,'stripeSuccess'])->name('stripe.success');
+                Route::get('stripe/cancel',[CheckoutController::class,'stripeCancel'])->name('stripe.cancel');
+                Route::get('myfatoorah/success',[CheckoutController::class,'myfatoorahSuccess'])->name('myfatoorah.success');
+                Route::get('myfatoorah/error',[CheckoutController::class,'myfatoorahError'])->name('myfatoorah.error');
+
             });
+
         });
 
 
 
     }
 );
+
+
+
+Route::get('/success', function () {
+    return 'Success';
+})->name('success');
+
+Route::get('/error', function () {
+    return 'Error';
+})->name('error');
 
 
 require __DIR__.'/auth.php';

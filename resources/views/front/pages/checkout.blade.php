@@ -28,88 +28,116 @@
             <div class="col-lg-7">
 
                 <div class="row">
+                    @if($errors->any())
+                        <div class="alert alert-danger">
+                            <ul>
+                                @foreach($errors->all() as $error)
+                                    <li>{{ $error }}</li>
+                                @endforeach
+                            </ul>
+                        </div>
+                    @endif
                     <h4 class="mb-30">Billing Details</h4>
-                    <form method="post">
-
-
+                    <form method="post" action="{{route('checkout.store')}}">
+                        @csrf
                         <div class="row">
                             <div class="form-group col-lg-6">
-                                <input type="text" required="" name="fname" placeholder="User Name *">
+                                <input type="text" required="" name="name" placeholder="Full Name *">
+                                @if ($errors->has('name'))
+                                    <div class="alert alert-danger">
+                                        {{ $errors->first('name') }}
+                                    </div>
+                                @endif
                             </div>
                             <div class="form-group col-lg-6">
-                                <input type="email" required="" name="lname" placeholder="Email *">
-                            </div>
-                        </div>
-
-
-
-                        <div class="row shipping_calculator">
-                            <div class="form-group col-lg-6">
-                                <div class="custom_select">
-                                    <select class="form-control select-active">
-                                        <option value="">Select an option...</option>
-                                        <option value="AX">Aland Islands</option>
-                                        <option value="AF">Afghanistan</option>
-                                        <option value="AL">Albania</option>
-                                        <option value="DZ">Algeria</option>
-                                        <option value="AD">Andorra</option>
-
-                                    </select>
-                                </div>
-                            </div>
-                            <div class="form-group col-lg-6">
-                                <input required="" type="text" name="city" placeholder="Phone*">
+                                <input type="email" required="" name="email" placeholder="Email *">
+                                @if ($errors->has('email'))
+                                    <div class="alert alert-danger">
+                                        {{ $errors->first('email') }}
+                                    </div>
+                                @endif
                             </div>
                         </div>
 
                         <div class="row shipping_calculator">
                             <div class="form-group col-lg-6">
                                 <div class="custom_select">
-                                    <select class="form-control select-active">
-                                        <option value="">Select an option...</option>
-                                        <option value="AX">Aland Islands</option>
-                                        <option value="AF">Afghanistan</option>
-                                        <option value="AL">Albania</option>
-                                        <option value="DZ">Algeria</option>
-                                        <option value="AD">Andorra</option>
-
+                                    <select required name="city" class="form-control select-active">
+                                        <option value="">Select Your City *</option>
+                                        <option value="dubai">Dubai</option>
+                                        <option value="abu_dhabi">Abu Dhabi</option>
+                                        <option value="sharjah">Sharjah</option>
+                                        <option value="ajman">Ajman</option>
+                                        <option value="umm_al_quwain">Umm Al Quwain</option>
+                                        <option value="ras_al_khaimah">Ras Al Khaimah</option>
+                                        <option value="fujairah">Fujairah</option>
                                     </select>
                                 </div>
+                                @if ($errors->has('city'))
+                                    <div class="alert alert-danger">
+                                        {{ $errors->first('city') }}
+                                    </div>
+                                @endif
                             </div>
                             <div class="form-group col-lg-6">
-                                <input required="" type="text" name="city" placeholder="Post Code *">
+                                <input required="" type="text" name="phone" placeholder="Phone*">
+                                @if ($errors->has('phone'))
+                                    <div class="alert alert-danger">
+                                        {{ $errors->first('phone') }}
+                                    </div>
+                                @endif
                             </div>
                         </div>
 
-
-                        <div class="row shipping_calculator">
-                            <div class="form-group col-lg-6">
-                                <div class="custom_select">
-                                    <select class="form-control select-active">
-                                        <option value="">Select an option...</option>
-                                        <option value="AX">Aland Islands</option>
-                                        <option value="AF">Afghanistan</option>
-                                        <option value="AL">Albania</option>
-                                        <option value="DZ">Algeria</option>
-                                        <option value="AD">Andorra</option>
-
-                                    </select>
-                                </div>
-                            </div>
-                            <div class="form-group col-lg-6">
-                                <input required="" type="text" name="city" placeholder="Address *">
+                        <div class="row">
+                            <div class="form-group col-lg-12">
+                                <input type="text" required="" name="address" placeholder="Address *">
+                                @if ($errors->has('address'))
+                                    <div class="alert alert-danger">
+                                        {{ $errors->first('address') }}
+                                    </div>
+                                @endif
                             </div>
                         </div>
-
-
-
-
 
                         <div class="form-group mb-30">
-                            <textarea rows="5" placeholder="Additional information"></textarea>
+                            <textarea rows="5" name="notes" placeholder="Additional information"></textarea>
+                            @if ($errors->has('notes'))
+                                <div class="alert alert-danger">
+                                    {{ $errors->first('notes') }}
+                                </div>
+                            @endif
                         </div>
 
-
+                        <div class="payment ml-30">
+                            <h4 class="mb-30">Payment</h4>
+                            <div class="payment_option">
+                                <div class="custome-radio">
+                                    <input class="form-check-input" required="" type="radio" value="cod" name="payment_method" id="exampleRadios4" checked="">
+                                    <label class="form-check-label" for="exampleRadios4" data-bs-toggle="collapse" data-target="#cod" aria-controls="checkPayment">Cash on delivery</label>
+                                </div>
+                                <div class="custome-radio">
+                                    <input class="form-check-input" required="" type="radio" value="stripe" name="payment_method" id="exampleRadios5" checked="">
+                                    <label class="form-check-label" for="exampleRadios5" data-bs-toggle="collapse" data-target="#stripe" aria-controls="paypal">Stripe</label>
+                                </div>
+                                <div class="custome-radio">
+                                    <input class="form-check-input" required="" type="radio" value="myfatoorah" name="payment_method" id="exampleRadios5" checked="">
+                                    <label class="form-check-label" for="exampleRadios5" data-bs-toggle="collapse" data-target="#myfatoorah" aria-controls="paypal">MyFatoorah</label>
+                                </div>
+                                @if ($errors->has('payment_method'))
+                                    <div class="alert alert-danger">
+                                        {{ $errors->first('payment_method') }}
+                                    </div>
+                                @endif
+                            </div>
+                            <div class="payment-logo d-flex">
+                                <img class="mr-15" src="{{asset('assets/front/imgs/theme/icons/payment-paypal.svg')}}" alt="">
+                                <img class="mr-15" src="{{asset('assets/front/imgs/theme/icons/payment-visa.svg')}}" alt="">
+                                <img class="mr-15" src="{{asset('assets/front/imgs/theme/icons/payment-master.svg')}}" alt="">
+                                <img src="{{asset('assets/front/imgs/theme/icons/payment-zapper.svg')}}" alt="">
+                            </div>
+                            <button type="submit" class="btn btn-fill-out btn-block mt-30">Place an Order<i class="fi-rs-sign-out ml-15"></i></button>
+                        </div>
 
                     </form>
                 </div>
@@ -188,30 +216,7 @@
 
                     </div>
                 </div>
-                <div class="payment ml-30">
-                    <h4 class="mb-30">Payment</h4>
-                    <div class="payment_option">
-{{--                        <div class="custome-radio">--}}
-{{--                            <input class="form-check-input" required="" type="radio" name="payment_option" id="exampleRadios3" checked="">--}}
-{{--                            <label class="form-check-label" for="exampleRadios3" data-bs-toggle="collapse" data-target="#bankTranfer" aria-controls="bankTranfer">Direct Bank Transfer</label>--}}
-{{--                        </div>--}}
-                        <div class="custome-radio">
-                            <input class="form-check-input" required="" type="radio" name="payment_option" id="exampleRadios4" checked="">
-                            <label class="form-check-label" for="exampleRadios4" data-bs-toggle="collapse" data-target="#checkPayment" aria-controls="checkPayment">Cash on delivery</label>
-                        </div>
-                        <div class="custome-radio">
-                            <input class="form-check-input" required="" type="radio" name="payment_option" id="exampleRadios5" checked="">
-                            <label class="form-check-label" for="exampleRadios5" data-bs-toggle="collapse" data-target="#paypal" aria-controls="paypal">Online Getway</label>
-                        </div>
-                    </div>
-                    <div class="payment-logo d-flex">
-                        <img class="mr-15" src="{{asset('assets/front/imgs/theme/icons/payment-paypal.svg')}}" alt="">
-                        <img class="mr-15" src="{{asset('assets/front/imgs/theme/icons/payment-visa.svg')}}" alt="">
-                        <img class="mr-15" src="{{asset('assets/front/imgs/theme/icons/payment-master.svg')}}" alt="">
-                        <img src="{{asset('assets/front/imgs/theme/icons/payment-zapper.svg')}}" alt="">
-                    </div>
-                    <a href="#" class="btn btn-fill-out btn-block mt-30">Place an Order<i class="fi-rs-sign-out ml-15"></i></a>
-                </div>
+
             </div>
         </div>
     </div>
