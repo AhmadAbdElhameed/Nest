@@ -13,12 +13,11 @@ return new class extends Migration
     {
         Schema::create('transactions', function (Blueprint $table) {
             $table->id();
-            $table->unsignedBigInteger('order_id');
-            $table->unsignedBigInteger('transaction_id');
+            $table->string('transaction_id'); // Changed to string to store Stripe session ID
+            $table->foreignId('order_id')->constrained()->onDelete('cascade');
+            $table->foreignId('user_id')->constrained()->onDelete('cascade');
             $table->string('payment_method');
-            $table->string('payment_method');
-            $table->string('amount');
-            $table->string('currency');
+            $table->decimal('amount', 10, 2); // Use decimal for monetary values
             $table->timestamps();
         });
     }

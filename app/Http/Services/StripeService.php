@@ -25,7 +25,7 @@ class StripeService
                 ]
             ],
             'mode' => 'payment',
-            'success_url' => route('checkout.stripe.success'),
+            'success_url' => route('checkout.stripe.success') . '?session_id={CHECKOUT_SESSION_ID}',
             'cancel_url' => route('checkout.stripe.cancel'),
         ]);
         return redirect()->away($response->url);

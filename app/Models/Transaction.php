@@ -13,7 +13,7 @@ class Transaction extends Model
         'transaction_id',
         'payment_method',
         'amount',
-        'currency'
+        'user_id'
     ];
 
     public function order()

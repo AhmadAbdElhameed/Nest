@@ -12,6 +12,7 @@ use App\Models\Order;
 use App\Models\OrderItem;
 use App\Models\Product;
 use App\Models\StripeSetting;
+use App\Models\Transaction;
 use Gloudemans\Shoppingcart\Facades\Cart;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
@@ -115,9 +116,10 @@ class CheckoutController extends Controller
 
     public function stripeSuccess(Request $request)
     {
+        $sessionId = $request->query('session_id');
         $checkout_details = Session::get('checkout_details');
         $cartProducts = $checkout_details['cart_items'];
-        DB::transaction(function () use ($checkout_details, $cartProducts) {
+        DB::transaction(function () use ($checkout_details, $cartProducts , $sessionId) {
             $order = Order::create([
                 'payment_method' => 'stripe',
                 'phone' => $checkout_details['phone'],
@@ -139,6 +141,15 @@ class CheckoutController extends Controller
                     'price' => $product['price'],
                 ]);
             }
+
+            $transaction = Transaction::create([
+                'order_id' => $order->id,
+                'transaction_id' => $sessionId,
+                'user_id' => $order->user_id,
+                'payment_method' => $order->payment_method,
+                'amount' => $order->total_amount,
+            ]);
+
         });
 
 //        OrderPlacedNotificationEvent::dispatch($order);
