@@ -10,6 +10,7 @@ use App\Http\Controllers\Admin\SliderController;
 use App\Http\Controllers\Admin\SubCategoryController;
 use App\Http\Controllers\Admin\TagController;
 use App\Http\Controllers\AttributeController;
+use App\Http\Controllers\Front\RoleController;
 use App\Http\Controllers\OptionController;
 use App\Http\Controllers\ProductController;
 use Illuminate\Support\Facades\Route;
@@ -150,6 +151,17 @@ Route::group(
                 Route::get('edit/{slider}', 'edit')->name('edit');
                 Route::put('update/{slider}', 'update')->name('update');
                 Route::get('delete/{slider}', 'destroy')->name('delete');
+            });
+            ################################## Options Routes #######################################
+
+            ################################## Options Routes ####################################
+            Route::prefix('role')->as('role.')->controller(RoleController::class)->group(function () {
+                Route::get('/', 'index')->name('index');
+                Route::get('create', 'create')->name('create');
+                Route::post('store', 'store')->name('store');
+                Route::get('edit/{role}', 'edit')->name('edit');
+                Route::put('update/{role}', 'update')->name('update');
+                Route::get('delete/{role}', 'destroy')->name('delete');
             });
             ################################## Options Routes #######################################
 
