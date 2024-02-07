@@ -24,28 +24,18 @@ class AuthServiceProvider extends ServiceProvider
     {
         $this->registerPolicies();
 
-        // Define a gate for 'manage brands' ability
-        Gate::define('brands', function (Admin $admin) {
-            return in_array('brands', $admin->role->permissions);
-        });
-        Gate::define('categories', function (Admin $admin) {
-            return in_array('categories', $admin->role->permissions);
-        });
+//        Gate::define('users', function (Admin $admin) {
+//            return in_array('users', $admin->role->permissions);
+//        });
 
-        Gate::define('tags', function (Admin $admin) {
-            return in_array('tags', $admin->role->permissions);
-        });
+        $permissions = config('global.permissions');
 
-        Gate::define('options', function (Admin $admin) {
-            return in_array('options', $admin->role->permissions);
-        });
+        foreach ($permissions as $permission) {
+            Gate::define($permission, function (Admin $admin) use ($permission) {
+                return in_array($permission, $admin->role->permissions ?? []);
+            });
+        }
 
-        Gate::define('products', function (Admin $admin) {
-            return in_array('products', $admin->role->permissions);
-        });
 
-        Gate::define('users', function (Admin $admin) {
-            return in_array('users', $admin->role->permissions);
-        });
     }
 }
