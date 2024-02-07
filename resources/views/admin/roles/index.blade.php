@@ -69,8 +69,10 @@
                                                         <td>
                                                             <div class="btn-group" role="group"
                                                                  aria-label="Basic example">
-                                                                <a href="{{route('admin.role.edit',$role -> id)}}"
+                                                                <a href="{{route('admin.role.edit',$role)}}"
                                                                    class="btn btn-outline-primary btn-min-width box-shadow-3 mr-1 mb-1">تعديل </a>
+                                                                <a href="{{route('admin.role.delete',$role)}}"
+                                                                   class="btn btn-outline-danger btn-min-width box-shadow-3 mr-1 mb-1">حذف</a>
                                                             </div>
                                                         </td>
                                                     </tr>

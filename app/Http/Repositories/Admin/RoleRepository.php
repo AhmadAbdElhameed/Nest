@@ -45,17 +45,30 @@ class RoleRepository implements RoleInterface
 
     public function edit($role)
     {
-        // TODO: Implement edit() method.
+        return view('admin.roles.edit',compact('role'));
     }
 
     public function update($request, $role)
     {
-        // TODO: Implement update() method.
+        try {
+            $role->update([
+                'name' => $request->name,
+                'permissions' => $request->permissions,
+            ]);
+
+            toast('Role Updated Successfully', 'success');
+            return redirect()->route('admin.role.index');
+        } catch (\Exception $e) {
+            toast('Something wrong happened, try later', 'error');
+            return redirect()->route('admin.role.index')->with(['error' => 'Something wrong happened, try later']);
+        }
     }
 
     public function destroy($role)
     {
-        // TODO: Implement destroy() method.
+        $role->delete();
+        toast('Role Deleted Successfully', 'success');
+        return redirect()->route('admin.role.index');
     }
 
 }
