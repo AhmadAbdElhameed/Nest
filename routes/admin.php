@@ -55,7 +55,6 @@ Route::group(
 
             ################################## Categories Routes ####################################
             Route::prefix('category')->as('category.')
-                ->middleware(['can:categories'])
                 ->controller(CategoryController::class)->group(function () {
                 Route::get('/', 'index')->name('index');
                 Route::get('create', 'create')->name('create');
@@ -172,7 +171,7 @@ Route::group(
 
             ################################## Options Routes ####################################
             Route::prefix('user')->as('user.')
-                ->middleware(['can:users'])
+
                 ->controller(UserController::class)->group(function () {
                 Route::get('/', 'index')->name('index');
                 Route::get('create', 'create')->name('create');
