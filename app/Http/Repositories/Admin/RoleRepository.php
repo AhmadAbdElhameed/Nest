@@ -26,15 +26,16 @@ class RoleRepository implements RoleInterface
         try {
             $role = Role::create([
                 'name' => $request->name,
-                'permissions' => json_encode($request->permissions)
+                // Directly assign the array to permissions
+                'permissions' => $request->permissions,
             ]);
-            toast('Role Created Successfully','success');
+
+            toast('Role Created Successfully', 'success');
             return redirect()->route('admin.role.index');
-        }catch (\Exception $e){
-            toast('Something wrong happened, try later','error');
+        } catch (\Exception $e) {
+            toast('Something wrong happened, try later', 'error');
             return redirect()->route('admin.role.index')->with(['error' => 'Something wrong happened, try later']);
         }
-
     }
 
     public function show($role)

@@ -61,7 +61,7 @@
                                                         <td>{{$role -> name}}</td>
 
                                                         <td>
-                                                            @foreach($role -> permissions as $permission)
+                                                            @foreach( $role->permissions as $permission)
                                                                 {{$permission}} ,
                                                             @endforeach
 
