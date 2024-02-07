@@ -9,7 +9,9 @@ use App\Http\Controllers\Admin\SettingController;
 use App\Http\Controllers\Admin\SliderController;
 use App\Http\Controllers\Admin\SubCategoryController;
 use App\Http\Controllers\Admin\TagController;
+use App\Http\Controllers\Admin\UserController;
 use App\Http\Controllers\AttributeController;
+use App\Http\Controllers\Front\RoleController;
 use App\Http\Controllers\OptionController;
 use App\Http\Controllers\ProductController;
 use Illuminate\Support\Facades\Route;
@@ -52,7 +54,9 @@ Route::group(
             Route::get('logout',[LoginController::class,'logout'])->name('logout');
 
             ################################## Categories Routes ####################################
-            Route::prefix('category')->as('category.')->controller(CategoryController::class)->group(function () {
+            Route::prefix('category')->as('category.')
+                ->middleware(['can:categories'])
+                ->controller(CategoryController::class)->group(function () {
                 Route::get('/', 'index')->name('index');
                 Route::get('create', 'create')->name('create');
                 Route::post('store', 'store')->name('store');
@@ -75,7 +79,9 @@ Route::group(
 
 
             ################################## Brands Routes ####################################
-            Route::prefix('brand')->as('brand.')->controller(BrandController::class)->group(function () {
+            Route::prefix('brand')->as('brand.')
+                ->middleware(['can:brands'])
+                ->controller(BrandController::class)->group(function () {
                 Route::get('/', 'index')->name('index');
                 Route::get('create', 'create')->name('create');
                 Route::post('store', 'store')->name('store');
@@ -150,6 +156,28 @@ Route::group(
                 Route::get('edit/{slider}', 'edit')->name('edit');
                 Route::put('update/{slider}', 'update')->name('update');
                 Route::get('delete/{slider}', 'destroy')->name('delete');
+            });
+            ################################## Options Routes #######################################
+
+            ################################## Options Routes ####################################
+            Route::prefix('role')->as('role.')->controller(RoleController::class)->group(function () {
+                Route::get('/', 'index')->name('index');
+                Route::get('create', 'create')->name('create');
+                Route::post('store', 'store')->name('store');
+                Route::get('edit/{role}', 'edit')->name('edit');
+                Route::put('update/{role}', 'update')->name('update');
+                Route::get('delete/{role}', 'destroy')->name('delete');
+            });
+            ################################## Options Routes #######################################
+
+            ################################## Options Routes ####################################
+            Route::prefix('user')->as('user.')
+                ->middleware(['can:users'])
+                ->controller(UserController::class)->group(function () {
+                Route::get('/', 'index')->name('index');
+                Route::get('create', 'create')->name('create');
+                Route::post('store', 'store')->name('store');
+                Route::get('delete/{admin}', 'destroy')->name('delete');
             });
             ################################## Options Routes #######################################
 

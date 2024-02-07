@@ -23,19 +23,22 @@
 {{--            </li>--}}
 
 
-            <li class="nav-item"><a href=""><i class="la la-group"></i>
-                    <span class="menu-title" data-i18n="nav.dash.main">{{__('admin/sidebar.category_title')}}</span>
-                    <span
-                        class="badge badge badge-danger badge-pill float-right mr-2"></span>
-                </a>
-                <ul class="menu-content">
-                    <li class="active"><a class="menu-item" href="{{route('admin.category.index')}}"
-                                          data-i18n="nav.dash.ecommerce">{{__('admin/sidebar.category')}}</a>
-                    </li>
-                    <li><a class="menu-item" href="{{route('admin.category.create')}}" data-i18n="nav.dash.crypto">{{__('admin/sidebar.category_create')}}</a>
-                    </li>
-                </ul>
-            </li>
+{{--            @can('categories')--}}
+                <li class="nav-item"><a href=""><i class="la la-group"></i>
+                        <span class="menu-title" data-i18n="nav.dash.main">{{__('admin/sidebar.category_title')}}</span>
+                        <span
+                            class="badge badge badge-danger badge-pill float-right mr-2"></span>
+                    </a>
+                    <ul class="menu-content">
+                        <li class="active"><a class="menu-item" href="{{route('admin.category.index')}}"
+                                              data-i18n="nav.dash.ecommerce">{{__('admin/sidebar.category')}}</a>
+                        </li>
+                        <li><a class="menu-item" href="{{route('admin.category.create')}}" data-i18n="nav.dash.crypto">{{__('admin/sidebar.category_create')}}</a>
+                        </li>
+                    </ul>
+                </li>
+{{--            @endcan--}}
+
 
             <li class="nav-item"><a href=""><i class="la la-group"></i>
                     <span class="menu-title" data-i18n="nav.dash.main">{{__('admin/sidebar.sub-category_title')}}</span>
@@ -126,7 +129,29 @@
 
 
 
+            <li><a class="nav-item" href="#" data-i18n="nav.templates.vert.main">Roles & Permissions</a>
+                <ul class="menu-content">
+                    <li><a class="menu-item" href="{{route('admin.role.index')}}"
+                           data-i18n="nav.templates.vert.classic_menu">All Roles</a>
+                    </li>
+                    <li><a class="menu-item" href="{{route('admin.role.create')}}"
+                           data-i18n="nav.templates.vert.classic_menu">Create New Role</a>
+                    </li>
 
+                </ul>
+            </li>
+
+            <li><a class="nav-item" href="#" data-i18n="nav.templates.vert.main">Admins</a>
+                <ul class="menu-content">
+                    <li><a class="menu-item" href="{{route('admin.user.index')}}"
+                           data-i18n="nav.templates.vert.classic_menu">All Admins</a>
+                    </li>
+                    <li><a class="menu-item" href="{{route('admin.user.create')}}"
+                           data-i18n="nav.templates.vert.classic_menu">Add New Admin</a>
+                    </li>
+
+                </ul>
+            </li>
 
 {{--            <li class="nav-item">--}}
 {{--                <a href=""><i class="la la-male"></i>--}}
@@ -168,6 +193,7 @@
 
                         </ul>
                     </li>
+
 
                     <li><a class="menu-item" href="{{route('admin.settings.edit.2fa',auth()->guard('admin')->user())}}">Edit 2 FA</a>
                     </li>
