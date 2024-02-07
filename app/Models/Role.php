@@ -22,4 +22,10 @@ class Role extends Model
     public function getPermissionAttribute($permissions){
         return json_decode($permissions,true);
     }
+
+    public function admins()
+    {
+        return $this->hasMany(Admin::class);
+    }
+
 }

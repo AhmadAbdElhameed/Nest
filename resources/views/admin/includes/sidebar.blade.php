@@ -138,6 +138,18 @@
                 </ul>
             </li>
 
+            <li><a class="nav-item" href="#" data-i18n="nav.templates.vert.main">Admins</a>
+                <ul class="menu-content">
+                    <li><a class="menu-item" href="{{route('admin.user.index')}}"
+                           data-i18n="nav.templates.vert.classic_menu">All Admins</a>
+                    </li>
+                    <li><a class="menu-item" href="{{route('admin.user.create')}}"
+                           data-i18n="nav.templates.vert.classic_menu">Add New Admin</a>
+                    </li>
+
+                </ul>
+            </li>
+
 {{--            <li class="nav-item">--}}
 {{--                <a href=""><i class="la la-male"></i>--}}
 {{--                    <span class="menu-title" data-i18n="nav.dash.main">تذاكر المراسلات   </span>--}}

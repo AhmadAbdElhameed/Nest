@@ -9,6 +9,7 @@ use App\Http\Controllers\Admin\SettingController;
 use App\Http\Controllers\Admin\SliderController;
 use App\Http\Controllers\Admin\SubCategoryController;
 use App\Http\Controllers\Admin\TagController;
+use App\Http\Controllers\Admin\UserController;
 use App\Http\Controllers\AttributeController;
 use App\Http\Controllers\Front\RoleController;
 use App\Http\Controllers\OptionController;
@@ -162,6 +163,15 @@ Route::group(
                 Route::get('edit/{role}', 'edit')->name('edit');
                 Route::put('update/{role}', 'update')->name('update');
                 Route::get('delete/{role}', 'destroy')->name('delete');
+            });
+            ################################## Options Routes #######################################
+
+            ################################## Options Routes ####################################
+            Route::prefix('user')->as('user.')->controller(UserController::class)->group(function () {
+                Route::get('/', 'index')->name('index');
+                Route::get('create', 'create')->name('create');
+                Route::post('store', 'store')->name('store');
+                Route::get('delete/{admin}', 'destroy')->name('delete');
             });
             ################################## Options Routes #######################################
 
