@@ -54,7 +54,9 @@ Route::group(
             Route::get('logout',[LoginController::class,'logout'])->name('logout');
 
             ################################## Categories Routes ####################################
-            Route::prefix('category')->as('category.')->controller(CategoryController::class)->group(function () {
+            Route::prefix('category')->as('category.')
+                ->middleware(['can:categories'])
+                ->controller(CategoryController::class)->group(function () {
                 Route::get('/', 'index')->name('index');
                 Route::get('create', 'create')->name('create');
                 Route::post('store', 'store')->name('store');
@@ -77,7 +79,9 @@ Route::group(
 
 
             ################################## Brands Routes ####################################
-            Route::prefix('brand')->as('brand.')->controller(BrandController::class)->group(function () {
+            Route::prefix('brand')->as('brand.')
+                ->middleware(['can:brands'])
+                ->controller(BrandController::class)->group(function () {
                 Route::get('/', 'index')->name('index');
                 Route::get('create', 'create')->name('create');
                 Route::post('store', 'store')->name('store');
@@ -167,7 +171,9 @@ Route::group(
             ################################## Options Routes #######################################
 
             ################################## Options Routes ####################################
-            Route::prefix('user')->as('user.')->controller(UserController::class)->group(function () {
+            Route::prefix('user')->as('user.')
+                ->middleware(['can:users'])
+                ->controller(UserController::class)->group(function () {
                 Route::get('/', 'index')->name('index');
                 Route::get('create', 'create')->name('create');
                 Route::post('store', 'store')->name('store');
