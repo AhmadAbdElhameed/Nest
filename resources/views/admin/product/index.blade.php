@@ -75,6 +75,9 @@
 
                                                                 <a href="{{route('admin.product.inventory',$product)}}"
                                                                    class="btn btn-outline-primary btn-min-width box-shadow-3 mr-1 mb-1">المستودع</a>
+
+                                                                <a href="{{route('admin.product.edit',$product)}}"
+                                                                   class="btn btn-outline-primary btn-min-width box-shadow-3 mr-1 mb-1">تعديل</a>
                                                             </div>
                                                         </td>
                                                     </tr>

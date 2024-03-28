@@ -35,20 +35,35 @@
                     <div class="header-info header-info-right">
                         <ul>
 
+{{--                            <li>--}}
+{{--                                <a class="language-dropdown-active" href="#">English <i class="fi-rs-angle-small-down"></i></a>--}}
+{{--                                <ul class="language-dropdown">--}}
+{{--                                    <li>--}}
+{{--                                        <a href="#"><img src="{{asset('assets/front/imgs/theme/flag-fr.png')}}" alt="" />العربية</a>--}}
+{{--                                    </li>--}}
+{{--                                    <li>--}}
+{{--                                        <a href="#"><img src="{{asset('assets/front/imgs/theme/flag-dt.png')}}" alt="" />English</a>--}}
+{{--                                    </li>--}}
+{{--                                </ul>--}}
+{{--                            </li>--}}
                             <li>
-                                <a class="language-dropdown-active" href="#">English <i class="fi-rs-angle-small-down"></i></a>
+                                <a class="language-dropdown-active" href="#">
+                                    @if(app()->getLocale() === 'ar')
+                                        العربية <i class="fi-rs-angle-small-down"></i>
+                                    @else
+                                        English <i class="fi-rs-angle-small-down"></i>
+                                    @endif
+                                </a>
                                 <ul class="language-dropdown">
                                     <li>
-                                        <a href="#"><img src="{{asset('assets/front/imgs/theme/flag-fr.png')}}" alt="" />Français</a>
+                                        <a href="{{ url('/ar') }}"><img src="{{asset('assets/front/imgs/theme/flag-ar.png')}}" alt=""/> العربية</a>
                                     </li>
                                     <li>
-                                        <a href="#"><img src="{{asset('assets/front/imgs/theme/flag-dt.png')}}" alt="" />Deutsch</a>
-                                    </li>
-                                    <li>
-                                        <a href="#"><img src="{{asset('assets/front/imgs/theme/flag-ru.png')}}" alt="" />Pусский</a>
+                                        <a href="{{ url('/en') }}"><img src="{{asset('assets/front/imgs/theme/flag-us.png')}}" alt=""/> English</a>
                                     </li>
                                 </ul>
                             </li>
+
 
                             <li>Need help? Call Us: <strong class="text-brand"> + 1800 900</strong></li>
 
@@ -301,7 +316,7 @@
                             <ul>
 
                                 <li>
-                                    <a class="active" href="index.html">Home  </a>
+                                    <a class="active" href="{{route('home')}}">Home  </a>
 
                                 </li>
                                 <li>

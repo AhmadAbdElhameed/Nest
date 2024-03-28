@@ -1,5 +1,5 @@
 ﻿<!DOCTYPE html>
-<html class="no-js" lang="en">
+<html class="no-js" lang="en" data-textdirection="{{app()->getLocale() === 'ar' ? 'rtl' : 'ltr'}}">
 
 <head>
     <meta charset="utf-8" />
