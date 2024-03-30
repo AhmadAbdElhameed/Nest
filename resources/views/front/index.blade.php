@@ -1,7 +1,7 @@
 @extends('front.layouts.master')
 
 @section('title')
-    Home
+    Nest
 @endsection
 
 @section('content')

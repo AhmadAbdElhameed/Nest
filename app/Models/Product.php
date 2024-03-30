@@ -52,7 +52,7 @@ class Product extends Model
     }
 
     public function getActive(){
-        return $this->status == 1 ? __('admin/category.status_active') : __('admin/category.status_inactive');
+        return $this->status == 1 ? __('admin/product.status_active') : __('admin/product.status_inactive');
     }
 
     public function getRouteKeyName()

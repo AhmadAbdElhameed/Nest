@@ -17,7 +17,7 @@ class ProductRepository implements ProductInterface
 
     public function index()
     {
-        $products = Product::select('id','slug','price', 'created_at')->paginate(PAGINATION_COUNT);
+        $products = Product::select('id','slug','price', 'created_at','status')->paginate(PAGINATION_COUNT);
         return view('admin.product.index', compact('products'));
     }
 
@@ -85,12 +85,59 @@ class ProductRepository implements ProductInterface
 
     public function edit($product)
     {
-        // TODO: Implement edit() method.
+        $brands= Brand::where('status',1)->select('id')->get();
+        $tags= Tag::select('id')->get();
+        $categories = Category::active()->select('id')->get();
+
+        return view('admin.product.edit', compact('product',
+            'brands','tags','categories'));
     }
 
     public function update($request, $product)
     {
-        // TODO: Implement update() method.
+        DB::beginTransaction();
+
+        //validation
+
+        if (!$request->has('status'))
+            $request->request->add(['status' => 0]);
+        else
+            $request->request->add(['status' => 1]);
+
+        if (!$request->has('manage_stock'))
+            $request->request->add(['manage_stock' => 0]);
+        else
+            $request->request->add(['manage_stock' => 1]);
+
+        if (!$request->has('in_stock'))
+            $request->request->add(['in_stock' => 0]);
+        else
+            $request->request->add(['in_stock' => 1]);
+
+        $product->update([
+            'slug' => $request->slug,
+            'brand_id' => $request->brand_id,
+            'status' => $request->status,
+            'price' => $request->price,
+            'manage_stock' => $request->manage_stock,
+            'in_stock' => $request->in_stock,
+        ]);
+        //save translations
+        $product->name = $request->name;
+        $product->description = $request->description;
+        $product->short_description = $request->short_description;
+        $product->save();
+
+        //save product categories
+
+        $product->categories()->sync($request->categories);
+
+        //save product tags
+
+        $product->tags()->sync($request->tags);
+
+        DB::commit();
+        return redirect()->route('admin.product.index')->with(['success' => 'تم ألاضافة بنجاح']);
     }
 
     public function destroy($product)
